@@ -63,11 +63,12 @@ const Navbar = () => {
                 </a>
               </li>
               <li className="nav-item mt-3">
-                <a href="#" className="btn theme_btn button_hover">
+                {/* <a href="#" className="btn theme_btn button_hover">
                   Sign Up
-                </a>
+                </a> */}
+                <Link to="/register"  className="btn theme_btn button_hover">Sign Up</Link>
               </li>
-              <li className="nav-item mt-3">
+              <li className="nav-zitem mt-3">
                 <a href="#" className="btn theme_btn button_hover">
                   Sign In
                 </a>

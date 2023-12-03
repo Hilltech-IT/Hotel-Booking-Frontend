@@ -1,190 +1,735 @@
-import React from 'react';
+import React from "react";
+import Navbar from "../components/Navbar";
+import Services from "./Services";
 
 const Home = () => {
   return (
-    <div>
-       <body>
-      
-        {/* <nav className="navbar navbar-light bg-light static-top">
+    <>
+      <div>
+        <Navbar/>
+        <section className="banner_area">
+          <div className="booking_table d_flex align-items-center">
+            <div
+              className="overlay bg-parallax"
+              data-stellar-ratio="0.9"
+              data-stellar-vertical-offset={0}
+              data-background
+            />
             <div className="container">
-                <a className="navbar-brand" href="#!">Start Bootstrap</a>
-                <a className="btn btn-primary" href="#signup">Sign Up</a>
+              <div className="banner_content text-center">
+                <h6>Away from monotonous life</h6>
+                <h2>Relax Your Mind</h2>
+                <p>
+                  If you are looking at blank cassettes on the web, you may be
+                  very confused at the
+                  <br /> difference in price. You may see some for as low as
+                  $.17 each.
+                </p>
+                <a href="#" className="btn theme_btn button_hover">
+                  Get Started
+                </a>
+              </div>
             </div>
-        </nav> */}
-      
-        <header className="masthead">
-            <div className="container position-relative">
-                <div className="row justify-content-center">
-                    <div className="col-xl-6">
-                        <div className="text-center text-white">
-                            <h1 className="mb-5">Find your place with our local life style</h1>
-          
-                            <form className="form-subscribe" id="contactForm" data-sb-form-api-token="API_TOKEN">
-
-                                <div className="row">
-                                    <div className="col">
-                                        <input className="form-control form-control-lg" id="emailAddress" type="email" placeholder="Location" data-sb-validations="required,email" />
-                                        <div className="invalid-feedback text-white" data-sb-feedback="emailAddress:required">Email Address is required.</div>
-                                        <div className="invalid-feedback text-white" data-sb-feedback="emailAddress:email">Email Address Email is not valid.</div>
-                                    </div>
-                                    <div className="col-auto"><button className="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Submit</button></div>
-                                </div>
-                                <div className="d-none" id="submitSuccessMessage">
-                                    <div className="text-center mb-3">
-                                        <div className="fw-bolder">Form submission successful!</div>
-                                        <p>To activate this form, sign up at</p>
-                                        <a className="text-white" href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                                    </div>
-                                </div>
-                                <div className="d-none" id="submitErrorMessage"><div className="text-center text-danger mb-3">Error sending message!</div></div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        {/* <section className="features-icons bg-light text-center">
+          </div>
+          <div className="hotel_booking_area position">
             <div className="container">
-                <div className="row">
-                    <div className="col-lg-4">
-                        <div className="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                            <div className="features-icons-icon d-flex"><i className="bi-window m-auto text-primary"></i></div>
-                            <h3>Fully Responsive</h3>
-                            <p className="lead mb-0">This theme will look great on any device, no matter the size!</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-4">
-                        <div className="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                            <div className="features-icons-icon d-flex"><i className="bi-layers m-auto text-primary"></i></div>
-                            <h3>Bootstrap 5 Ready</h3>
-                            <p className="lead mb-0">Featuring the latest build of the new Bootstrap 5 framework!</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-4">
-                        <div className="features-icons-item mx-auto mb-0 mb-lg-3">
-                            <div className="features-icons-icon d-flex"><i className="bi-terminal m-auto text-primary"></i></div>
-                            <h3>Easy to Use</h3>
-                            <p className="lead mb-0">Ready to use with your own content, or customize the source files!</p>
-                        </div>
-                    </div>
+              <div className="hotel_booking_table">
+                <div className="col-md-3">
+                  <h2>
+                    Book
+                    <br /> Your Room
+                  </h2>
                 </div>
-            </div>
-        </section>
-        <section className="showcase">
-            <div className="container-fluid p-0">
-                <div className="row g-0">
-                    <div className="col-lg-6 order-lg-2 text-white showcase-img" style={{backgroundImage: "url('assets/img/bg-showcase-1.jpg')"}}></div>
-                    <div className="col-lg-6 order-lg-1 my-auto showcase-text">
-                        <h2>Fully Responsive Design</h2>
-                        <p className="lead mb-0">When you use a theme created by Start Bootstrap, you know that the theme will look great on any device, whether it's a phone, tablet, or desktop the page will behave responsively!</p>
-                    </div>
-                </div>
-                <div className="row g-0">
-                    <div className="col-lg-6 text-white showcase-img" style={{backgroundImage:" url('assets/img/bg-showcase-2.jpg')"}}></div>
-                    <div className="col-lg-6 my-auto showcase-text">
-                        <h2>Updated For Bootstrap 5</h2>
-                        <p className="lead mb-0">Newly improved, and full of great utility classNamees, Bootstrap 5 is leading the way in mobile responsive web development! All of the themes on Start Bootstrap are now using Bootstrap 5!</p>
-                    </div>
-                </div>
-                <div className="row g-0">
-                    <div className="col-lg-6 order-lg-2 text-white showcase-img" style={{backgroundImage: "url('assets/img/bg-showcase-3.jpg')"}}></div>
-                    <div className="col-lg-6 order-lg-1 my-auto showcase-text">
-                        <h2>Easy to Use & Customize</h2>
-                        <p className="lead mb-0">Landing Page is just HTML and CSS with a splash of SCSS for users who demand some deeper customization options. Out of the box, just add your content and images, and your new landing page will be ready to go!</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section className="testimonials text-center bg-light">
-            <div className="container">
-                <h2 className="mb-5">What people are saying...</h2>
-                <div className="row">
-                    <div className="col-lg-4">
-                        <div className="testimonial-item mx-auto mb-5 mb-lg-0">
-                            <img className="img-fluid rounded-circle mb-3" src="assets/img/testimonials-1.jpg" alt="..." />
-                            <h5>Margaret E.</h5>
-                            <p className="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-4">
-                        <div className="testimonial-item mx-auto mb-5 mb-lg-0">
-                            <img className="img-fluid rounded-circle mb-3" src="assets/img/testimonials-2.jpg" alt="..." />
-                            <h5>Fred S.</h5>
-                            <p className="font-weight-light mb-0">"Bootstrap is amazing. I've been using it to create lots of super nice landing pages."</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-4">
-                        <div className="testimonial-item mx-auto mb-5 mb-lg-0">
-                            <img className="img-fluid rounded-circle mb-3" src="assets/img/testimonials-3.jpg" alt="..." />
-                            <h5>Sarah W.</h5>
-                            <p className="font-weight-light mb-0">"Thanks so much for making these free resources available to us!"</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section className="call-to-action text-white text-center" id="signup">
-            <div className="container position-relative">
-                <div className="row justify-content-center">
-                    <div className="col-xl-6">
-                        <h2 className="mb-4">Ready to get started? Sign up now!</h2>
-                        
-                        <form className="form-subscribe" id="contactFormFooter" data-sb-form-api-token="API_TOKEN">
-                            <div className="row">
-                                <div className="col">
-                                    <input className="form-control form-control-lg" id="emailAddressBelow" type="email" placeholder="Email Address" data-sb-validations="required,email" />
-                                    <div className="invalid-feedback text-white" data-sb-feedback="emailAddressBelow:required">Email Address is required.</div>
-                                    <div className="invalid-feedback text-white" data-sb-feedback="emailAddressBelow:email">Email Address Email is not valid.</div>
-                                </div>
-                                <div className="col-auto"><button className="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Submit</button></div>
+                <div className="col-md-9">
+                  <div className="boking_table">
+                    <div className="row">
+                      <div className="col-md-4">
+                        <div className="book_tabel_item">
+                          <div className="form-group">
+                            <div
+                              className="input-group date"
+                              id="datetimepicker11"
+                            >
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Arrival Date"
+                              />
+                              <span className="input-group-addon">
+                                <i
+                                  className="fa fa-calendar"
+                                  aria-hidden="true"
+                                />
+                              </span>
                             </div>
-                            <div className="d-none" id="submitSuccessMessage">
-                                <div className="text-center mb-3">
-                                    <div className="fw-bolder">Form submission successful!</div>
-                                    <p>To activate this form, sign up at</p>
-                                    <a className="text-white" href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                                </div>
+                          </div>
+                          <div className="form-group">
+                            <div
+                              className="input-group date"
+                              id="datetimepicker1"
+                            >
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Departure Date"
+                              />
+                              <span className="input-group-addon">
+                                <i
+                                  className="fa fa-calendar"
+                                  aria-hidden="true"
+                                />
+                              </span>
                             </div>
-                            <div className="d-none" id="submitErrorMessage"><div className="text-center text-danger mb-3">Error sending message!</div></div>
-                        </form>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="book_tabel_item">
+                          <div className="input-group">
+                            <select className="wide">
+                              <option data-display="Adult">Adult</option>
+                              <option value={1}>Old</option>
+                              <option value={2}>Younger</option>
+                              <option value={3}>Potato</option>
+                            </select>
+                          </div>
+                          <div className="input-group">
+                            <select className="wide">
+                              <option data-display="Child">Child</option>
+                              <option value={1}>Child</option>
+                              <option value={2}>Baby</option>
+                              <option value={3}>Child</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="book_tabel_item">
+                          <div className="input-group">
+                            <select className="wide">
+                              <option data-display="Child">
+                                Number of Rooms
+                              </option>
+                              <option value={1}>Room 01</option>
+                              <option value={2}>Room 02</option>
+                              <option value={3}>Room 03</option>
+                            </select>
+                          </div>
+                          <a className="book_now_btn button_hover" href="#">
+                            Book Now
+                          </a>
+                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
-        </section> */}
-         {/* Footer */}
-        <footer className="footer bg-light">
-            <div className="container">
-                <div className="row">
-                    <div className="col-lg-6 h-100 text-center text-lg-start my-auto">
-                        <ul className="list-inline mb-2">
-                            <li className="list-inline-item"><a href="#!">About</a></li>
-                            <li className="list-inline-item">⋅</li>
-                            <li className="list-inline-item"><a href="#!">Contact</a></li>
-                            <li className="list-inline-item">⋅</li>
-                            <li className="list-inline-item"><a href="#!">Terms of Use</a></li>
-                            <li className="list-inline-item">⋅</li>
-                            <li className="list-inline-item"><a href="#!">Privacy Policy</a></li>
-                        </ul>
-                        <p className="text-muted small mb-4 mb-lg-0">&copy; Your Website 2023. All Rights Reserved.</p>
-                    </div>
-                    <div className="col-lg-6 h-100 text-center text-lg-end my-auto">
-                        <ul className="list-inline mb-0">
-                            <li className="list-inline-item me-4">
-                                <a href="#!"><i className="bi-facebook fs-3"></i></a>
-                            </li>
-                            <li className="list-inline-item me-4">
-                                <a href="#!"><i className="bi-twitter fs-3"></i></a>
-                            </li>
-                            <li className="list-inline-item">
-                                <a href="#!"><i className="bi-instagram fs-3"></i></a>
-                            </li>
-                        </ul>
-                    </div>
+          </div>
+        </section>
+        {/*================Banner Area =================*/}
+        {/*================ Accomodation Area  =================*/}
+        <section className="accomodation_area section_gap">
+          <div className="container">
+            <div className="section_title text-center">
+              <h2 className="title_color">Hotel  Recommendations</h2>
+              <p>
+                We all live in an age that belongs to the young at heart. Life
+                that is becoming extremely fast,{" "}
+              </p>
+            </div>
+            <div className="row mb_30">
+              <div className="col-lg-3 col-sm-6">
+                <div className="accomodation_item text-center">
+                  <div className="hotel_img">
+                    <img src="image/room1.jpg" alt />
+                    <a href="#" className="btn theme_btn button_hover">
+                      Book Now
+                    </a>
+                  </div>
+                  <a href="#">
+                    <h4 className="sec_h4">Double Deluxe Room</h4>
+                  </a>
+                  <h5>
+                    $250<small>/night</small>
+                  </h5>
                 </div>
+              </div>
+              <div className="col-lg-3 col-sm-6">
+                <div className="accomodation_item text-center">
+                  <div className="hotel_img">
+                    <img src="image/room2.jpg" alt />
+                    <a href="#" className="btn theme_btn button_hover">
+                      Book Now
+                    </a>
+                  </div>
+                  <a href="#">
+                    <h4 className="sec_h4">Single Deluxe Room</h4>
+                  </a>
+                  <h5>
+                    $200<small>/night</small>
+                  </h5>
+                </div>
+              </div>
+              <div className="col-lg-3 col-sm-6">
+                <div className="accomodation_item text-center">
+                  <div className="hotel_img">
+                    <img src="image/room3.jpg" alt />
+                    <a href="#" className="btn theme_btn button_hover">
+                      Book Now
+                    </a>
+                  </div>
+                  <a href="#">
+                    <h4 className="sec_h4">Honeymoon Suit</h4>
+                  </a>
+                  <h5>
+                    $750<small>/night</small>
+                  </h5>
+                </div>
+              </div>
+              <div className="col-lg-3 col-sm-6">
+                <div className="accomodation_item text-center">
+                  <div className="hotel_img">
+                    <img src="image/room4.jpg" alt />
+                    <a href="#" className="btn theme_btn button_hover">
+                      Book Now
+                    </a>
+                  </div>
+                  <a href="#">
+                    <h4 className="sec_h4">Economy Double</h4>
+                  </a>
+                  <h5>
+                    $200<small>/night</small>
+                  </h5>
+                </div>
+              </div>
             </div>
+          </div>
+        </section>
+        {/*================ Accomodation Area  =================*/}
+        {/*================ Facilities Area  =================*/}
+        <section className="facilities_area section_gap">
+          <div
+            className="overlay bg-parallax"
+            data-stellar-ratio="0.8"
+            data-stellar-vertical-offset={0}
+            data-background
+          ></div>
+          <div className="container">
+            <div className="section_title text-center">
+              <h2 className="title_w">Royal Facilities</h2>
+              <p>Who are in extremely love with eco friendly system.</p>
+            </div>
+            <div className="row mb_30">
+              <div className="col-lg-4 col-md-6">
+                <div className="facilities_item">
+                  <h4 className="sec_h4">
+                    <i className="lnr lnr-dinner" />
+                    Restaurant
+                  </h4>
+                  <p>
+                    Usage of the Internet is becoming more common due to rapid
+                    advancement of technology and power.
+                  </p>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-6">
+                <div className="facilities_item">
+                  <h4 className="sec_h4">
+                    <i className="lnr lnr-bicycle" />
+                    Sports CLub
+                  </h4>
+                  <p>
+                    Usage of the Internet is becoming more common due to rapid
+                    advancement of technology and power.
+                  </p>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-6">
+                <div className="facilities_item">
+                  <h4 className="sec_h4">
+                    <i className="lnr lnr-shirt" />
+                    Swimming Pool
+                  </h4>
+                  <p>
+                    Usage of the Internet is becoming more common due to rapid
+                    advancement of technology and power.
+                  </p>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-6">
+                <div className="facilities_item">
+                  <h4 className="sec_h4">
+                    <i className="lnr lnr-car" />
+                    Rent a Car
+                  </h4>
+                  <p>
+                    Usage of the Internet is becoming more common due to rapid
+                    advancement of technology and power.
+                  </p>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-6">
+                <div className="facilities_item">
+                  <h4 className="sec_h4">
+                    <i className="lnr lnr-construction" />
+                    Gymnesium
+                  </h4>
+                  <p>
+                    Usage of the Internet is becoming more common due to rapid
+                    advancement of technology and power.
+                  </p>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-6">
+                <div className="facilities_item">
+                  <h4 className="sec_h4">
+                    <i className="lnr lnr-coffee-cup" />
+                    Bar
+                  </h4>
+                  <p>
+                    Usage of the Internet is becoming more common due to rapid
+                    advancement of technology and power.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {/*================ Facilities Area  =================*/}
+        {/*================ About History Area  =================*/}
+        <section className="about_history_area section_gap">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-6 d_flex align-items-center">
+                <div className="about_content ">
+                  <h2 className="title title_color">
+                    About Us <br />
+                    Our History
+                    <br />
+                    Mission &amp; Vision
+                  </h2>
+                  <p>
+                    inappropriate behavior is often laughed off as “boys will be
+                    boys,” women face higher conduct standards especially in the
+                    workplace. That’s why it’s crucial that, as women, our
+                    behavior on the job is beyond reproach. inappropriate
+                    behavior is often laughed.
+                  </p>
+                  <a href="#" className="button_hover theme_btn_two">
+                    Request Custom Price
+                  </a>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <img className="img-fluid" src="image/about_bg.jpg" alt="img" />
+              </div>
+            </div>
+          </div>
+        </section>
+        {/*================ About History Area  =================*/}
+        {/*================ Testimonial Area  =================*/}
+        <section className="testimonial_area section_gap">
+          <div className="container">
+            <div className="section_title text-center">
+              <h2 className="title_color">Testimonial from our Clients</h2>
+              <p>
+                The French Revolution constituted for the conscience of the
+                dominant aristocratic class a fall from{" "}
+              </p>
+            </div>
+            <div className="testimonial_slider owl-carousel">
+              <div className="media testimonial_item">
+                <img
+                  className="rounded-circle"
+                  src="image/testtimonial-1.jpg"
+                  alt
+                />
+                <div className="media-body">
+                  <p>
+                    As conscious traveling Paupers we must always be concerned
+                    about our dear Mother Earth. If you think about it, you
+                    travel across her face, and She is the{" "}
+                  </p>
+                  <a href="#">
+                    <h4 className="sec_h4">Fanny Spencer</h4>
+                  </a>
+                  <div className="star">
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star-half-o" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div className="media testimonial_item">
+                <img
+                  className="rounded-circle"
+                  src="image/testtimonial-1.jpg"
+                  alt
+                />
+                <div className="media-body">
+                  <p>
+                    As conscious traveling Paupers we must always be concerned
+                    about our dear Mother Earth. If you think about it, you
+                    travel across her face, and She is the{" "}
+                  </p>
+                  <a href="#">
+                    <h4 className="sec_h4">Fanny Spencer</h4>
+                  </a>
+                  <div className="star">
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star-half-o" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div className="media testimonial_item">
+                <img
+                  className="rounded-circle"
+                  src="image/testtimonial-1.jpg"
+                  alt
+                />
+                <div className="media-body">
+                  <p>
+                    As conscious traveling Paupers we must always be concerned
+                    about our dear Mother Earth. If you think about it, you
+                    travel across her face, and She is the{" "}
+                  </p>
+                  <a href="#">
+                    <h4 className="sec_h4">Fanny Spencer</h4>
+                  </a>
+                  <div className="star">
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star-half-o" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div className="media testimonial_item">
+                <img
+                  className="rounded-circle"
+                  src="image/testtimonial-1.jpg"
+                  alt
+                />
+                <div className="media-body">
+                  <p>
+                    As conscious traveling Paupers we must always be concerned
+                    about our dear Mother Earth. If you think about it, you
+                    travel across her face, and She is the{" "}
+                  </p>
+                  <a href="#">
+                    <h4 className="sec_h4">Fanny Spencer</h4>
+                  </a>
+                  <div className="star">
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-star-half-o" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="latest_blog_area section_gap">
+          <div className="container">
+            <div className="section_title text-center">
+              <h2 className="title_color">latest posts from blog</h2>
+              <p>
+                The French Revolution constituted for the conscience of the
+                dominant aristocratic class a fall from{" "}
+              </p>
+            </div>
+            <div className="row mb_30">
+              <div className="col-lg-4 col-md-6">
+                <div className="single-recent-blog-post">
+                  <div className="thumb">
+                    <img
+                      className="img-fluid"
+                      src="image/blog/blog-1.jpg"
+                      alt="post"
+                    />
+                  </div>
+                  <div className="details">
+                    <div className="tags">
+                      <a href="#" className="button_hover tag_btn">
+                        Travel
+                      </a>
+                      <a href="#" className="button_hover tag_btn">
+                        Life Style
+                      </a>
+                    </div>
+                    <a href="#">
+                      <h4 className="sec_h4">Low Cost Advertising</h4>
+                    </a>
+                    <p>
+                      Acres of Diamonds… you’ve read the famous story, or at
+                      least had it related to you. A farmer.
+                    </p>
+                    <h6 className="date title_color">31st January,2018</h6>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-6">
+                <div className="single-recent-blog-post">
+                  <div className="thumb">
+                    <img
+                      className="img-fluid"
+                      src="image/blog/blog-2.jpg"
+                      alt="post"
+                    />
+                  </div>
+                  <div className="details">
+                    <div className="tags">
+                      <a href="#" className="button_hover tag_btn">
+                        Travel
+                      </a>
+                      <a href="#" className="button_hover tag_btn">
+                        Life Style
+                      </a>
+                    </div>
+                    <a href="#">
+                      <h4 className="sec_h4">Creative Outdoor Ads</h4>
+                    </a>
+                    <p>
+                      Self-doubt and fear interfere with our ability to achieve
+                      or set goals. Self-doubt and fear are
+                    </p>
+                    <h6 className="date title_color">31st January,2018</h6>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-6">
+                <div className="single-recent-blog-post">
+                  <div className="thumb">
+                    <img
+                      className="img-fluid"
+                      src="image/blog/blog-3.jpg"
+                      alt="post"
+                    />
+                  </div>
+                  <div className="details">
+                    <div className="tags">
+                      <a href="#" className="button_hover tag_btn">
+                        Travel
+                      </a>
+                      <a href="#" className="button_hover tag_btn">
+                        Life Style
+                      </a>
+                    </div>
+                    <a href="#">
+                      <h4 className="sec_h4">
+                        It S Classified How To Utilize Free
+                      </h4>
+                    </a>
+                    <p>
+                      Why do you want to motivate yourself? Actually, just
+                      answering that question fully can{" "}
+                    </p>
+                    <h6 className="date title_color">31st January,2018</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {/*================ Recent Area  =================*/}
+        {/*================ start footer Area  =================*/}
+        <footer className="footer-area section_gap">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3  col-md-6 col-sm-6">
+                <div className="single-footer-widget">
+                  <h6 className="footer_title">About Agency</h6>
+                  <p>
+                    The world has become so fast paced that people don’t want to
+                    stand by reading a page of information, they would much
+                    rather look at a presentation and understand the message. It
+                    has come to a point{" "}
+                  </p>
+                </div>
+              </div>
+              <div className="col-lg-3 col-md-6 col-sm-6">
+                <div className="single-footer-widget">
+                  <h6 className="footer_title">Navigation Links</h6>
+                  <div className="row">
+                    <div className="col-4">
+                      <ul className="list_style">
+                        <li>
+                          <a href="#">Home</a>
+                        </li>
+                        <li>
+                          <a href="#">Feature</a>
+                        </li>
+                        <li>
+                          <a href="#">Services</a>
+                        </li>
+                        <li>
+                          <a href="#">Portfolio</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="col-4">
+                      <ul className="list_style">
+                        <li>
+                          <a href="#">Team</a>
+                        </li>
+                        <li>
+                          <a href="#">Pricing</a>
+                        </li>
+                        <li>
+                          <a href="#">Blog</a>
+                        </li>
+                        <li>
+                          <a href="#">Contact</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-3 col-md-6 col-sm-6">
+                <div className="single-footer-widget">
+                  <h6 className="footer_title">Newsletter</h6>
+                  <p>
+                    For business professionals caught between high OEM price and
+                    mediocre print and graphic output,{" "}
+                  </p>
+                  <div id="mc_embed_signup">
+                    <form
+                      target="_blank"
+                      action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&id=92a4423d01"
+                      method="get"
+                      className="subscribe_form relative"
+                    >
+                      <div className="input-group d-flex flex-row">
+                        <input
+                          name="EMAIL"
+                          placeholder="Email Address"
+                          onfocus="this.placeholder = ''"
+                          onblur="this.placeholder = 'Email Address '"
+                          required
+                          type="email"
+                        />
+                        <button className="btn sub-btn">
+                          <span className="lnr lnr-location" />
+                        </button>
+                      </div>
+                      <div className="mt-10 info" />
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-3 col-md-6 col-sm-6">
+                <div className="single-footer-widget instafeed">
+                  <h6 className="footer_title">InstaFeed</h6>
+                  <ul className="list_style instafeed d-flex flex-wrap">
+                    <li>
+                      <img src="image/instagram/Image-01.jpg" alt />
+                    </li>
+                    <li>
+                      <img src="image/instagram/Image-02.jpg" alt />
+                    </li>
+                    <li>
+                      <img src="image/instagram/Image-03.jpg" alt />
+                    </li>
+                    <li>
+                      <img src="image/instagram/Image-04.jpg" alt />
+                    </li>
+                    <li>
+                      <img src="image/instagram/Image-05.jpg" alt />
+                    </li>
+                    <li>
+                      <img src="image/instagram/Image-06.jpg" alt />
+                    </li>
+                    <li>
+                      <img src="image/instagram/Image-07.jpg" alt />
+                    </li>
+                    <li>
+                      <img src="image/instagram/Image-08.jpg" alt />
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div className="border_line" />
+            <div className="row footer-bottom d-flex justify-content-between align-items-center">
+              <p className="col-lg-8 col-sm-12 footer-text m-0">
+                {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
+                Copyright © All rights reserved | This template is made with{" "}
+                <i className="fa fa-heart-o" aria-hidden="true" /> by{" "}
+                <a href="https://colorlib.com" target="_blank">
+                  Colorlib
+                </a>
+                Link back to Colorlib can't be removed. Template is licensed
+                under CC BY 3.0.
+              </p>
+              <div className="col-lg-4 col-sm-12 footer-social">
+                <a href="#">
+                  <i className="fa fa-facebook" />
+                </a>
+                <a href="#">
+                  <i className="fa fa-twitter" />
+                </a>
+                <a href="#">
+                  <i className="fa fa-dribbble" />
+                </a>
+                <a href="#">
+                  <i className="fa fa-behance" />
+                </a>
+              </div>
+            </div>
+          </div>
         </footer>
-    </body>
-    </div>
+      </div>
+    </>
   );
 };
 

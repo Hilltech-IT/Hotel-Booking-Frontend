@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -39,7 +41,22 @@ const Register = () => {
 
       if (response.ok) {
         // Registration successful, you can redirect or perform other actions here
+        setFormData({
+          username: "",
+          email: "",
+          password: "",
+          first_name: "",
+          last_name: "",
+          id_number: "",
+          role: "",
+          phone_number: "",
+          gender: "",
+          date_of_birth: "2022-05-12",
+          country: "",
+          address: "",
+        });
         console.log("Registration successful!");
+        navigate("/");
       } else {
         // Handle registration errors here
         console.error("Registration failed");

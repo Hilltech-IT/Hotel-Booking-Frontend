@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     email: "",
     username: "",
@@ -30,6 +32,7 @@ const Login = () => {
       if (response.ok) {
         // Login successful, you can redirect or perform other actions here
         console.log("Login successful!");
+        navigate("/");
       } else {
         // Handle login errors here
         console.error("Login failed");

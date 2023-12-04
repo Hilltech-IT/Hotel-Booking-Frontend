@@ -12,9 +12,9 @@ const Register = () => {
     role: "",
     phone_number: "",
     gender: "",
-    date_of_birth: "",
-    address: "",
+    date_of_birth: "2022-05-12",
     country: "",
+    address: "",
   });
 
   const handleChange = (e) => {
@@ -51,7 +51,7 @@ const Register = () => {
 
   return (
     <div className="min-vh-100 py-5">
-      <Navbar/>
+      <Navbar />
       <div className="container bg-white rounded p-4 shadow mt-5">
         <div className="row justify-content-center">
           <div className="col-md-6">
@@ -99,17 +99,147 @@ const Register = () => {
                   required
                 />
               </div>
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                  <label className="form-check-label">
-                    <input type="checkbox" className="form-check-input" />{" "}
-                    Remember
-                  </label>
-                </div>
-                <div>
-                  <a href="/register">Login</a> |{" "}
-                  <a href="/reset-password">Reset Password</a>
-                </div>
+              {/* First Name */}
+              <div className="mb-3">
+                <label htmlFor="first_name" className="form-label">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="first_name"
+                  name="first_name"
+                  value={formData.first_name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              {/* Last Name */}
+              <div className="mb-3">
+                <label htmlFor="last_name" className="form-label">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="last_name"
+                  name="last_name"
+                  value={formData.last_name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              {/* ID Number */}
+              <div className="mb-3">
+                <label htmlFor="id_number" className="form-label">
+                  ID Number
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="id_number"
+                  name="id_number"
+                  value={formData.id_number}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              {/* Role */}
+              <div className="mb-3">
+                <label htmlFor="role" className="form-label">
+                  Role
+                </label>
+                <select
+                  className="form-control"
+                  id="role"
+                  name="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select Role</option>
+                  <option value="customer">Customer</option>
+                  {/* Add other role options */}
+                </select>
+              </div>
+              {/* Phone Number */}
+              <div className="mb-3">
+                <label htmlFor="phone_number" className="form-label">
+                  Phone Number
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="phone_number"
+                  name="phone_number"
+                  value={formData.phone_number}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              {/* Gender */}
+              <div className="mb-3">
+                <label htmlFor="gender" className="form-label">
+                  Gender
+                </label>
+                <select
+                  className="form-control"
+                  id="gender"
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  {/* Add other gender options */}
+                </select>
+              </div>
+              {/* Date of Birth */}
+              <div className="mb-3">
+                <label htmlFor="date_of_birth" className="form-label">
+                  Date of Birth
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="date_of_birth"
+                  name="date_of_birth"
+                  value={formData.date_of_birth}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              {/* Country */}
+              <div className="mb-3">
+                <label htmlFor="country" className="form-label">
+                  Country
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="country"
+                  name="country"
+                  value={formData.country}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              {/* Address */}
+              <div className="mb-3">
+                <label htmlFor="address" className="form-label">
+                  Address
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="address"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  required
+                />
               </div>
               <button type="submit" className="btn btn-primary">
                 Submit

@@ -3,8 +3,8 @@ import Navbar from "../components/Navbar";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
+    email: "",
     username: "",
-    password: "",
   });
 
   const handleChange = (e) => {
@@ -87,9 +87,9 @@ const Login = () => {
                   <a href="/reset-password">Reset Password</a>
                 </div>
               </div>
-                <button type="submit" className="btn btn-primary">
-                  Submit
-                </button>
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
             </form>
           </div>
         </div>

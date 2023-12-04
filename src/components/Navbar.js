@@ -14,7 +14,8 @@ const Navbar = () => {
         <nav className="navbar navbar-expand-lg navbar-light">
           {/* Brand and toggle get grouped for better mobile display */}
           <a className="navbar-brand logo_h" href="index.html">
-            <img src="image/Logo.png" alt />
+            HILLTECH BOOKINGS
+            <img src="" alt />
           </a>
           <button
             className="navbar-toggler"
@@ -69,9 +70,10 @@ const Navbar = () => {
                 <Link to="/register"  className="btn theme_btn button_hover">Sign Up</Link>
               </li>
               <li className="nav-zitem mt-3">
-                <a href="#" className="btn theme_btn button_hover">
+                {/* <a href="#" className="btn theme_btn button_hover">
                   Sign In
-                </a>
+                </a> */}
+                   <Link to="/register"  className="btn theme_btn button_hover">Sign In</Link>
               </li>
             </ul>
           </div>

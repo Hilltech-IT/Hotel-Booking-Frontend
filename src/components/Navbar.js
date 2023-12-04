@@ -37,9 +37,10 @@ const Navbar = () => {
           >
             <ul className="nav navbar-nav menu_nav ml-auto">
               <li className="nav-item active">
-                <a className="nav-link" href="index.html">
+                {/* <a className="nav-link" href="index.html">
                   Home
-                </a>
+                </a> */}
+                <Link to="/"  className="nav-link">Home</Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="about.html">
@@ -73,7 +74,7 @@ const Navbar = () => {
                 {/* <a href="#" className="btn theme_btn button_hover">
                   Sign In
                 </a> */}
-                   <Link to="/register"  className="btn theme_btn button_hover">Sign In</Link>
+                   <Link to="/login"  className="btn theme_btn button_hover">Sign In</Link>
               </li>
             </ul>
           </div>

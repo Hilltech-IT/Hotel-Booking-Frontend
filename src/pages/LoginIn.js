@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Navbar from "../components/Navbar";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -39,34 +40,58 @@ const Login = () => {
   };
 
   return (
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label>
-                Username:
+    <div className="min-vh-100 py-5">
+      <Navbar />
+      <div className="container bg-white rounded p-4 shadow mt-5">
+        <div className="row justify-content-center">
+          <div className="col-md-6">
+            <h2 className="text-center mb-4">Sign in or create an account</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label htmlFor="username" className="form-label">
+                  Username
+                </label>
                 <input
                   type="text"
+                  className="form-control"
+                  id="username"
                   name="username"
                   value={loginData.username}
                   onChange={handleChange}
+                  required
                 />
-              </label>
-            </div>
-            <div>
-              <label>
-                Password:
+              </div>
+              <div className="mb-3">
+                <label htmlFor="password" className="form-label">
+                  Password
+                </label>
                 <input
                   type="password"
+                  className="form-control"
+                  id="password"
                   name="password"
                   value={loginData.password}
                   onChange={handleChange}
+                  required
                 />
-              </label>
-            </div>
-            <button type="submit">Login</button>
-          </form>
+              </div>
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                  <label className="form-check-label">
+                    <input type="checkbox" className="form-check-input" />{" "}
+                    Remember
+                  </label>
+                </div>
+                <div>
+                  <a href="/register">Register</a> |{" "}
+                  <a href="/reset-password">Reset Password</a>
+                </div>
+              </div>
+                <button type="submit" className="btn btn-primary">
+                  Submit
+                </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

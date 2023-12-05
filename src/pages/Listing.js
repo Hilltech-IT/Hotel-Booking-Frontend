@@ -1,7 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import { useNavigate } from "react-router-dom";
+
 const Listing = () => {
+  const [listings, setListings] = useState([]);
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/properties/property-listings/")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && data.results && Array.isArray(data.results)) {
+          setListings(data.results);
+        } else {
+          console.error("Invalid data format received:", data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -67,11 +83,9 @@ const Listing = () => {
                 <div className="form-group mr-1">
                   <label htmlFor="children">Children:</label>
                   <select className="form-control ml-1" id="children">
-                    {/* Options for selecting number of children */}
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
-                    {/* Add more options if needed */}
                   </select>
                 </div>
                 <button type="submit" className="btn btn-primary">
@@ -80,8 +94,8 @@ const Listing = () => {
               </form>
             </div>
           </div>
-          {/* Example accommodation item (replace this with your accommodation cards) */}
-          <div
+          {/* Hotels Section*/}
+          {/* <div
             className="row"
             style={{
               backgroundColor: "#ffffff",
@@ -118,7 +132,51 @@ const Listing = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
+          {listings.map((hotel) => (
+            <div
+              className="row"
+              key={hotel.id}
+              style={{
+                backgroundColor: "#ffffff",
+                borderRadius: "15px",
+                boxShadow: "2px 4px 8px rgba(0.2, 0, 0, 0.2)",
+                padding: "20px",
+                marginBottom: "20px",
+              }}
+            >
+              <div className="col-md-6">
+                <div className="hotel_img">
+                  <img
+                    src={hotel.profile_image}
+                    alt={hotel.name}
+                    style={{ width: "100%", height: "auto" }}
+                  />
+                  <a href="#" className="btn btn-primary mt-2">
+                    View
+                  </a>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="description">
+                  <a href="#">
+                    <h4 className="sec_h4">{hotel.name}</h4>
+                  </a>
+                  <h5>
+                    ${hotel.cost}
+                    <small>/night</small>
+                  </h5>
+                  <p>Description: {hotel.description}</p>
+                  {/* Add other relevant information */}
+                  <p>
+                    Location: {hotel.location}, {hotel.city}, {hotel.country}
+                  </p>
+                  <p>Contact: {hotel.contact_number}</p>
+                  {/* Add other necessary fields */}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     </>

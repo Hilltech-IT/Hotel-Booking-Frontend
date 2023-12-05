@@ -2,13 +2,6 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    // <nav>
-    //   <ul>
-    //     <li><Link to="/">Home</Link></li>
-    //     <li><Link to="/about">About</Link></li>
-    //     <li><Link to="/services">Services</Link></li>
-    //     <li><Link to="/contact">Contact</Link></li>
-    //   </ul>
     <header className="header_area">
       <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light">
@@ -40,7 +33,9 @@ const Navbar = () => {
                 {/* <a className="nav-link" href="index.html">
                   Home
                 </a> */}
-                <Link to="/"  className="nav-link">Home</Link>
+                <Link to="/" className="nav-link">
+                  Home
+                </Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="about.html">
@@ -48,16 +43,7 @@ const Navbar = () => {
                 </a>
               </li>
               <li className="nav-item submenu dropdown">
-                <a
-                  href="#"
-                  className="nav-link dropdown-toggle"
-                  data-toggle="dropdown"
-                  role="button"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Propert Listing
-                </a>
+                <Link className="nav-link" to="/listing">Property Listing</Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="contact.html">
@@ -65,16 +51,14 @@ const Navbar = () => {
                 </a>
               </li>
               <li className="nav-item mt-3">
-                {/* <a href="#" className="btn theme_btn button_hover">
+                <Link to="/register" className="btn theme_btn button_hover">
                   Sign Up
-                </a> */}
-                <Link to="/register"  className="btn theme_btn button_hover">Sign Up</Link>
+                </Link>
               </li>
               <li className="nav-zitem mt-3">
-                {/* <a href="#" className="btn theme_btn button_hover">
+                <Link to="/login" className="btn theme_btn button_hover">
                   Sign In
-                </a> */}
-                   <Link to="/login"  className="btn theme_btn button_hover">Sign In</Link>
+                </Link>
               </li>
             </ul>
           </div>

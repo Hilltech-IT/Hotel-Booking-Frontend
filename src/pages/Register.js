@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -59,10 +60,12 @@ const Register = () => {
         navigate("/");
       } else {
         // Handle registration errors here
-        console.error("Registration failed");
+        const errorData = await response.json(); // Assuming the server sends error messages in JSON format
+        setError(errorData.message); // Update error state with the error message received from the server
       }
     } catch (error) {
       console.error("Error occurred:", error);
+      setError("An error occurred. Please try again."); // Update error state in case of a network or other errors
     }
   };
 
@@ -258,6 +261,7 @@ const Register = () => {
                   required
                 />
               </div>
+              {error && <div className="alert alert-danger">{error}</div>} {/* Display error message if exists */}
               <button type="submit" className="btn btn-primary">
                 Submit
               </button>

@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <>
       <div>
-        <Navbar/>
+        <Navbar />
         <section className="banner_area">
           <div className="booking_table d_flex align-items-center">
             <div
@@ -18,13 +18,14 @@ const Home = () => {
             <div className="container">
               <div className="banner_content text-center">
                 <h6>Away from monotonous life</h6>
-                <h2>Relax Your Mind</h2>
-                <p>
-                  If you are looking at blank cassettes on the web, you may be
-                  very confused at the
-                  <br /> difference in price. You may see some for as low as
-                  $.17 each.
-                </p>
+                <h4>Search and Discover: Your Gateway to Hotel Exploration</h4>
+                {/* <p>
+                  Welcome to our hotel booking app, where comfort meets
+                  convenience!
+                  <br />
+                  Discover a world of seamless travel planning at your
+                  fingertips
+                </p> */}
                 <a href="#" className="btn theme_btn button_hover">
                   Get Started
                 </a>
@@ -34,15 +35,15 @@ const Home = () => {
           <div className="hotel_booking_area position">
             <div className="container">
               <div className="hotel_booking_table">
-                <div className="col-md-3">
+                {/* <div className="col-md-3">
                   <h2>
                     Book
                     <br /> Your Room
                   </h2>
-                </div>
-                <div className="col-md-9">
+                </div> */}
+                <div className="col-md-12">
                   <div className="boking_table">
-                    <div className="row">
+                    {/* <div className="row">
                       <div className="col-md-4">
                         <div className="book_tabel_item">
                           <div className="form-group">
@@ -120,6 +121,80 @@ const Home = () => {
                           </a>
                         </div>
                       </div>
+                    </div> */}
+                    <div
+                      className="row mb-5"
+                      style={{
+                        backgroundColor: "#fffff",
+                        borderRadius: "15px",
+                        boxShadow: "2px 4px 8px rgba(0.2, 0, 0, 0.2)",
+                        padding: "10px",
+                      }}
+                    >
+                      <div className="col-md-12">
+                        <form className="form-inline">
+                          <div className="form-group mr-1">
+                            <input
+                              type="text"
+                              className="form-control ml-1"
+                              id="location"
+                              placeholder="location"
+                            />
+                          </div>
+                          <div className="form-group mr-1">
+                            <label htmlFor="checkIn">In:</label>
+                            <input
+                              type="date"
+                              className="form-control ml-1"
+                              id="checkIn"
+                              placeholder="Enter location"
+                            />
+                          </div>
+                          <div className="form-group mr-2">
+                            <label htmlFor="checkOut">out:</label>
+                            <input
+                              type="date"
+                              className="form-control ml-1"
+                              id="checkOut"
+                            />
+                          </div>
+                          <div className="form-group mr-1">
+                            <label htmlFor="rooms">Rooms:</label>
+                            <select className="form-control ml-1" id="rooms">
+                              {/* Options for selecting number of rooms */}
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              {/* Add more options if needed */}
+                            </select>
+                          </div>
+                          <div className="form-group mr-1">
+                            <label htmlFor="adults">Adults:</label>
+                            <select className="form-control ml-1" id="adults">
+                              {/* Options for selecting number of adults */}
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              {/* Add more options if needed */}
+                            </select>
+                          </div>
+                          <div className="form-group mr-1">
+                            <label htmlFor="children">Children:</label>
+                            <select className="form-control ml-1" id="children">
+                              {/* Options for selecting number of children */}
+                              <option value="0">0</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              {/* Add more options if needed */}
+                            </select>
+                          </div>
+                          <div className="form-group mt-2">
+                            <button type="submit" className="btn btn-primary">
+                              Search
+                            </button>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -132,7 +207,7 @@ const Home = () => {
         <section className="accomodation_area section_gap">
           <div className="container">
             <div className="section_title text-center">
-              <h2 className="title_color">Hotel  Recommendations</h2>
+              <h2 className="title_color">Hotel Recommendations</h2>
               <p>
                 We all live in an age that belongs to the young at heart. Life
                 that is becoming extremely fast,{" "}

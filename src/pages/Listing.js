@@ -3,6 +3,21 @@ import Navbar from "../components/Navbar";
 
 const Listing = () => {
   const [listings, setListings] = useState([]);
+  const [cityFilter, setCityFilter] = useState("");
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    // Filter the listings based on the entered city
+    const filteredListings = listings.filter(
+      (hotel) =>
+        cityFilter === "" ||
+        hotel.city.toLowerCase().includes(cityFilter.toLowerCase())
+    );
+
+    setListings(filteredListings);
+  };
+
   useEffect(() => {
     fetch("http://127.0.0.1:8000/properties/property-listings/")
       .then((response) => response.json())
@@ -34,13 +49,15 @@ const Listing = () => {
             }}
           >
             <div className="col-md-12">
-              <form className="form-inline">
+              <form className="form-inline" onSubmit={handleFormSubmit}>
                 <div className="form-group mr-1">
                   <input
                     type="text"
                     className="form-control ml-2"
                     id="location"
                     placeholder="location"
+                    value={cityFilter}
+                    onChange={(e) => setCityFilter(e.target.value)}
                   />
                 </div>
                 <div className="form-group mr-1">

@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  // country
+  const [countries, setCountries] = useState([]);
+  const [countryData, setCountryData] = useState({ country: "" });
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -19,6 +22,23 @@ const Register = () => {
     country: "",
     address: "",
   });
+  useEffect(() => {
+    // Fetch list of countries from REST Countries API
+    fetch("https://restcountries.com/v3.1/all")
+      .then((response) => response.json())
+      .then((data) => {
+        const countryNames = data.map((country) => country.name.common);
+        setCountries(countryNames);
+      })
+      .catch((error) => {
+        console.error("Error fetching countries:", error);
+      });
+  }, []);
+
+  const handleCountryChange = (event) => {
+    const { name, value } = event.target;
+    setCountryData({ ...countryData, [name]: value });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -81,6 +101,8 @@ const Register = () => {
         <div className="row justify-content-center">
           <div className="col-md-6">
             <h2 className="text-center mb-4">Sign in or create an account</h2>
+            {error && <div className="alert alert-danger">{error}</div>}{" "}
+            {/* Display error message if exists */}
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="username" className="form-label">
@@ -237,7 +259,7 @@ const Register = () => {
                 />
               </div>
               {/* Country */}
-              <div className="mb-3">
+              {/* <div className="mb-3">
                 <label htmlFor="country" className="form-label">
                   Country
                 </label>
@@ -250,6 +272,27 @@ const Register = () => {
                   onChange={handleChange}
                   required
                 />
+              </div> */}
+              <div className="mb-3">
+                <label htmlFor="country" className="form-label">
+                  Country
+                </label>
+                <select
+                  className="form-select"
+                  id="country"
+                  name="country"
+                  value={countryData.country}
+                  onChange={ handleCountryChange }
+                  required
+                >
+                  <option value="">Select a country</option>
+                  {/* Populate options with fetched countries */}
+                  {countries.map((country, index) => (
+                    <option key={index} value={country}>
+                      {country}
+                    </option>
+                  ))}
+                </select>
               </div>
               {/* Address */}
               <div className="mb-3">
@@ -266,8 +309,6 @@ const Register = () => {
                   required
                 />
               </div>
-              {error && <div className="alert alert-danger">{error}</div>}{" "}
-              {/* Display error message if exists */}
               <button type="submit" className="btn btn-primary">
                 Submit
               </button>

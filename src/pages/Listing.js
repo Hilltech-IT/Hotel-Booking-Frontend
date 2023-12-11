@@ -14,7 +14,6 @@ const Listing = () => {
         cityFilter === "" ||
         hotel.city.toLowerCase().includes(cityFilter.toLowerCase())
     );
-
     setListings(filteredListings);
   };
 
@@ -112,44 +111,6 @@ const Listing = () => {
             </div>
           </div>
           {/* Hotels Section*/}
-          {/* <div
-            className="row"
-            style={{
-              backgroundColor: "#ffffff",
-              borderRadius: "15px",
-              boxShadow: "2px 4px 8px rgba(0.2, 0, 0, 0.2)",
-              padding: "20px",
-            }}
-          >
-            <div className="col-md-6">
-              <div className="accomodation_item">
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="hotel_img">
-                      <img src="image/room1.jpg" alt="Double Deluxe Room" />
-                      <a href="#" className="btn theme_btn button_hover">
-                        Book Now
-                      </a>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="description">
-                      <a href="#">
-                        <h4 className="sec_h4">Double Deluxe Room</h4>
-                      </a>
-                      <h5>
-                        $250<small>/night</small>
-                      </h5>
-                      <p>
-                        Description: The Double Deluxe Room offers spacious
-                        accommodation with modern amenities.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
           {listings.map((hotel) => (
             <div
               className="row"

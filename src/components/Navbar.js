@@ -1,6 +1,28 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect} from "react";
 
 const Navbar = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const loggedInUser = sessionStorage.getItem("user");
+    if (loggedInUser) {
+      setUser(JSON.parse(loggedInUser));
+    }
+  }, []);
+
+  const getLoggedInUserName = () => {
+    return user ? user.username : "Guest"; // Assuming 'username' is the user's name property
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("user");
+    setUser(null);
+    // Additional logic: Redirect, clear local storage, or perform other logout actions
+  };
+
+  const loggedInUserName = getLoggedInUserName();
+
   return (
     <header className="header_area">
       <div className="container">
@@ -43,7 +65,9 @@ const Navbar = () => {
                 </a>
               </li>
               <li className="nav-item submenu dropdown">
-                <Link className="nav-link" to="/listing">Property Listing</Link>
+                <Link className="nav-link" to="/listing">
+                  Property Listing
+                </Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">
@@ -61,6 +85,24 @@ const Navbar = () => {
                 </Link>
               </li>
             </ul>
+            <div className="nav-item dropdown">
+              <span
+                className="nav-link dropdown-toggle"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i className="fa fa-user-circle-o" aria-hidden="true" />
+                {loggedInUserName}
+              </span>
+              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <Link className="dropdown-item" to="#" onClick={handleLogout}>
+                  Sign Out
+                </Link>
+              </div>
+            </div>
           </div>
         </nav>
       </div>

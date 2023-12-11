@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
   const [loginData, setLoginData] = useState({
     email: "",
     username: "",
@@ -15,6 +16,11 @@ const Login = () => {
       ...loginData,
       [name]: value,
     });
+  };
+
+  //user into session
+  const handleSessionStorage = (userData) => {
+    sessionStorage.setItem("user", JSON.stringify(userData));
   };
 
   const handleSubmit = async (e) => {
@@ -31,14 +37,18 @@ const Login = () => {
 
       if (response.ok) {
         // Login successful, you can redirect or perform other actions here
+        const responseData = await response.json(); // Parse the response JSON
+        handleSessionStorage(responseData);
         console.log("Login successful!");
         navigate("/");
       } else {
-        // Handle login errors here
-        console.error("Login failed");
+        // Handle registration errors here
+        const errorData = await response.json(); // Assuming the server sends error messages in JSON format
+        setError(errorData.message); // Update error state with the error message received from the server
       }
     } catch (error) {
       console.error("Error occurred:", error);
+      setError("An error occurred. Please try again."); // Update error state in case of a network or other errors
     }
   };
 
@@ -49,6 +59,8 @@ const Login = () => {
         <div className="row justify-content-center">
           <div className="col-md-6">
             <h2 className="text-center mb-4">Sign in or create an account</h2>
+            {error && <div className="alert alert-danger">{error}</div>}{" "}
+            {/* Display error message if exists */}
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="username" className="form-label">

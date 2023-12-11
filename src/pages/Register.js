@@ -15,7 +15,7 @@ const Register = () => {
     role: "",
     phone_number: "",
     gender: "",
-    date_of_birth: "2022-05-12",
+    date_of_birth: "",
     country: "",
     address: "",
   });
@@ -26,6 +26,10 @@ const Register = () => {
       ...formData,
       [name]: value,
     });
+  };
+
+  const handleSessionStorage = (userData) => {
+    sessionStorage.setItem("user", JSON.stringify(userData));
   };
 
   const handleSubmit = async (e) => {
@@ -41,6 +45,7 @@ const Register = () => {
       });
 
       if (response.ok) {
+        handleSessionStorage(formData);
         // Registration successful, you can redirect or perform other actions here
         setFormData({
           username: "",
@@ -222,7 +227,7 @@ const Register = () => {
                   Date of Birth
                 </label>
                 <input
-                  type="text"
+                  type="date"
                   className="form-control"
                   id="date_of_birth"
                   name="date_of_birth"
@@ -261,7 +266,8 @@ const Register = () => {
                   required
                 />
               </div>
-              {error && <div className="alert alert-danger">{error}</div>} {/* Display error message if exists */}
+              {error && <div className="alert alert-danger">{error}</div>}{" "}
+              {/* Display error message if exists */}
               <button type="submit" className="btn btn-primary">
                 Submit
               </button>

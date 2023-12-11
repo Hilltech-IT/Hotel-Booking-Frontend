@@ -39,15 +39,19 @@ const Login = () => {
         // Login successful, you can redirect or perform other actions here
         const responseData = await response.json(); // Parse the response JSON
         handleSessionStorage(responseData);
-        console.log("Login successful!");
+        // console.log("Login successful!");
         navigate("/");
+      } else if (response.status === 401) {
+        setError(
+          "Invalid credentials. Please check your username/email and password."
+        );
       } else {
         // Handle registration errors here
-        const errorData = await response.json(); // Assuming the server sends error messages in JSON format
-        setError(errorData.message); // Update error state with the error message received from the server
+        const errorData = await response.json();
+        setError(errorData.message || "An error occurred. Please try again.");
       }
     } catch (error) {
-      console.error("Error occurred:", error);
+      // console.error("Error occurred:", error);
       setError("An error occurred. Please try again."); // Update error state in case of a network or other errors
     }
   };
@@ -60,7 +64,7 @@ const Login = () => {
           <div className="col-md-6">
             <h2 className="text-center mb-4">Sign in or create an account</h2>
             {error && <div className="alert alert-danger">{error}</div>}{" "}
-            {/* Display error message if exists */}
+            {/* Display error message if it exists */}
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="username" className="form-label">

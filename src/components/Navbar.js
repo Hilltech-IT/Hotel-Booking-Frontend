@@ -28,7 +28,7 @@ const Navbar = () => {
       <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light">
           {/* Brand and toggle get grouped for better mobile display */}
-          <a className="navbar-brand logo_h" href="index.html">
+          <a className="navbar-brand logo_h" href="">
             HILLTECH BOOKINGS
             <img src="" alt />
           </a>

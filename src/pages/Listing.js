@@ -4,6 +4,39 @@ import Navbar from "../components/Navbar";
 const Listing = () => {
   const [listings, setListings] = useState([]);
   const [cityFilter, setCityFilter] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  
+  const handleInputChange = async (e) => {
+    const value = e.target.value;
+    setCityFilter(value);
+
+    // Make an API request to retrieve country data
+    try {
+      const response = await fetch("https://restcountries.com/v3.1/all");
+
+      if (response.ok) {
+        const data = await response.json();
+        const countryNames = data.map((country) => country.name.common);
+        setSuggestions(
+          countryNames.filter((country) =>
+            country.toLowerCase().startsWith(value.toLowerCase())
+          )
+        );
+      } else {
+        throw new Error("Failed to fetch data");
+      }
+    } catch (error) {
+      console.error("Error fetching country suggestions:", error);
+    }
+  };
+
+  const handleSuggestionClick = (value) => {
+    // Set the selected suggestion as the input value
+    setCityFilter(value);
+    // Clear the suggestions
+    setSuggestions([]);
+  };
+  //end of city search
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -12,7 +45,7 @@ const Listing = () => {
     const filteredListings = listings.filter(
       (hotel) =>
         cityFilter === "" ||
-        hotel.city.toLowerCase().includes(cityFilter.toLowerCase())
+        hotel.country.toLowerCase().includes(cityFilter.toLowerCase())
     );
     setListings(filteredListings);
   };
@@ -37,7 +70,6 @@ const Listing = () => {
       <Navbar />
       <section className="accomodation_area section_gap">
         <div className="container">
-          {/* Search bar for filtering */}
           <div
             className="row mb-5"
             style={{
@@ -52,12 +84,34 @@ const Listing = () => {
                 <div className="form-group mr-1">
                   <input
                     type="text"
-                    className="form-control ml-2"
+                    className="form-control"
                     id="location"
-                    placeholder="location"
+                    placeholder="Location"
                     value={cityFilter}
-                    onChange={(e) => setCityFilter(e.target.value)}
+                    onChange={handleInputChange}
                   />
+                  {/* Display suggestions */}
+                  {suggestions.length > 0 && cityFilter !== "" && (
+                    <select
+                      className="form-control position-absolute suggestion-box"
+                      style={{ zIndex: 100, top: "100%", left: 0 }}
+                      size={suggestions.length > 5 ? 5 : suggestions.length}
+                      onBlur={() => setSuggestions([])} // Hide suggestions on blur (when focus is lost)
+                    >
+                      {suggestions.map((suggestion, index) => (
+                        <option
+                          key={index}
+                          value={suggestion}
+                          onClick={() => handleSuggestionClick(suggestion)} // Handle suggestion click
+                        >
+                          <strong>
+                            {suggestion.substring(0, cityFilter.length)}
+                          </strong>
+                          {suggestion.substring(cityFilter.length)}
+                        </option>
+                      ))}
+                    </select>
+                  )}
                 </div>
                 <div className="form-group mr-1">
                   <label htmlFor="checkIn">In:</label>

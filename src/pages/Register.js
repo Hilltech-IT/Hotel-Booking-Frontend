@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Register = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+
   // country
   const [countries, setCountries] = useState([]);
   const [countryData, setCountryData] = useState({ country: "" });
@@ -22,6 +23,8 @@ const Register = () => {
     country: "",
     address: "",
   });
+
+
   useEffect(() => {
     // Fetch list of countries from REST Countries API
     fetch("https://restcountries.com/v3.1/all")
@@ -35,10 +38,16 @@ const Register = () => {
       });
   }, []);
 
+
   const handleCountryChange = (event) => {
-    const { name, value } = event.target;
-    setCountryData({ ...countryData, [name]: value });
+    const { value } = event.target;
+    setCountryData({ country: value }); // Update countryData directly with the selected country value
+    setFormData({
+      ...formData,
+      country: value, // Update the country value in the form data
+    });
   };
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,10 +57,12 @@ const Register = () => {
     });
   };
 
+
   const handleSessionStorage = (userData) => {
     sessionStorage.setItem("user", JSON.stringify(userData));
   };
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -61,7 +72,11 @@ const Register = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        // body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          country: countryData.country, // Include the selected country value from countryData
+        }),
       });
 
       if (response.ok) {
@@ -86,7 +101,7 @@ const Register = () => {
       } else {
         // Handle registration errors here
         const errorData = await response.json(); // Assuming the server sends error messages in JSON format
-        setError(errorData.message); // Update error state with the error message received from the server
+        setError(errorData.message || "An error occurred. Please try again.");
       }
     } catch (error) {
       console.error("Error occurred:", error);
@@ -282,7 +297,7 @@ const Register = () => {
                   id="country"
                   name="country"
                   value={countryData.country}
-                  onChange={ handleCountryChange }
+                  onChange={handleCountryChange}
                   required
                 >
                   <option value="">Select a country</option>

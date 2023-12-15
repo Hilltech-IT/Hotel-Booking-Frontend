@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
+import Home from "./Home";
+import { useLocation,Link } from "react-router-dom";
+import Rooms from "./Rooms";
 
 const Listing = () => {
+  //home
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const countryFilter = queryParams.get("country") || "";
+
   const [listings, setListings] = useState([]);
   const [cityFilter, setCityFilter] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  
+
   const handleInputChange = async (e) => {
     const value = e.target.value;
     setCityFilter(value);
@@ -63,7 +71,7 @@ const Listing = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [countryFilter]);
 
   return (
     <>
@@ -184,9 +192,12 @@ const Listing = () => {
                     alt={hotel.name}
                     style={{ width: "100%", height: "auto" }}
                   />
-                  <a href="#" className="btn btn-primary mt-2">
+                  {/* <a href="#" className="btn btn-primary mt-2">
                     View
-                  </a>
+                  </a> */}
+                    <Link to="/rooms" className="btn btn-primary mt-2">
+                  View
+                </Link>
                 </div>
               </div>
               <div className="col-md-6">

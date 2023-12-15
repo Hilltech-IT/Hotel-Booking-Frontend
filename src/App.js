@@ -5,6 +5,8 @@ import About from './pages/About';
 import Register from './pages/Register';
 import Login from './pages/LoginIn';
 import Listing from './pages/Listing';
+import Rooms from './pages/Rooms';
+
 
 
 function App() {
@@ -16,6 +18,7 @@ function App() {
       <Route path="/register" element={ <Register/> } />
       <Route path="/login" element={ <Login/> } />
       <Route path="/listing" element={ <Listing /> } />
+      <Route path="/rooms" element={ <Rooms /> } />
       </Routes>
     </div>
   );

@@ -1,6 +1,5 @@
 import Navbar from "../components/Navbar";
 import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
 
 const Rooms = () => {
   const [roomsData, setRoomsData] = useState([]);
@@ -23,7 +22,7 @@ const Rooms = () => {
 
     fetchData();
   }, []); // Empty dependency array ensures this runs only once on component mount
-  const placeholderImageUrl = "https://via.placeholder.com/300";
+
 
   return (
     <div>

@@ -59,7 +59,7 @@ const Listing = () => {
   };
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/properties/property-listings/")
+    fetch("http://127.0.0.1:8000/properties/api/property-listings/")
       .then((response) => response.json())
       .then((data) => {
         if (data && data.results && Array.isArray(data.results)) {

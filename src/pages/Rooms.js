@@ -1,6 +1,30 @@
 import Navbar from "../components/Navbar";
+import { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 
 const Rooms = () => {
+  const [roomsData, setRoomsData] = useState([]);
+  useEffect(() => {
+    // Fetch data from the API endpoint
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:8000/properties/api/rooms/"
+        );
+        const data = await response.json();
+        if (data && data.results) {
+          setRoomsData(data.results);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        // Handle error scenarios as needed
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures this runs only once on component mount
+  const placeholderImageUrl = "https://via.placeholder.com/300";
+
   return (
     <div>
       <Navbar />
@@ -23,82 +47,38 @@ const Rooms = () => {
           </div>
         </div>
       </section>
-      {/*================Breadcrumb Area =================*/}
-      {/*================ Accomodation Area  =================*/}
       <section className="accomodation_area section_gap">
         <div className="container">
+          {/* Your existing section_title */}
           <div className="section_title text-center">
-            <h2 className="title_color">Accomodation</h2>
-            <p>
-              We all live in an age that belongs to the young at heart. Life
-              that is becoming extremely fast,
-            </p>
+            <h2 className="title_color">Rooms</h2>
           </div>
           <div className="row mb_30">
-            <div className="col-lg-3 col-sm-6">
-              <div className="accomodation_item text-center">
-                <div className="hotel_img">
-                  <img src="image/room1.jpg" alt />
-                  <a href="#" className="btn theme_btn button_hover">
-                    Book Now
+            {/* Loop through roomsData to display room information */}
+            {roomsData.map((room) => (
+              <div className="col-lg-3 col-sm-6" key={room.id}>
+                <div className="accomodation_item text-center card rounded">
+                  <div className="hotel_img">
+                    {/* Use placeholder image URL directly in src */}
+                    <img src="image/room1.jpg" alt="Placeholder" />
+                    <a href="#" className="btn theme_btn button_hover">
+                      Book Now
+                    </a>
+                  </div>
+                  <a href="#">
+                    <h4 className="sec_h4">{room.room_type}</h4>
                   </a>
+                  <h5>
+                    ${room.rate}
+                    <small>/night</small>
+                  </h5>
+                  {/* You can display other room details here */}
+                  <p>Amenities: {room.amenities}</p>
+                  <p>View: {room.view}</p>
+                  {/* Add more details as needed */}
                 </div>
-                <a href="#">
-                  <h4 className="sec_h4">Double Deluxe Room</h4>
-                </a>
-                <h5>
-                  $250<small>/night</small>
-                </h5>
               </div>
-            </div>
-            <div className="col-lg-3 col-sm-6">
-              <div className="accomodation_item text-center">
-                <div className="hotel_img">
-                  <img src="image/room2.jpg" alt />
-                  <a href="#" className="btn theme_btn button_hover">
-                    Book Now
-                  </a>
-                </div>
-                <a href="#">
-                  <h4 className="sec_h4">Single Deluxe Room</h4>
-                </a>
-                <h5>
-                  $200<small>/night</small>
-                </h5>
-              </div>
-            </div>
-            <div className="col-lg-3 col-sm-6">
-              <div className="accomodation_item text-center">
-                <div className="hotel_img">
-                  <img src="image/room3.jpg" alt />
-                  <a href="#" className="btn theme_btn button_hover">
-                    Book Now
-                  </a>
-                </div>
-                <a href="#">
-                  <h4 className="sec_h4">Honeymoon Suit</h4>
-                </a>
-                <h5>
-                  $750<small>/night</small>
-                </h5>
-              </div>
-            </div>
-            <div className="col-lg-3 col-sm-6">
-              <div className="accomodation_item text-center">
-                <div className="hotel_img">
-                  <img src="image/room4.jpg" alt />
-                  <a href="#" className="btn theme_btn button_hover">
-                    Book Now
-                  </a>
-                </div>
-                <a href="#">
-                  <h4 className="sec_h4">Economy Double</h4>
-                </a>
-                <h5>
-                  $200<small>/night</small>
-                </h5>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

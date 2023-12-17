@@ -1,28 +1,48 @@
-import Navbar from "../components/Navbar";
 import { useState, useEffect } from "react";
+import Navbar from "../components/Navbar";
+import { useParams } from "react-router-dom";
 
 const Rooms = () => {
   const [roomsData, setRoomsData] = useState([]);
+  const { propertyname } = useParams();
+  
   useEffect(() => {
-    // Fetch data from the API endpoint
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "http://127.0.0.1:8000/properties/api/rooms/"
-        );
+        const encodedPropertyName = encodeURIComponent(propertyname);
+        const response = await fetch(`http://127.0.0.1:8000/properties/api/rooms/?search=${encodedPropertyName}`);
         const data = await response.json();
         if (data && data.results) {
           setRoomsData(data.results);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
-        // Handle error scenarios as needed
+        console.error("Error fetching rooms:", error);
       }
     };
 
     fetchData();
-  }, []); // Empty dependency array ensures this runs only once on component mount
+  }, [propertyname]);
 
+  // useEffect(() => {
+  //   // Fetch data from the API endpoint
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `http://127.0.0.1:8000/properties/api/rooms/?search=${propertyname}/`
+  //       );
+  //       const data = await response.json();
+  //       if (data && data.results) {
+  //         setRoomsData(data.results);
+  //         console.log(roomsData);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //       // Handle error scenarios as needed
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [propertyname]); // Empty dependency array ensures this runs only once on component mount
 
   return (
     <div>
@@ -59,7 +79,7 @@ const Rooms = () => {
                 <div className="accomodation_item text-center card rounded">
                   <div className="hotel_img">
                     {/* Use placeholder image URL directly in src */}
-                    <img src="image/room1.jpg" alt="Placeholder" />
+                    <img src="/image/room1.jpg" alt="Placeholder" />
                     <a href="#" className="btn theme_btn button_hover">
                       Book Now
                     </a>

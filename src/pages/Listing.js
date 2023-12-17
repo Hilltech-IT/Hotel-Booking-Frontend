@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import Home from "./Home";
-import { useLocation,Link } from "react-router-dom";
-import Rooms from "./Rooms";
+import { useLocation, Link } from "react-router-dom";
 
 const Listing = () => {
   //home
@@ -195,9 +193,12 @@ const Listing = () => {
                   {/* <a href="#" className="btn btn-primary mt-2">
                     View
                   </a> */}
-                    <Link to="/rooms" className="btn btn-primary mt-2">
-                  View
-                </Link>
+                  <Link
+                    to={`/rooms/${hotel.name}`}
+                    className="btn btn-primary mt-2"
+                  >
+                    View
+                  </Link>
                 </div>
               </div>
               <div className="col-md-6">

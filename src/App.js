@@ -1,11 +1,13 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Register from "./pages/Register";
 import Login from "./pages/LoginIn";
 import Listing from "./pages/Listing";
 import Rooms from "./pages/Rooms";
+
+
 
 function App() {
   return (

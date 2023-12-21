@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import { useLocation, Link } from "react-router-dom";
+import { HotelContext } from "../context/HotelContext";
 
 const Listing = () => {
   //home
@@ -11,6 +12,14 @@ const Listing = () => {
   const [listings, setListings] = useState([]);
   const [cityFilter, setCityFilter] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+
+  const { selectHotel, selectedHotel } = useContext(HotelContext);
+
+  const handleSelectHotel = (hotelId) => {
+    console.log(`Selected Hotel ID: ${hotelId}`)
+    selectHotel({"hotelId": hotelId})
+  }
+
 
   const handleInputChange = async (e) => {
     const value = e.target.value;
@@ -196,6 +205,7 @@ const Listing = () => {
                   <Link
                     to={`/rooms/${hotel.name}`}
                     className="btn btn-primary mt-2"
+                    onClick={()=> handleSelectHotel(hotel.id) }
                   >
                     View
                   </Link>

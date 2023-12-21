@@ -1,10 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
+import { HotelContext } from "../context/HotelContext";
 
 const Rooms = () => {
   const [roomsData, setRoomsData] = useState([]);
   const { propertyname } = useParams();
+  const [checkinDate, setCheckinDate] = useState(null);
+  const [checkoutDate, setCheckoutDate] = useState(null);
+  const [roomsBooked, setRoomsBooked] = useState(null);
+  const [showForm, setShowForm] = useState(false);
   
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +27,28 @@ const Rooms = () => {
 
     fetchData();
   }, [propertyname]);
+
+  const { selectHotel, selectedHotel, selectRoom, selectedRoom } = useContext(HotelContext);
+  console.log(selectedHotel)
+
+  const handleRoomSelection = (propertyId, roomId, roomType, chargePerNight, roomsCount ) => {
+    localStorage.setItem("roomObj", JSON.stringify({
+      "propertyId": propertyId, 
+      "roomId": roomId,
+      "roomType": roomType,
+      "chargePerNight": chargePerNight,
+      "roomsCount": roomsCount
+    }))
+  }
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+
+    if (checkinDate && checkoutDate && roomsBooked) {
+      console.log(`Room: , Checkin Date: ${checkinDate}, Checkout Date: ${checkoutDate}, Rooms Booked: ${roomsBooked}`)
+    }
+
+  }
 
   // useEffect(() => {
   //   // Fetch data from the API endpoint
@@ -80,20 +107,27 @@ const Rooms = () => {
                   <div className="hotel_img">
                     {/* Use placeholder image URL directly in src */}
                     <img src="/image/room1.jpg" alt="Placeholder" />
-                    <a href="#" className="btn theme_btn button_hover">
+                    {room.rooms_count &&
+                      <button onClick={() => handleRoomSelection(
+                        room.property, room.id, room.room_type, room.rate, room.rooms_count
+                      )} className="btn theme_btn button_hover">
                       Book Now
-                    </a>
+                    </button>
+
+                    }
+
                   </div>
                   <a href="#">
                     <h4 className="sec_h4">{room.room_type}</h4>
                   </a>
-                  <h5>
-                    ${room.rate}
+                  <h6>
+                    KES.{room.rate}
                     <small>/night</small>
-                  </h5>
+                  </h6>
                   {/* You can display other room details here */}
                   <p>Amenities: {room.amenities}</p>
                   <p>View: {room.view}</p>
+                  <p>Available Rooms: {room.rooms_count}</p>
                   {/* Add more details as needed */}
                 </div>
               </div>
@@ -114,71 +148,75 @@ const Rooms = () => {
             </div>
             <div className="col-md-9">
               <div className="boking_table">
+                <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-md-4">
                     <div className="book_tabel_item">
                       <div className="form-group">
-                        <div className="input-group date" id="datetimepicker11">
+                        <div className="input-group" id="datetimepicker11">
                           <input
-                            type="text"
+                            type="date"
+                            id="checkin_date"
+                            name="checkin_date"
                             className="form-control"
-                            placeholder="Arrival Date"
+                            placeholder="Checkin Date"
+                            onChange={(e) => setCheckinDate(e.target.value)}
+                            required
                           />
-                          <span className="input-group-addon">
-                            <i className="fa fa-calendar" aria-hidden="true" />
-                          </span>
+                          
                         </div>
                       </div>
                       <div className="form-group">
                         <div className="input-group date" id="datetimepicker1">
                           <input
-                            type="text"
+                            type="date"
+                            id="checkout_date"
+                            name="checkout_date"
                             className="form-control"
-                            placeholder="Departure Date"
+                            placeholder="Checkout Date"
+                            onChange={(e) => setCheckoutDate(e.target.value)}
+                            required
                           />
-                          <span className="input-group-addon">
-                            <i className="fa fa-calendar" aria-hidden="true" />
-                          </span>
+                          
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="col-md-4">
                     <div className="book_tabel_item">
-                      <div className="input-group">
-                        <select className="wide">
-                          <option data-display="Adult">Adult</option>
-                          <option value={1}>Old</option>
-                          <option value={2}>Younger</option>
-                          <option value={3}>Potato</option>
-                        </select>
+                      <div className="form-group">
+                        <div className="input-group date" id="datetimepicker11">
+                          <input
+                            type="number"
+                            id="rooms_booked"
+                            name="rooms_booked"
+                            className="form-control"
+                            placeholder="Number of rooms"
+                            onChange={(e) => setRoomsBooked(e.target.value)}
+                            required
+                          />
+                          
+                        </div>
                       </div>
-                      <div className="input-group">
-                        <select className="wide">
-                          <option data-display="Child">Child</option>
-                          <option value={1}>Child</option>
-                          <option value={2}>Baby</option>
-                          <option value={3}>Child</option>
-                        </select>
+                      <div className="form-group">
+                        <div className="input-group date" id="datetimepicker1">
+                          <p>Total: 9000</p>
+                          
+                        </div>
                       </div>
                     </div>
                   </div>
+                
                   <div className="col-md-4">
                     <div className="book_tabel_item">
-                      <div className="input-group">
-                        <select className="wide">
-                          <option data-display="Child">Number of Rooms</option>
-                          <option value={1}>Room 01</option>
-                          <option value={2}>Room 02</option>
-                          <option value={3}>Room 03</option>
-                        </select>
-                      </div>
-                      <a className="book_now_btn button_hover" href="#">
+                      <button className="book_now_btn button_hover">
                         Book Now
-                      </a>
+                      </button>
                     </div>
                   </div>
                 </div>
+                </form>
+
               </div>
             </div>
           </div>

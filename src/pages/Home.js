@@ -725,8 +725,8 @@ const Home = () => {
                         <input
                           name="EMAIL"
                           placeholder="Email Address"
-                          onfocus="this.placeholder = ''"
-                          onblur="this.placeholder = 'Email Address '"
+                          onFocus="this.placeholder = ''"
+                          onBlur="this.placeholder = 'Email Address '"
                           required
                           type="email"
                         />

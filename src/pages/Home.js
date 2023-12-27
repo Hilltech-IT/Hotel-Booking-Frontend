@@ -2,12 +2,10 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
-import Recommendations from "./Recommendation";
 import Blogs from "./Blogs";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState("");
   //country
   const [cityFilter, setCityFilter] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -101,34 +99,51 @@ const Home = () => {
                             />
                             {/* Display suggestions */}
                             {suggestions.length > 0 && cityFilter !== "" && (
-                              <select
-                                className="form-control position-absolute suggestion-box"
-                                style={{ zIndex: 100, top: "100%", left: 0 }}
-                                size={
-                                  suggestions.length > 5
-                                    ? 5
-                                    : suggestions.length
-                                }
-                                onBlur={() => setSuggestions([])} // Hide suggestions on blur (when focus is lost)
-                              >
-                                {suggestions.map((suggestion, index) => (
-                                  <option
-                                    key={index}
-                                    value={suggestion}
+                              <>
+                                {suggestions.length === 1 ? (
+                                  // If only one suggestion is available, allow selection
+                                  <div
                                     onClick={() =>
-                                      handleSuggestionClick(suggestion)
-                                    } // Handle suggestion click
+                                      handleSuggestionClick(suggestions[0])
+                                    }
                                   >
-                                    <strong>
-                                      {suggestion.substring(
-                                        0,
-                                        cityFilter.length
-                                      )}
-                                    </strong>
-                                    {suggestion.substring(cityFilter.length)}
-                                  </option>
-                                ))}
-                              </select>
+                                    {suggestions[0]}
+                                  </div>
+                                ) : (
+                                  // If multiple suggestions are available, display the dropdown
+                                  <select
+                                    className="form-control position-absolute suggestion-box"
+                                    style={{
+                                      zIndex: 100,
+                                      top: "100%",
+                                      left: 0,
+                                    }}
+                                    size={
+                                      suggestions.length > 5
+                                        ? 5
+                                        : suggestions.length
+                                    }
+                                    onBlur={() => setSuggestions([])}
+                                    onChange={(e) =>
+                                      handleSuggestionClick(e.target.value)
+                                    }
+                                  >
+                                    {suggestions.map((suggestion, index) => (
+                                      <option key={index} value={suggestion}>
+                                        <strong>
+                                          {suggestion.substring(
+                                            0,
+                                            cityFilter.length
+                                          )}
+                                        </strong>
+                                        {suggestion.substring(
+                                          cityFilter.length
+                                        )}
+                                      </option>
+                                    ))}
+                                  </select>
+                                )}
+                              </>
                             )}
                           </div>
                           <div className="form-group mr-1">
@@ -178,7 +193,7 @@ const Home = () => {
                               {/* Add more options if needed */}
                             </select>
                           </div>
-                          <div className="form-group mt-2">
+                          <div className="form-group mt-4 ml-2">
                             <button type="submit" className="btn btn-primary">
                               Search
                             </button>

@@ -201,7 +201,7 @@ const Rooms = () => {
 
       {/* Display booking form when 'Book Now' is clicked */}
       {showBookingForm && selectedRoom && (
-        <section className="hotel_booking_area">
+        <section className="hotel_booking_area mt-5">
           <div className="container">
             <div className="row hotel_booking_table">
               <div className="col-md-3">

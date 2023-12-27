@@ -4,30 +4,26 @@ import { useLocation, Link } from "react-router-dom";
 import { HotelContext } from "../context/HotelContext";
 import Footer from "../components/Footer";
 
-
 const Listing = () => {
-  //home
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const countryFilter = queryParams.get("country") || "";
 
   const [listings, setListings] = useState([]);
+  const [originalListings, setOriginalListings] = useState([]);
   const [cityFilter, setCityFilter] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   const { selectHotel, selectedHotel } = useContext(HotelContext);
 
   const handleSelectHotel = (hotelId) => {
-    console.log(`Selected Hotel ID: ${hotelId}`)
-    selectHotel({"hotelId": hotelId})
-  }
-
+    selectHotel({ hotelId: hotelId });
+  };
 
   const handleInputChange = async (e) => {
     const value = e.target.value;
     setCityFilter(value);
 
-    // Make an API request to retrieve country data
     try {
       const response = await fetch("https://restcountries.com/v3.1/all");
 
@@ -48,18 +44,14 @@ const Listing = () => {
   };
 
   const handleSuggestionClick = (value) => {
-    // Set the selected suggestion as the input value
     setCityFilter(value);
-    // Clear the suggestions
     setSuggestions([]);
   };
-  //end of city search
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    // Filter the listings based on the entered city
-    const filteredListings = listings.filter(
+    const filteredListings = originalListings.filter(
       (hotel) =>
         cityFilter === "" ||
         hotel.country.toLowerCase().includes(cityFilter.toLowerCase())
@@ -73,6 +65,7 @@ const Listing = () => {
       .then((data) => {
         if (data && data.results && Array.isArray(data.results)) {
           setListings(data.results);
+          setOriginalListings(data.results);
         } else {
           console.error("Invalid data format received:", data);
         }
@@ -81,6 +74,12 @@ const Listing = () => {
         console.error("Error fetching data:", error);
       });
   }, [countryFilter]);
+
+  useEffect(() => {
+    if (cityFilter === "") {
+      setListings(originalListings);
+    }
+  }, [cityFilter, originalListings]);
 
   return (
     <>
@@ -109,25 +108,36 @@ const Listing = () => {
                   />
                   {/* Display suggestions */}
                   {suggestions.length > 0 && cityFilter !== "" && (
-                    <select
-                      className="form-control position-absolute suggestion-box"
-                      style={{ zIndex: 100, top: "100%", left: 0 }}
-                      size={suggestions.length > 5 ? 5 : suggestions.length}
-                      onBlur={() => setSuggestions([])} // Hide suggestions on blur (when focus is lost)
-                    >
-                      {suggestions.map((suggestion, index) => (
-                        <option
-                          key={index}
-                          value={suggestion}
-                          onClick={() => handleSuggestionClick(suggestion)} // Handle suggestion click
+                    <>
+                      {suggestions.length === 1 ? (
+                        // If only one suggestion is available, allow selection
+                        <div
+                          onClick={() => handleSuggestionClick(suggestions[0])}
                         >
-                          <strong>
-                            {suggestion.substring(0, cityFilter.length)}
-                          </strong>
-                          {suggestion.substring(cityFilter.length)}
-                        </option>
-                      ))}
-                    </select>
+                          {suggestions[0]}
+                        </div>
+                      ) : (
+                        // If multiple suggestions are available, display the dropdown
+                        <select
+                          className="form-control position-absolute suggestion-box"
+                          style={{ zIndex: 100, top: "100%", left: 0 }}
+                          size={suggestions.length > 5 ? 5 : suggestions.length}
+                          onBlur={() => setSuggestions([])}
+                          onChange={(e) =>
+                            handleSuggestionClick(e.target.value)
+                          }
+                        >
+                          {suggestions.map((suggestion, index) => (
+                            <option key={index} value={suggestion}>
+                              <strong>
+                                {suggestion.substring(0, cityFilter.length)}
+                              </strong>
+                              {suggestion.substring(cityFilter.length)}
+                            </option>
+                          ))}
+                        </select>
+                      )}
+                    </>
                   )}
                 </div>
                 <div className="form-group mr-1">
@@ -207,7 +217,7 @@ const Listing = () => {
                   <Link
                     to={`/rooms/${hotel.name}`}
                     className="btn btn-primary mt-2"
-                    onClick={()=> handleSelectHotel(hotel.id) }
+                    onClick={() => handleSelectHotel(hotel.id)}
                   >
                     View
                   </Link>
@@ -235,7 +245,7 @@ const Listing = () => {
           ))}
         </div>
       </section>
-      <Footer/>
+      <Footer />
     </>
   );
 };

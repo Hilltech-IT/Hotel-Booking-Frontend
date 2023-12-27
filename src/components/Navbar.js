@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
@@ -27,10 +27,12 @@ const Navbar = () => {
       <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light">
           {/* Brand and toggle get grouped for better mobile display */}
-          <a className="navbar-brand logo_h" href="">
-           WonderWise
-            <img src="" alt />
-          </a>
+          <Link to="/">
+            <a className="navbar-brand logo_h" href="">
+              WonderWise
+              <img src="" alt />
+            </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -65,7 +67,7 @@ const Navbar = () => {
               </li> */}
               <li className="nav-item submenu dropdown">
                 <Link className="nav-link" to="/listing">
-                 Hotels
+                  Hotels
                 </Link>
               </li>
               {/* <li className="nav-item">

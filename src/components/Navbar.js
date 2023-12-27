@@ -12,13 +12,12 @@ const Navbar = () => {
   }, []);
 
   const getLoggedInUserName = () => {
-    return user ? user.username : "Guest"; // Assuming 'username' is the user's name property
+    return user ? user.username : "Guest";
   };
 
   const handleLogout = () => {
     sessionStorage.removeItem("user");
     setUser(null);
-    // Additional logic: Redirect, clear local storage, or perform other logout actions
   };
 
   const loggedInUserName = getLoggedInUserName();
@@ -29,7 +28,7 @@ const Navbar = () => {
         <nav className="navbar navbar-expand-lg navbar-light">
           {/* Brand and toggle get grouped for better mobile display */}
           <a className="navbar-brand logo_h" href="">
-            HILLTECH BOOKINGS
+           WonderWise
             <img src="" alt />
           </a>
           <button

@@ -58,21 +58,21 @@ const Navbar = () => {
                   Home
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <a className="nav-link" href="#">
                   About us
                 </a>
-              </li>
+              </li> */}
               <li className="nav-item submenu dropdown">
                 <Link className="nav-link" to="/listing">
-                  Property Listing
+                 Hotels
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <a className="nav-link" href="#">
                   Contact
                 </a>
-              </li>
+              </li> */}
               <li className="nav-item mt-3">
                 <Link to="/register" className="btn theme_btn button_hover">
                   Sign Up

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import { useLocation, Link } from "react-router-dom";
 import { HotelContext } from "../context/HotelContext";
+import Footer from "../components/Footer";
+
 
 const Listing = () => {
   //home
@@ -233,6 +235,7 @@ const Listing = () => {
           ))}
         </div>
       </section>
+      <Footer/>
     </>
   );
 };

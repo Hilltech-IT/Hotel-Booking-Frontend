@@ -84,28 +84,28 @@ const Footer = () => {
                 <h6 className="footer_title">InstaFeed</h6>
                 <ul className="list_style instafeed d-flex flex-wrap">
                   <li>
-                    <img src="image/instagram/Image-01.jpg" alt />
+                    <img src="../image/instagram/Image-01.jpg" alt />
                   </li>
                   <li>
-                    <img src="image/instagram/Image-02.jpg" alt />
+                    <img src="../image/instagram/Image-02.jpg" alt />
                   </li>
                   <li>
-                    <img src="image/instagram/Image-03.jpg" alt />
+                    <img src="../image/instagram/Image-03.jpg" alt />
                   </li>
                   <li>
-                    <img src="image/instagram/Image-04.jpg" alt />
+                    <img src="../image/instagram/Image-04.jpg" alt />
                   </li>
                   <li>
-                    <img src="image/instagram/Image-05.jpg" alt />
+                    <img src="../image/instagram/Image-05.jpg" alt />
                   </li>
                   <li>
-                    <img src="image/instagram/Image-06.jpg" alt />
+                    <img src="../image/instagram/Image-06.jpg" alt />
                   </li>
                   <li>
-                    <img src="image/instagram/Image-07.jpg" alt />
+                    <img src="../image/instagram/Image-07.jpg" alt />
                   </li>
                   <li>
-                    <img src="image/instagram/Image-08.jpg" alt />
+                    <img src="../image/instagram/Image-08.jpg" alt />
                   </li>
                 </ul>
               </div>

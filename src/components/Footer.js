@@ -4,20 +4,19 @@ const Footer = () => {
       <footer className="footer-area section_gap">
         <div className="container">
           <div className="row">
-            <div className="col-lg-3  col-md-6 col-sm-6">
+            <div className="col-lg-3 col-md-6 col-sm-6">
               <div className="single-footer-widget">
-                <h6 className="footer_title">About Agency</h6>
+                <h6 className="footer_title">About Our Hotel Booking App</h6>
                 <p>
-                  The world has become so fast paced that people don’t want to
-                  stand by reading a page of information, they would much rather
-                  look at a presentation and understand the message. It has come
-                  to a point{" "}
+                  Discover, book, and explore hotels in your preferred country
+                  with ease. Receive personalized recommendations for your next
+                  stay and travel smarter with our app.
                 </p>
               </div>
             </div>
             <div className="col-lg-3 col-md-6 col-sm-6">
               <div className="single-footer-widget">
-                <h6 className="footer_title">Navigation Links</h6>
+                <h6 className="footer_title">Explore Our App</h6>
                 <div className="row">
                   <div className="col-4">
                     <ul className="list_style">
@@ -25,29 +24,23 @@ const Footer = () => {
                         <a href="#">Home</a>
                       </li>
                       <li>
-                        <a href="#">Feature</a>
+                        <a href="#">Search Hotels</a>
                       </li>
                       <li>
-                        <a href="#">Services</a>
-                      </li>
-                      <li>
-                        <a href="#">Portfolio</a>
+                        <a href="#">Bookings</a>
                       </li>
                     </ul>
                   </div>
                   <div className="col-4">
                     <ul className="list_style">
                       <li>
-                        <a href="#">Team</a>
+                        <a href="#">Recommendations</a>
                       </li>
                       <li>
-                        <a href="#">Pricing</a>
+                        <a href="#">About Us</a>
                       </li>
                       <li>
-                        <a href="#">Blog</a>
-                      </li>
-                      <li>
-                        <a href="#">Contact</a>
+                        <a href="#">Contact Us</a>
                       </li>
                     </ul>
                   </div>
@@ -56,24 +49,24 @@ const Footer = () => {
             </div>
             <div className="col-lg-3 col-md-6 col-sm-6">
               <div className="single-footer-widget">
-                <h6 className="footer_title">Newsletter</h6>
+                <h6 className="footer_title">Join Our Newsletter</h6>
                 <p>
-                  For business professionals caught between high OEM price and
-                  mediocre print and graphic output,{" "}
+                  Get exclusive deals, travel insights, and personalized
+                  recommendations delivered directly to your inbox.
                 </p>
                 <div id="mc_embed_signup">
                   <form
                     target="_blank"
-                    action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&id=92a4423d01"
+                    action="#"
                     method="get"
                     className="subscribe_form relative"
                   >
                     <div className="input-group d-flex flex-row">
                       <input
                         name="EMAIL"
-                        placeholder="Email Address"
-                        onFocus="this.placeholder = ''"
-                        onBlur="this.placeholder = 'Email Address '"
+                        placeholder="Your Email Address"
+                        // onFocus="this.placeholder = ''"
+                        // onBlur="this.placeholder = 'Your Email Address'"
                         required
                         type="email"
                       />
@@ -121,14 +114,11 @@ const Footer = () => {
           <div className="border_line" />
           <div className="row footer-bottom d-flex justify-content-between align-items-center">
             <p className="col-lg-8 col-sm-12 footer-text m-0">
-              {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
-              Copyright © All rights reserved | This template is made with{" "}
+              © WonderWise - All rights reserved | Created with{" "}
               <i className="fa fa-heart-o" aria-hidden="true" /> by{" "}
-              <a href="https://colorlib.com" target="_blank">
-                Colorlib
+              <a href="#" target="_blank">
+                HillTech IT
               </a>
-              Link back to Colorlib can't be removed. Template is licensed under
-              CC BY 3.0.
             </p>
             <div className="col-lg-4 col-sm-12 footer-social">
               <a href="#">

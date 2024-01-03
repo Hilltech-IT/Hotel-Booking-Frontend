@@ -209,18 +209,8 @@ const Listing = () => {
                   <img
                     src={hotel.profile_image}
                     alt={hotel.name}
-                    style={{ width: "100%", height: "auto" }}
+                    style={{ width: "60%", height: "auto" }}
                   />
-                  {/* <a href="#" className="btn btn-primary mt-2">
-                    View
-                  </a> */}
-                  <Link
-                    to={`/rooms/${hotel.name}`}
-                    className="btn btn-primary mt-2"
-                    onClick={() => handleSelectHotel(hotel.id)}
-                  >
-                    View
-                  </Link>
                 </div>
               </div>
               <div className="col-md-6">
@@ -239,6 +229,13 @@ const Listing = () => {
                   </p>
                   <p>Contact: {hotel.contact_number}</p>
                   {/* Add other necessary fields */}
+                  <Link
+                    to={`/rooms/${hotel.name}`}
+                    className="btn btn-primary mt-2"
+                    onClick={() => handleSelectHotel(hotel.id)}
+                  >
+                    View
+                  </Link>
                 </div>
               </div>
             </div>

@@ -138,143 +138,6 @@ const Rooms = () => {
   return (
     <div>
       <Navbar />
-      <section className="breadcrumb_area mb-2">
-        <div
-          className="overlay bg-parallax"
-          data-stellar-ratio="0.8"
-          data-stellar-vertical-offset={0}
-          data-background
-        />
-        <div className="container">
-          <div className="page-cover text-center">
-            <h2 className="page-cover-tittle">Accomodation</h2>
-            <ol className="breadcrumb">
-              <li>
-                <a href="index.html">Home</a>
-              </li>
-              <li className="active">Accomodation</li>
-            </ol>
-          </div>
-        </div>
-      </section>
-      {/* errormessage */}
-      {loginPrompt && (
-        <div
-          style={{
-            color: "white",
-            textAlign: "center",
-            backgroundColor: "red",
-            width: "50%",
-            margin: "0 auto",
-            marginBottom: 12,
-          }}
-        >
-          Please log in to Book rooms.
-        </div>
-      )}
-      {bookingError && (
-        <div
-          style={{
-            color: "white",
-            textAlign: "center",
-            backgroundColor: "green",
-            width: "50%",
-            margin: "0 auto",
-          }}
-        >
-          {bookingError}
-        </div>
-      )}
-      {bookingSuccess && (
-        <div
-          style={{
-            color: "white",
-            textAlign: "center",
-            backgroundColor: "green",
-            width: "50%",
-            margin: "0 auto",
-          }}
-        >
-          Room booked successfully!
-        </div>
-      )}
-
-      {/* Display booking form when 'Book Now' is clicked */}
-      {showBookingForm && selectedRoom && (
-        <section className="hotel_booking_area mt-5">
-          <div className="container">
-            <div className="row hotel_booking_table">
-              <div className="col-md-3">
-                <h2>
-                  Book
-                  <br /> Your Room
-                </h2>
-              </div>
-              <div className="col-md-9">
-                <div className="boking_table">
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      handleRoomBooking();
-                    }}
-                  >
-                    <div className="row">
-                      <div className="col-md-4">
-                        <div className="book_tabel_item">
-                          {/* Date pickers for arrival and departure */}
-                          <div className="form-group">
-                            <input
-                              type="date"
-                              className="form-control"
-                              placeholder="Arrival Date"
-                              value={checkinDate}
-                              onChange={(e) => setCheckinDate(e.target.value)}
-                            />
-                          </div>
-                          <div className="form-group">
-                            <input
-                              type="date"
-                              className="form-control"
-                              placeholder="Departure Date"
-                              value={checkoutDate}
-                              onChange={(e) => setCheckoutDate(e.target.value)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md-4">
-                        <div className="book_tabel_item">
-                          {/* Number of rooms */}
-                          <div className="form-group">
-                            <input
-                              type="number"
-                              className="form-control"
-                              placeholder="Number of Rooms"
-                              value={roomsBooked}
-                              onChange={(e) => setRoomsBooked(e.target.value)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md-4">
-                        <div className="book_tabel_item">
-                          <button
-                            type="submit"
-                            className="book_now_btn button_hover"
-                          >
-                            Book Now
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-      {/* Display rooms */}
       <section className="accomodation_area section_gap">
         <div className="container">
           <div className="row mb_30">
@@ -303,6 +166,95 @@ const Rooms = () => {
           </div>
         </div>
       </section>
+
+      {showBookingForm && selectedRoom && (
+        <div className="booking_form_right">
+          <section className="hotel_booking_area mt-5">
+            <div className="container">
+              <div className="row hotel_booking_table">
+                <div className="col-md-9 offset-md-3">
+                  <div className="boking_table">
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        handleRoomBooking();
+                      }}
+                    >
+                      <div className="row">
+                        <div className="col-md-5">
+                          {/* Date pickers for arrival and departure */}
+                          <div className="form-group">
+                            <label htmlFor="checkIn">In:</label>
+                            <input
+                              type="date"
+                              className="form-control"
+                              placeholder="Arrival Date"
+                              value={checkinDate}
+                              onChange={(e) => setCheckinDate(e.target.value)}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label htmlFor="checkOut">out:</label>
+                            <input
+                              type="date"
+                              className="form-control"
+                              placeholder="Departure Date"
+                              value={checkoutDate}
+                              onChange={(e) => setCheckoutDate(e.target.value)}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-3">
+                          {/* Number of rooms */}
+                          <label htmlFor="rooms">Rooms:</label>
+                          <div className="form-group">
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder="Number of Rooms"
+                              value={roomsBooked}
+                              onChange={(e) => setRoomsBooked(e.target.value)}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-4">
+                          <div className="book_tabel_item">
+                            <button
+                              type="submit"
+                              className="book_now_btn button_hover"
+                            >
+                              Book Now
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {/* Error Messages */}
+      {/* Changes in Error Messages Rendering */}
+      <div
+        className={
+          loginPrompt || bookingError || bookingSuccess
+            ? "error_popup active"
+            : "error_popup"
+        }
+      >
+        {loginPrompt && (
+          <div className="error_message">Please log in to book rooms.</div>
+        )}
+        {bookingError && <div className="error_message">{bookingError}</div>}
+        {bookingSuccess && (
+          <div className="success_message">Room booked successfully!</div>
+        )}
+      </div>
+      {/* End of Error Messages Section */}
       <Footer />
     </div>
   );

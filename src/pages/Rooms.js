@@ -13,6 +13,7 @@ const Rooms = () => {
   const [bookingError, setBookingError] = useState(null);
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [loginPrompt, setLoginPrompt] = useState(false);
+  const [isBookingVisible, setIsBookingVisible] = useState(false);
 
   const { propertyname } = useParams();
 
@@ -135,6 +136,11 @@ const Rooms = () => {
     fetchData();
   }, [propertyname]);
 
+  // Function to toggle booking visibility
+  const toggleBooking = () => {
+    setIsBookingVisible(!isBookingVisible);
+  };
+
   return (
     <div>
       <Navbar />
@@ -236,64 +242,74 @@ const Rooms = () => {
         //   </section>
         // </div>
         <div className="booking_form_right">
-  <section className="hotel_booking_area mt-5">
-    <div className="container">
-      <div className="row hotel_booking_table">
-        <div className="col-md-9 offset-md-3">
-          <div className="boking_table">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleRoomBooking();
-              }}
-            >
-              {/* Adjusted layout for smaller screens */}
-              <div className="form-group">
-                <label htmlFor="checkIn">Check-In:</label>
-                <input
-                  type="date"
-                  className="form-control"
-                  placeholder="Arrival Date"
-                  value={checkinDate}
-                  onChange={(e) => setCheckinDate(e.target.value)}
-                />
+          <section className="hotel_booking_area mt-5">
+            <div className="container">
+              <div className="row hotel_booking_table">
+                <div className="col-md-9 offset-md-3">
+                  <div className="boking_table">
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        handleRoomBooking();
+                      }}
+                    >
+                      {/* Form fields */}
+                      <div className="form-group">
+                        <label htmlFor="checkIn">Check-In:</label>
+                        <input
+                          type="date"
+                          className="form-control"
+                          placeholder="Arrival Date"
+                          value={checkinDate}
+                          onChange={(e) => setCheckinDate(e.target.value)}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="checkOut">Check-Out:</label>
+                        <input
+                          type="date"
+                          className="form-control"
+                          placeholder="Departure Date"
+                          value={checkoutDate}
+                          onChange={(e) => setCheckoutDate(e.target.value)}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="rooms">Rooms:</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          placeholder="Number of Rooms"
+                          value={roomsBooked}
+                          onChange={(e) => setRoomsBooked(e.target.value)}
+                        />
+                      </div>
+                      {/* Book Now button */}
+                      <div className="book_tabel_item">
+                        <button
+                          type="submit"
+                          className="book_now_btn button_hover"
+                        >
+                          Book Now
+                        </button>
+                      </div>
+                    </form>
+                    {/* Close button */}
+                    <div className="book_tabel_item mt-2">
+                      <button
+                        type="button"
+                        className="btn btn-danger" // Customize classes for close button
+                        onClick={() => setShowBookingForm(false)} // Function to hide the booking form
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="checkOut">Check-Out:</label>
-                <input
-                  type="date"
-                  className="form-control"
-                  placeholder="Departure Date"
-                  value={checkoutDate}
-                  onChange={(e) => setCheckoutDate(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="rooms">Rooms:</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  placeholder="Number of Rooms"
-                  value={roomsBooked}
-                  onChange={(e) => setRoomsBooked(e.target.value)}
-                />
-              </div>
-              <div className="book_tabel_item">
-                <button
-                  type="submit"
-                  className="book_now_btn button_hover"
-                >
-                  Book Now
-                </button>
-              </div>
-            </form>
-          </div>
+            </div>
+          </section>
         </div>
-      </div>
-    </div>
-  </section>
-</div>
-
       )}
 
       {/* Error Messages */}

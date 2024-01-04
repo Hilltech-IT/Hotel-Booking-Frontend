@@ -13,6 +13,34 @@
   margin: 5px;
 }
 
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .booking_form_right {
+    width: 100%; /* Adjust to occupy full width */
+    height: 100%; /* Adjust to occupy full height */
+    top: 0;
+    left: 0;
+    padding: 10px;
+  }
+}
+
+/* Rest of your old  CSS remains unchanged */
+
+/* Add this to your CSS file */
+.booking_form_right {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 40%; /* Adjust the width as needed */
+  height: 80%;
+  background-color: #fff; /* Set your desired background color */
+  padding: 20px;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow-y: auto;
+  margin: 5px;
+}
+
 .error_popup {
   position: fixed;
   top: 10px; /* Changed from bottom to top */

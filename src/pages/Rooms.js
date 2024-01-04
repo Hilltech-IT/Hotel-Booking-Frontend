@@ -168,73 +168,132 @@ const Rooms = () => {
       </section>
 
       {showBookingForm && selectedRoom && (
+        // <div className="booking_form_right">
+        //   <section className="hotel_booking_area mt-5">
+        //     <div className="container">
+        //       <div className="row hotel_booking_table">
+        //         <div className="col-md-9 offset-md-3">
+        //           <div className="boking_table">
+        //             <form
+        //               onSubmit={(e) => {
+        //                 e.preventDefault();
+        //                 handleRoomBooking();
+        //               }}
+        //             >
+        //               <div className="row">
+        //                 <div className="col-md-5">
+        //                   {/* Date pickers for arrival and departure */}
+        //                   <div className="form-group">
+        //                     <label htmlFor="checkIn">In:</label>
+        //                     <input
+        //                       type="date"
+        //                       className="form-control"
+        //                       placeholder="Arrival Date"
+        //                       value={checkinDate}
+        //                       onChange={(e) => setCheckinDate(e.target.value)}
+        //                     />
+        //                   </div>
+        //                   <div className="form-group">
+        //                     <label htmlFor="checkOut">out:</label>
+        //                     <input
+        //                       type="date"
+        //                       className="form-control"
+        //                       placeholder="Departure Date"
+        //                       value={checkoutDate}
+        //                       onChange={(e) => setCheckoutDate(e.target.value)}
+        //                     />
+        //                   </div>
+        //                 </div>
+        //                 <div className="col-md-3">
+        //                   {/* Number of rooms */}
+        //                   <label htmlFor="rooms">Rooms:</label>
+        //                   <div className="form-group">
+        //                     <input
+        //                       type="number"
+        //                       className="form-control"
+        //                       placeholder="Number of Rooms"
+        //                       value={roomsBooked}
+        //                       onChange={(e) => setRoomsBooked(e.target.value)}
+        //                     />
+        //                   </div>
+        //                 </div>
+        //                 <div className="col-md-4">
+        //                   <div className="book_tabel_item">
+        //                     <button
+        //                       type="submit"
+        //                       className="book_now_btn button_hover"
+        //                     >
+        //                       Book Now
+        //                     </button>
+        //                   </div>
+        //                 </div>
+        //               </div>
+        //             </form>
+        //           </div>
+        //         </div>
+        //       </div>
+        //     </div>
+        //   </section>
+        // </div>
         <div className="booking_form_right">
-          <section className="hotel_booking_area mt-5">
-            <div className="container">
-              <div className="row hotel_booking_table">
-                <div className="col-md-9 offset-md-3">
-                  <div className="boking_table">
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        handleRoomBooking();
-                      }}
-                    >
-                      <div className="row">
-                        <div className="col-md-5">
-                          {/* Date pickers for arrival and departure */}
-                          <div className="form-group">
-                            <label htmlFor="checkIn">In:</label>
-                            <input
-                              type="date"
-                              className="form-control"
-                              placeholder="Arrival Date"
-                              value={checkinDate}
-                              onChange={(e) => setCheckinDate(e.target.value)}
-                            />
-                          </div>
-                          <div className="form-group">
-                            <label htmlFor="checkOut">out:</label>
-                            <input
-                              type="date"
-                              className="form-control"
-                              placeholder="Departure Date"
-                              value={checkoutDate}
-                              onChange={(e) => setCheckoutDate(e.target.value)}
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-3">
-                          {/* Number of rooms */}
-                          <label htmlFor="rooms">Rooms:</label>
-                          <div className="form-group">
-                            <input
-                              type="number"
-                              className="form-control"
-                              placeholder="Number of Rooms"
-                              value={roomsBooked}
-                              onChange={(e) => setRoomsBooked(e.target.value)}
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-4">
-                          <div className="book_tabel_item">
-                            <button
-                              type="submit"
-                              className="book_now_btn button_hover"
-                            >
-                              Book Now
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
+  <section className="hotel_booking_area mt-5">
+    <div className="container">
+      <div className="row hotel_booking_table">
+        <div className="col-md-9 offset-md-3">
+          <div className="boking_table">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleRoomBooking();
+              }}
+            >
+              {/* Adjusted layout for smaller screens */}
+              <div className="form-group">
+                <label htmlFor="checkIn">Check-In:</label>
+                <input
+                  type="date"
+                  className="form-control"
+                  placeholder="Arrival Date"
+                  value={checkinDate}
+                  onChange={(e) => setCheckinDate(e.target.value)}
+                />
               </div>
-            </div>
-          </section>
+              <div className="form-group">
+                <label htmlFor="checkOut">Check-Out:</label>
+                <input
+                  type="date"
+                  className="form-control"
+                  placeholder="Departure Date"
+                  value={checkoutDate}
+                  onChange={(e) => setCheckoutDate(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="rooms">Rooms:</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="Number of Rooms"
+                  value={roomsBooked}
+                  onChange={(e) => setRoomsBooked(e.target.value)}
+                />
+              </div>
+              <div className="book_tabel_item">
+                <button
+                  type="submit"
+                  className="book_now_btn button_hover"
+                >
+                  Book Now
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
+    </div>
+  </section>
+</div>
+
       )}
 
       {/* Error Messages */}

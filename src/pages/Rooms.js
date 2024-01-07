@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import Footer from "../components/Footer";
+import RoomImages from "./RoomImages";
 
 const Rooms = () => {
   const [roomsData, setRoomsData] = useState([]);
@@ -14,6 +15,7 @@ const Rooms = () => {
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [loginPrompt, setLoginPrompt] = useState(false);
   const [isBookingVisible, setIsBookingVisible] = useState(false);
+  const [hotelImages, setHotelImages] = useState([]);
 
   const { propertyname } = useParams();
 
@@ -52,12 +54,31 @@ const Rooms = () => {
   };
 
   const handleRoomBooking = async () => {
+    // Check if selectedRoom exists and has available_rooms property
+    // if (!selectedRoom || !selectedRoom.available_rooms) {
+    //   console.error("Invalid room data or available_rooms property not found.");
+    //   return;
+    // }
+
+    // console.log("Selected Room Available Rooms:", selectedRoom.available_rooms);
+    // console.log("Rooms Booked:", roomsBooked);
+
+    // if (selectedRoom.available_rooms <= 0) {
+    //   alert("Sorry, the rooms are fully booked for this room type.");
+    //   return;
+    // }
+
+    if (roomsBooked > selectedRoom.available_rooms) {
+      alert(
+        "Sorry, the requested number of rooms exceeds the available rooms."
+      );
+      return;
+    }
     if (!checkinDate || !checkoutDate || !roomsBooked || !selectedRoom) {
       alert("Please fill in all booking details");
       return;
     }
     const token = getUserTokenFromSession();
-    console.log(token);
 
     if (!token) {
       setLoginPrompt(true);
@@ -140,6 +161,26 @@ const Rooms = () => {
   const toggleBooking = () => {
     setIsBookingVisible(!isBookingVisible);
   };
+  useEffect(() => {
+    const fetchHotelImages = async () => {
+      try {
+        // Fetch hotel details based on the propertyname or hotel name
+        const response = await fetch(
+          `http://127.0.0.1:8000/properties/api/property-listings/?search=${propertyname}`
+        );
+        const data = await response.json();
+        if (data && data.results && data.results.length > 0) {
+          // Assuming the first hotel from search results has the images
+          const hotelImagesData = data.results[0].images;
+          setHotelImages(hotelImagesData);
+        }
+      } catch (error) {
+        console.error("Error fetching hotel images:", error);
+      }
+    };
+
+    fetchHotelImages();
+  }, [propertyname]);
 
   return (
     <div>
@@ -174,73 +215,6 @@ const Rooms = () => {
       </section>
 
       {showBookingForm && selectedRoom && (
-        // <div className="booking_form_right">
-        //   <section className="hotel_booking_area mt-5">
-        //     <div className="container">
-        //       <div className="row hotel_booking_table">
-        //         <div className="col-md-9 offset-md-3">
-        //           <div className="boking_table">
-        //             <form
-        //               onSubmit={(e) => {
-        //                 e.preventDefault();
-        //                 handleRoomBooking();
-        //               }}
-        //             >
-        //               <div className="row">
-        //                 <div className="col-md-5">
-        //                   {/* Date pickers for arrival and departure */}
-        //                   <div className="form-group">
-        //                     <label htmlFor="checkIn">In:</label>
-        //                     <input
-        //                       type="date"
-        //                       className="form-control"
-        //                       placeholder="Arrival Date"
-        //                       value={checkinDate}
-        //                       onChange={(e) => setCheckinDate(e.target.value)}
-        //                     />
-        //                   </div>
-        //                   <div className="form-group">
-        //                     <label htmlFor="checkOut">out:</label>
-        //                     <input
-        //                       type="date"
-        //                       className="form-control"
-        //                       placeholder="Departure Date"
-        //                       value={checkoutDate}
-        //                       onChange={(e) => setCheckoutDate(e.target.value)}
-        //                     />
-        //                   </div>
-        //                 </div>
-        //                 <div className="col-md-3">
-        //                   {/* Number of rooms */}
-        //                   <label htmlFor="rooms">Rooms:</label>
-        //                   <div className="form-group">
-        //                     <input
-        //                       type="number"
-        //                       className="form-control"
-        //                       placeholder="Number of Rooms"
-        //                       value={roomsBooked}
-        //                       onChange={(e) => setRoomsBooked(e.target.value)}
-        //                     />
-        //                   </div>
-        //                 </div>
-        //                 <div className="col-md-4">
-        //                   <div className="book_tabel_item">
-        //                     <button
-        //                       type="submit"
-        //                       className="book_now_btn button_hover"
-        //                     >
-        //                       Book Now
-        //                     </button>
-        //                   </div>
-        //                 </div>
-        //               </div>
-        //             </form>
-        //           </div>
-        //         </div>
-        //       </div>
-        //     </div>
-        //   </section>
-        // </div>
         <div className="booking_form_right">
           <section className="hotel_booking_area mt-5">
             <div className="container">
@@ -329,6 +303,7 @@ const Rooms = () => {
           <div className="success_message">Room booked successfully!</div>
         )}
       </div>
+      {hotelImages.length > 0 && <RoomImages images={hotelImages} />}
       {/* End of Error Messages Section */}
       <Footer />
     </div>

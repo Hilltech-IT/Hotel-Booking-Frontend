@@ -116,7 +116,7 @@ const Footer = () => {
             <p className="col-lg-8 col-sm-12 footer-text m-0">
               © WonderWise - All rights reserved | Created with{" "}
               <i className="fa fa-heart-o" aria-hidden="true" /> by{" "}
-              <a href="#" target="_blank">
+              <a href="https://hilltechit.com/" target="_blank">
                 HillTech IT
               </a>
             </p>

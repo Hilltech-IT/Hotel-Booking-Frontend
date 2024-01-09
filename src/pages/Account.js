@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
+
 const Account = () => {
   const [userData, setUserData] = useState(null);
 
@@ -52,14 +53,21 @@ const Account = () => {
                     <p className="mb-2">
                       <strong>Email:</strong> {userData.email}
                     </p>
-                  </div>
-                  <div className="col-md-6">
                     <p className="mb-2">
                       <strong>First Name:</strong> {userData.first_name}
                     </p>
                     <p className="mb-2">
                       <strong>Last Name:</strong> {userData.last_name}
                     </p>
+                    <p className="mb-2">
+                      <strong>Phone Number:</strong> {userData.phone_number}
+                    </p>
+                  </div>
+                  <div className="col-md-6">
+                    <p className="mb-2">
+                      <strong>Role:</strong> {userData.role}
+                    </p>
+                    {/* Add more user information fields as needed */}
                   </div>
                 </div>
                 <h4 className="mt-3">Bookings:</h4>
@@ -69,6 +77,9 @@ const Account = () => {
                       <tr>
                         <th scope="col">Booking ID</th>
                         <th scope="col">Booked from</th>
+                        <th scope="col">Booked to</th>
+                        <th scope="col">Amount Expected</th>
+                        <th scope="col">Amount Paid</th>
                         {/* Add more columns as needed */}
                       </tr>
                     </thead>
@@ -77,6 +88,9 @@ const Account = () => {
                         <tr key={booking.id}>
                           <td>{booking.id}</td>
                           <td>{booking.booked_from}</td>
+                          <td>{booking.booked_to}</td>
+                          <td>{booking.amount_expected}</td>
+                          <td>{booking.amount_paid}</td>
                           {/* Add more columns as needed */}
                         </tr>
                       ))}

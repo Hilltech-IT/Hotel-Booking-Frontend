@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Account from "../pages/Account";
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
@@ -99,6 +100,10 @@ const Navbar = () => {
                 {loggedInUserName}
               </span>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <Link to="/account" className="dropdown-item">
+                  Account
+                </Link>
+            
                 <Link className="dropdown-item" to="#" onClick={handleLogout}>
                   Sign Out
                 </Link>

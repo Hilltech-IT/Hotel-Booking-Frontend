@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-
 const Account = () => {
   const [userData, setUserData] = useState(null);
 
@@ -45,9 +44,6 @@ const Account = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <p className="mb-2">
-                      <strong>ID:</strong> {userData.id}
-                    </p>
-                    <p className="mb-2">
                       <strong>Username:</strong> {userData.username}
                     </p>
                     <p className="mb-2">
@@ -56,18 +52,17 @@ const Account = () => {
                     <p className="mb-2">
                       <strong>First Name:</strong> {userData.first_name}
                     </p>
+                  </div>
+                  <div className="col-md-6">
+                    <p className="mb-2">
+                      <strong>Role:</strong> {userData.role}
+                    </p>
                     <p className="mb-2">
                       <strong>Last Name:</strong> {userData.last_name}
                     </p>
                     <p className="mb-2">
                       <strong>Phone Number:</strong> {userData.phone_number}
                     </p>
-                  </div>
-                  <div className="col-md-6">
-                    <p className="mb-2">
-                      <strong>Role:</strong> {userData.role}
-                    </p>
-                    {/* Add more user information fields as needed */}
                   </div>
                 </div>
                 <h4 className="mt-3">Bookings:</h4>

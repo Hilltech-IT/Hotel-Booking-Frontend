@@ -5,7 +5,7 @@ const RoomImages = ({ images }) => {
     <section className="gallery_area section_gap">
       <div className="container">
         <div className="section_title text-center">
-          <h4 className="title_color">Gallaery</h4>
+          <h4 className="title_color">Gallarey</h4>
           {/* Additional description if needed */}
         </div>
         <div className="row custom_gallery">

@@ -325,7 +325,7 @@ const Rooms = () => {
       try {
         const encodedPropertyName = encodeURIComponent(propertyname);
         const response = await fetch(
-          `http://127.0.0.1:8000/properties/api/rooms/?search=${encodedPropertyName}`
+          `http://34.171.61.167:8000/properties/api/rooms/?search=${encodedPropertyName}`
         );
         const data = await response.json();
         if (data && data.results) {
@@ -419,7 +419,7 @@ const Rooms = () => {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/bookings/book-a-room/",
+        "http://34.171.61.167:8000/bookings/book-a-room/",
         {
           method: "POST",
           headers: {
@@ -458,7 +458,7 @@ const Rooms = () => {
     const fetchHotelImages = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/properties/api/property-listings/?search=${propertyname}`
+          `http://34.171.61.167:8000/properties/api/property-listings/?search=${propertyname}`
         );
         const data = await response.json();
         if (data && data.results && data.results.length > 0) {
@@ -478,11 +478,15 @@ const Rooms = () => {
       <Navbar />
       <section className="accomodation_area section_gap">
         <div className="container">
+        <div className="section_title text-center">
+          <h4 className="title_color">Rooms</h4>
+          {/* Additional description if needed */}
+        </div>
           <div className="row mb_30">
             {currentRooms.map((room) => (
               <div className="col-lg-3 col-sm-6" key={room.id}>
                 <div className="accomodation_item text-center card rounded">
-                  <img src="/image/room1.jpg" alt="Room" />
+                  {/* <img src="/image/room1.jpg" alt="Room" /> */}
                   <h4 className="sec_h4">{room.room_type}</h4>
                   <h6>
                     KES.{room.rate}
@@ -643,4 +647,3 @@ const Rooms = () => {
 };
 
 export default Rooms;
-

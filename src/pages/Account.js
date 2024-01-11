@@ -158,6 +158,7 @@ const Account = () => {
       <Navbar />
       <div className="whole-wrap">
         <div className="container">
+          <h4>User Information</h4>
           <div className="section-top-border">
             {userData ? (
               <div>

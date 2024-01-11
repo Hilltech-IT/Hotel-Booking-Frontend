@@ -7,6 +7,8 @@ import Login from "./pages/LoginIn";
 import Listing from "./pages/Listing";
 import Rooms from "./pages/Rooms";
 import Account from "./pages/Account";
+import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
 
 
 
@@ -17,6 +19,8 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/about" element={<About />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/listing" element={<Listing />} />
         <Route path="/rooms/:propertyname" element={<Rooms />} />

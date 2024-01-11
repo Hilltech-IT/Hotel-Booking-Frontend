@@ -104,7 +104,7 @@ const Login = () => {
                 </div>
                 <div>
                   <a href="/register">Register</a> |{" "}
-                  <a href="/reset-password">Reset Password</a>
+                  <a href="/forgot-password">Reset Password</a>
                 </div>
               </div>
               <button type="submit" className="btn btn-primary">

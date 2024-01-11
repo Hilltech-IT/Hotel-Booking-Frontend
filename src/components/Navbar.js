@@ -76,13 +76,13 @@ const Navbar = () => {
                   Contact
                 </a>
               </li> */}
-              <li className="nav-item mt-3">
-                <Link to="/register" className="btn theme_btn button_hover">
+              <li className="nav-link mt-3">
+                <Link to="/register" className="genric-btn primary-border small text-dark">
                   Sign Up
                 </Link>
               </li>
-              <li className="nav-zitem mt-3">
-                <Link to="/login" className="btn theme_btn button_hover">
+              <li className="nav-link mt-3">
+                <Link to="/login" className="genric-btn primary-border small text-dark">
                   Sign In
                 </Link>
               </li>

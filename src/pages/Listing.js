@@ -349,6 +349,7 @@ const Listing = () => {
       setListings(originalListings);
     }
   }, [cityFilter, originalListings]);
+  //number increase
 
   return (
     <>
@@ -358,10 +359,11 @@ const Listing = () => {
           <div
             className="row mb-5"
             style={{
-              backgroundColor: "#fffff",
-              borderRadius: "15px",
-              boxShadow: "2px 4px 8px rgba(0.2, 0, 0, 0.2)",
+              backgroundColor: "#04091e",
+              borderRadius: "8px",
+              // boxShadow: "1px 4px 8px rgba(0.2, 0, 0, 0.2)",
               padding: "20px",
+              color:"white",
             }}
           >
             <div className="col-md-12">
@@ -407,57 +409,50 @@ const Listing = () => {
                   )}
                 </div>
                 <div className="form-group mr-1">
-                  <label htmlFor="checkIn">Check-In:</label>
+                  <label htmlFor="checkIn">In:</label>
                   <input
                     type="date"
                     className="form-control ml-1"
                     id="checkIn"
-                    placeholder="Check-In"
+                    placeholder="Enter location"
                   />
                 </div>
                 <div className="form-group mr-2">
-                  <label htmlFor="checkOut">Check-Out:</label>
+                  <label htmlFor="checkOut">out:</label>
                   <input
                     type="date"
                     className="form-control ml-1"
                     id="checkOut"
-                    placeholder="Check-Out"
-
                   />
                 </div>
                 <div className="form-group mr-1">
                   <label htmlFor="rooms">Rooms:</label>
-                  <select
-                    className="form-control ml-1"
-                    id="rooms"
-                  >
-                    <option value="0">Any</option>
+                  <select className="form-control ml-1" id="rooms">
+                    {/* Options for selecting number of rooms */}
                     <option value="1">1</option>
                     <option value="2">2</option>
+                    <option value="3">3</option>
                     {/* Add more options if needed */}
                   </select>
                 </div>
                 <div className="form-group mr-1">
                   <label htmlFor="adults">Adults:</label>
-                  <select
-                    className="form-control ml-1"
-                    id="adults"
-                  >
-                    <option value="0">Any</option>
+                  <select className="form-control ml-1" id="adults">
+                    {/* Options for selecting number of adults */}
                     <option value="1">1</option>
                     <option value="2">2</option>
+                    <option value="3">3</option>
                     {/* Add more options if needed */}
                   </select>
                 </div>
                 <div className="form-group mr-1">
                   <label htmlFor="children">Children:</label>
-                  <select
-                    className="form-control ml-1"
-                    id="children"
-                  >
-                    <option value="0">Any</option>
+                  <select className="form-control ml-1" id="children">
+                    {/* Options for selecting number of children */}
+                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
+                    {/* Add more options if needed */}
                   </select>
                 </div>
                 <button type="submit" className="btn btn-primary">
@@ -466,52 +461,55 @@ const Listing = () => {
               </form>
             </div>
           </div>
-          {listings.map((hotel) => (
-            <div
-              className="row"
-              key={hotel.id}
-              style={{
-                backgroundColor: "#ffffff",
-                borderRadius: "15px",
-                boxShadow: "2px 4px 8px rgba(0.2, 0, 0, 0.2)",
-                padding: "20px",
-                marginBottom: "20px",
-              }}
-            >
-              <div className="col-md-6">
-                <div className="hotel_img">
-                  <img
-                    src={hotel.profile_image}
-                    alt={hotel.name}
-                    style={{ width: "60%", height: "auto" }}
-                  />
+          <div className="row">
+            <div className="col-lg-8 col-md-8 col-sm-12">
+              {listings.map((hotel) => (
+                <div
+                  className="row"
+                  key={hotel.id}
+                  style={{
+                    backgroundColor: "#ffffff",
+                    borderRadius: "15px",
+                    boxShadow: "2px 4px 8px rgba(0.2, 0, 0, 0.2)",
+                    padding: "5px",
+                    marginBottom: "10px",
+                    width: "100%",
+                  }}
+                >
+                  <div className="col-lg-6 col-md-6 col-sm-6">
+                    <div className="hotel_img">
+                      <img
+                        src={hotel.profile_image}
+                        alt={hotel.name}
+                        style={{ width: "100%", height: "auto" }}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-lg-6 col-md-6 col-sm-6">
+                    <div className="description">
+                      <a href="#">
+                        <h4 className="sec_h4">{hotel.name}</h4>
+                      </a>
+                      <p>Property Type: {hotel.property_type}</p>
+                      <p>
+                        Location: {hotel.location}, {hotel.city},{" "}
+                        {hotel.country}
+                      </p>
+                      <p>Contact: {hotel.contact_number}</p>
+                      <Link
+                        to={`/rooms/${hotel.name}`}
+                        className="btn btn-primary"
+                        onClick={() => handleSelectHotel(hotel.id)}
+                      >
+                        View
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="col-md-6">
-                <div className="description">
-                  <a href="#">
-                    <h4 className="sec_h4">{hotel.name}</h4>
-                  </a>
-                  <h5>
-                    ${hotel.cost}
-                    <small>/night</small>
-                  </h5>
-                  <p>Description: {hotel.description}</p>
-                  <p>
-                    Location: {hotel.location}, {hotel.city}, {hotel.country}
-                  </p>
-                  <p>Contact: {hotel.contact_number}</p>
-                  <Link
-                    to={`/rooms/${hotel.name}`}
-                    className="btn btn-primary mt-2"
-                    onClick={() => handleSelectHotel(hotel.id)}
-                  >
-                    View
-                  </Link>
-                </div>
-              </div>
+              ))}
             </div>
-          ))}
+            <div className="col-lg-4 col-md-4 col-sm-12">{/* hello */}</div>
+          </div>
         </div>
       </section>
       {/* Pagination */}
@@ -533,7 +531,9 @@ const Listing = () => {
             (item, index) => (
               <li
                 key={index}
-                className={`page-item ${currentPage === index + 1 ? "active" : ""}`}
+                className={`page-item ${
+                  currentPage === index + 1 ? "active" : ""
+                }`}
               >
                 <a
                   href="#"

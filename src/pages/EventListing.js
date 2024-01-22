@@ -1,6 +1,8 @@
+// EventListing.js
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import React, { useEffect, useState } from "react";
 
 const EventListing = () => {
   const [events, setEvents] = useState([]);
@@ -10,7 +12,7 @@ const EventListing = () => {
     fetch("http://127.0.0.1:8000/events/api/events/")
       .then((response) => response.json())
       .then((data) => setEvents(data.results))
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => console.error("Error fetching events:", error));
   }, []);
 
   return (
@@ -37,9 +39,12 @@ const EventListing = () => {
                     </p>
                     <p>Location: {event.location}</p>
                     <p>Regular Price: ${event.regular_ticket_price}</p>
-                    <a href="#" className="btn theme_btn button_hover">
-                      Book Now
-                    </a>
+                    <Link
+                      to={`/events/${event.id}`}
+                      className="btn theme_btn button_hover"
+                    >
+                      View Tickets
+                    </Link>
                   </div>
                 </div>
               </div>

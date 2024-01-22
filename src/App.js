@@ -9,8 +9,7 @@ import Rooms from "./pages/Rooms";
 import Account from "./pages/Account";
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
-
-
+import EventListing from "./pages/EventListing";
 
 function App() {
   return (
@@ -25,6 +24,7 @@ function App() {
         <Route path="/listing" element={<Listing />} />
         <Route path="/rooms/:propertyname" element={<Rooms />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/events" element={<EventListing />} />
       </Routes>
     </div>
   );

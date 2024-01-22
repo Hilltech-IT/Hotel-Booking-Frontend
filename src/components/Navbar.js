@@ -71,11 +71,11 @@ const Navbar = () => {
                   Hotels
                 </Link>
               </li>
-              {/* <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Contact
-                </a>
-              </li> */}
+              <li className="nav-item">
+              <Link className="nav-link" to="/events">
+                  Events
+                </Link>
+              </li>
               <li className="nav-link mt-3">
                 <Link to="/register" className="genric-btn primary-border small text-dark">
                   Sign Up

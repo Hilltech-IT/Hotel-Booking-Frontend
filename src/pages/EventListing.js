@@ -40,7 +40,7 @@ const EventListing = () => {
                     <p>Location: {event.location}</p>
                     <p>Regular Price: ${event.regular_ticket_price}</p>
                     <Link
-                      to={`/events/${event.id}`}
+                      to={`/events/${event.id}/tickets`} // Include event ID in the URL
                       className="btn theme_btn button_hover"
                     >
                       View Tickets

@@ -10,21 +10,19 @@
 //   useEffect(() => {
 //     const user = JSON.parse(sessionStorage.getItem("user"));
 //     if (user && user.pk) {
-//       fetchUserData(user.pk);
+//       fetchUserData(user.token);
 //     }
 //   }, []);
 
-//   const fetchUserData = async (userId) => {
+//   const fetchUserData = async (token) => {
 //     try {
-//       const response = await fetch(
-//         `http://34.171.61.167:8000/users/${userId}`,
-//         {
-//           method: "GET",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//         }
-//       );
+//       const response = await fetch(`http://34.171.61.167:8000/users/`, {
+//         method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Token ${token}`,
+//         },
+//       });
 
 //       if (response.ok) {
 //         const userData = await response.json();
@@ -169,6 +167,7 @@
 // };
 
 // export default Account;
+
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -181,21 +180,19 @@ const Account = () => {
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem("user"));
     if (user && user.pk) {
-      fetchUserData(user.pk);
+      fetchUserData(user.token);
     }
   }, []);
 
-  const fetchUserData = async (userId) => {
+  const fetchUserData = async (token) => {
     try {
-      const response = await fetch(
-        `http://34.171.61.167:8000/users/${userId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`http://34.171.61.167:8000/users/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`,
+        },
+      });
 
       if (response.ok) {
         const userData = await response.json();

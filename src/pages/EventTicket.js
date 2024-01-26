@@ -160,6 +160,7 @@ const EventTicket = () => {
       );
       if (response.ok) {
         console.log("Ticket purchase successful!");
+        alert("Ticket purchase successful!");
       } else {
         const errorData = await response.json();
         console.error("Failed to purchase ticket:", errorData);

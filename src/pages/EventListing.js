@@ -98,6 +98,7 @@ const EventListing = () => {
                       Date: {event.event_date} Time: {event.event_time}
                     </p>
                     <p>Location: {event.location}</p>
+                    <p>Tickets: {event.total_tickets}</p>
                     <p>Regular Price: ${event.regular_ticket_price}</p>
                     <p>VIP Price: ${event.vip_ticket_price}</p>
                     <p>VVIP Price: ${event.vvip_ticket_price}</p>

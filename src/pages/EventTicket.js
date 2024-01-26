@@ -1,160 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
-// import Navbar from "../components/Navbar";
-// import Footer from "../components/Footer";
-
-// const EventTicket = () => {
-//   const { eventId } = useParams();
-//   const [event, setEvent] = useState(null);
-//   const [user, setUser] = useState(null);
-
-//   const [formData, setFormData] = useState({
-//     email: "",
-//     first_name: "",
-//     last_name: "",
-//     phone_number: "",
-//     regular_tickets: 0,
-//     vip_tickets: 0,
-//     vvip_tickets: 0,
-//     children_tickets: 0,
-//     couples_tickets: 0,
-//     group_tickets: 0,
-//     students_tickets: 0,
-//     ticket_type: "Single", // Set a default value
-//     payment_method: "Credit Card", // Set a default value
-//   });
-
-//   useEffect(() => {
-//     const fetchEventDetails = async () => {
-//       try {
-//         const response = await fetch(
-//           `http://127.0.0.1:8000/events/api/events/${eventId}`
-//         );
-//         if (response.ok) {
-//           const eventData = await response.json();
-//           setEvent(eventData);
-//         } else {
-//           console.error("Failed to fetch event details");
-//         }
-//       } catch (error) {
-//         console.error("Error occurred while fetching event details:", error);
-//       }
-//     };
-
-//     // Fetch event details based on the eventId
-//     fetchEventDetails();
-
-//     // Retrieve user details from session storage
-//     const storedUser = JSON.parse(sessionStorage.getItem("user"));
-//     setUser(storedUser);
-
-//     // Prefill the form data with user details
-//     if (storedUser) {
-//       setFormData((prevData) => ({
-//         ...prevData,
-//         email: storedUser.email,
-//         first_name: storedUser.first_name,
-//         last_name: storedUser.last_name,
-//         phone_number: storedUser.phone_number,
-//       }));
-//     }
-//   }, [eventId]);
-
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       [name]: value,
-//     }));
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     // Perform the API call to save the form data to the database
-//     try {
-//       const response = await fetch(
-//         "http://127.0.0.1:8000/events/buy-event-ticket/",
-//         {
-//           method: "POST",
-//           headers: {
-//             headers: {
-//               "Content-Type": "application/json",
-//               Authorization: `Token ${formData.token}`,
-//             },
-//           },
-//           body: JSON.stringify({
-//             event: eventId,
-//             ...formData,
-//           }),
-//         }
-//       );
-
-//       if (response.ok) {
-//         // Handle success, e.g., show a success message
-//         console.log("Ticket purchase successful!");
-//       } else {
-//         // Handle error, e.g., show an error message
-//         console.error("Failed to purchase ticket");
-//       }
-//     } catch (error) {
-//       console.error("Error occurred while purchasing ticket:", error);
-//     }
-//   };
-
-//   if (!event || !user) {
-//     return <p>Loading...</p>;
-//   }
-
-//   return (
-//     <>
-//       <Navbar />
-//       <section className="ticket_booking_area section_gap">
-//         <div className="container">
-//           <h2>{event.title}</h2>
-//           <p>
-//             Welcome, {user.first_name} {user.last_name}!
-//           </p>
-//           <form onSubmit={handleSubmit}>
-//             {/* Add form elements to select ticket type and quantity */}
-//             <label>Email:</label>
-//             <input
-//               type="text"
-//               name="email"
-//               value={formData.email}
-//               onChange={handleInputChange}
-//               readOnly
-//             />
-//             {/* Add similar input fields for other user details */}
-//             <label>Regular Tickets:</label>
-//             <input
-//               type="number"
-//               name="regular_tickets"
-//               value={formData.regular_tickets}
-//               onChange={handleInputChange}
-//             />
-//             {/* Add similar input fields for other ticket types */}
-//             <label>Ticket Type:</label>
-//             <select
-//               name="ticket_type"
-//               value={formData.ticket_type}
-//               onChange={handleInputChange}
-//             >
-//               <option value="Single">Single</option>
-//               <option value="Multiple">Multiple</option>
-//               {/* Add options for other ticket types */}
-//             </select>
-//             {/* Add a button to proceed with the purchase */}
-//             <button type="submit">Purchase Tickets</button>
-//           </form>
-//         </div>
-//       </section>
-//       <Footer />
-//     </>
-//   );
-// };
-
-// export default EventTicket;
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -164,23 +7,22 @@ const EventTicket = () => {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
   const [formData, setFormData] = useState({
+    regular_tickets: 0,
+    vip_tickets: 0,
+    vvip_tickets: 0,
+    children_tickets: 0,
+    couples_tickets: 0,
+    group_tickets: 0,
+    students_tickets: 0,
+    ticket_type: "Multiple",
     email: "",
     first_name: "",
     last_name: "",
     phone_number: "",
-    tickets: {
-      regular: 0,
-      vip: 0,
-      vvip: 0,
-      children: 0,
-      couples: 0,
-      group: 0,
-      students: 0,
-    },
-    ticket_type: "Single",
-    payment_method: "Credit Card",
+    payment_method: "Mpesa",
   });
 
   useEffect(() => {
@@ -202,35 +44,45 @@ const EventTicket = () => {
 
     fetchEventDetails();
 
-    const storedUser = JSON.parse(sessionStorage.getItem("user"));
-    setUser(storedUser);
-
-    if (storedUser) {
-      setFormData((prevData) => ({
-        ...prevData,
-        email: storedUser.email,
-        first_name: storedUser.first_name,
-        last_name: storedUser.last_name,
-        phone_number: storedUser.phone_number,
-      }));
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    if (user && user.pk) {
+      fetchUserData(user.token);
+      setToken(user.token);
     }
   }, [eventId]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const fetchUserData = async (token) => {
+    try {
+      const response = await fetch(`http://34.171.61.167:8000/users/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const storedUser = await response.json();
+        setUser(storedUser);
+        setFormData((prevData) => ({
+          ...prevData,
+          first_name: storedUser.first_name,
+          last_name: storedUser.last_name,
+          phone_number: storedUser.phone_number,
+          email: storedUser.email,
+        }));
+      } else {
+        console.error("Failed to fetch user data");
+      }
+    } catch (error) {
+      console.error("Error occurred while fetching user data:", error);
+    }
   };
 
   const handleTicketChange = (type, value) => {
     setFormData((prevData) => ({
       ...prevData,
-      tickets: {
-        ...prevData.tickets,
-        [type]: value,
-      },
+      [`${type}_tickets`]: value,
     }));
   };
 
@@ -239,21 +91,57 @@ const EventTicket = () => {
       return 0;
     }
 
-    const { regular_ticket_price, vip_ticket_price, vvip_ticket_price } = event;
+    const {
+      regular_ticket_price,
+      vip_ticket_price,
+      vvip_ticket_price,
+      children_ticket_price,
+      couples_ticket_price,
+      group_ticket_price,
+      students_ticket_price,
+    } = event;
+    const {
+      regular_tickets,
+      vip_tickets,
+      vvip_tickets,
+      children_tickets,
+      couples_tickets,
+      group_tickets,
+      students_tickets,
+    } = formData;
 
-    const { tickets } = formData;
+    const totalRegularPrice = regular_tickets * regular_ticket_price;
+    const totalVipPrice = vip_tickets * vip_ticket_price;
+    const totalVvipPrice = vvip_tickets * vvip_ticket_price;
+    const totalChildrenPrice = children_tickets * children_ticket_price;
+    const totalCouplesPrice = couples_tickets * couples_ticket_price;
+    const totalGroupPrice = group_tickets * group_ticket_price;
+    const totalStudentsPrice = students_tickets * students_ticket_price;
 
-    const totalRegularPrice = tickets.regular * regular_ticket_price;
-    const totalVipPrice = tickets.vip * vip_ticket_price;
-    const totalVvipPrice = tickets.vvip * vvip_ticket_price;
-
-    const totalPrice = totalRegularPrice + totalVipPrice + totalVvipPrice;
+    const totalPrice =
+      totalRegularPrice +
+      totalVipPrice +
+      totalVvipPrice +
+      totalChildrenPrice +
+      totalCouplesPrice +
+      totalGroupPrice +
+      totalStudentsPrice;
 
     return totalPrice;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user) {
+      alert("Please log in before purchasing.");
+      return;
+    }
+
+    if (event && event.total_tickets === 0) {
+      alert("Sorry, tickets for this event are sold out.");
+      return;
+    }
 
     try {
       const response = await fetch(
@@ -262,7 +150,7 @@ const EventTicket = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Token ${formData.token}`,
+            Authorization: `Token ${token}`,
           },
           body: JSON.stringify({
             event: eventId,
@@ -270,18 +158,22 @@ const EventTicket = () => {
           }),
         }
       );
-
       if (response.ok) {
         console.log("Ticket purchase successful!");
       } else {
-        console.error("Failed to purchase ticket");
+        const errorData = await response.json();
+        console.error("Failed to purchase ticket:", errorData);
+        alert(`Failed to purchase ticket: ${errorData.message}`);
       }
     } catch (error) {
       console.error("Error occurred while purchasing ticket:", error);
+      alert(
+        "An error occurred while processing your request. Please try again later."
+      );
     }
   };
 
-  if (!event || !user) {
+  if (!event) {
     return <p>Loading...</p>;
   }
 
@@ -291,77 +183,111 @@ const EventTicket = () => {
       <section className="ticket_booking_area section_gap">
         <div className="container">
           <h2>{event.title}</h2>
-          <p>
-            Welcome, {user.first_name} {user.last_name}!
-          </p>
+          {user && (
+            <p>
+              Welcome, {user.first_name} {user.last_name}!
+            </p>
+          )}
           <form onSubmit={handleSubmit}>
-            <label>Email:</label>
-            <input
-              type="text"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              readOnly
-            />
-
-            {/* Add similar input fields for other user details */}
             <label>Regular Tickets:</label>
             <input
               type="number"
               name="regular_tickets"
-              value={formData.tickets.regular}
+              value={formData.regular_tickets}
               onChange={(e) =>
                 handleTicketChange("regular", parseInt(e.target.value, 10))
               }
             />
 
-            {/* Add similar input fields for other ticket types */}
+            <label>VIP Tickets:</label>
+            <input
+              type="number"
+              name="vip_tickets"
+              value={formData.vip_tickets}
+              onChange={(e) =>
+                handleTicketChange("vip", parseInt(e.target.value, 10))
+              }
+            />
+
+            <label>VVIP Tickets:</label>
+            <input
+              type="number"
+              name="vvip_tickets"
+              value={formData.vvip_tickets}
+              onChange={(e) =>
+                handleTicketChange("vvip", parseInt(e.target.value, 10))
+              }
+            />
+
+            <label>Children Tickets:</label>
+            <input
+              type="number"
+              name="children_tickets"
+              value={formData.children_tickets}
+              onChange={(e) =>
+                handleTicketChange("children", parseInt(e.target.value, 10))
+              }
+            />
+
+            <label>Couples Tickets:</label>
+            <input
+              type="number"
+              name="couples_tickets"
+              value={formData.couples_tickets}
+              onChange={(e) =>
+                handleTicketChange("couples", parseInt(e.target.value, 10))
+              }
+            />
+
+            <label>Group Tickets:</label>
+            <input
+              type="number"
+              name="group_tickets"
+              value={formData.group_tickets}
+              onChange={(e) =>
+                handleTicketChange("group", parseInt(e.target.value, 10))
+              }
+            />
+
+            <label>Students Tickets:</label>
+            <input
+              type="number"
+              name="students_tickets"
+              value={formData.students_tickets}
+              onChange={(e) =>
+                handleTicketChange("students", parseInt(e.target.value, 10))
+              }
+            />
+
             <label>Ticket Type:</label>
             <select
               name="ticket_type"
               value={formData.ticket_type}
-              onChange={handleInputChange}
+              onChange={(e) =>
+                setFormData({ ...formData, ticket_type: e.target.value })
+              }
             >
               <option value="Single">Single</option>
               <option value="Multiple">Multiple</option>
             </select>
 
-            {/* Ticket Quantity Inputs */}
-            <div className="ticket-quantity">
-              <label>VIP Tickets:</label>
-              <input
-                type="number"
-                name="vip_tickets"
-                value={formData.tickets.vip}
-                onChange={(e) =>
-                  handleTicketChange("vip", parseInt(e.target.value, 10))
-                }
-              />
-
-              {/* Add similar input fields for other ticket types */}
-              <label>VVIP Tickets:</label>
-              <input
-                type="number"
-                name="vvip_tickets"
-                value={formData.tickets.vvip}
-                onChange={(e) =>
-                  handleTicketChange("vvip", parseInt(e.target.value, 10))
-                }
-              />
-            </div>
-
-            {/* Ticket Summary */}
             <div className="ticket-summary">
               <h3>Ticket Summary</h3>
-              <div>
-                <p>Regular Tickets: {formData.tickets.regular}</p>
-                <p>VIP Tickets: {formData.tickets.vip}</p>
-                <p>VVIP Tickets: {formData.tickets.vvip}</p>
-              </div>
+              {Object.keys(formData).map((ticketType) =>
+                ticketType.endsWith("_tickets") ? (
+                  <p key={ticketType}>
+                    {`${ticketType
+                      .replace("_tickets", "")
+                      .charAt(0)
+                      .toUpperCase()}${ticketType
+                      .replace("_tickets", "")
+                      .slice(1)} Tickets: ${formData[ticketType]}`}
+                  </p>
+                ) : null
+              )}
               <p>Total Price: ${calculateTotalPrice()}</p>
             </div>
 
-            {/* Add a button to proceed with the purchase */}
             <button type="submit">Purchase Tickets</button>
           </form>
         </div>

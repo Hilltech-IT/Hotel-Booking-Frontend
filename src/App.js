@@ -26,7 +26,7 @@ function App() {
         <Route path="/rooms/:propertyname" element={<Rooms />} />
         <Route path="/account" element={<Account />} />
         <Route path="/events" element={<EventListing />} />
-        <Route path="/events/:eventId/book" element={<EventTicket/>} />
+        <Route path="/events/:eventId" element={<EventTicket />} />
       </Routes>
     </div>
   );

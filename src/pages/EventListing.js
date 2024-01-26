@@ -77,7 +77,7 @@ const EventListing = () => {
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <section className="accomodation_area section_gap">
         <div className="container">
           <div className="section_title text-center">
@@ -104,7 +104,7 @@ const EventListing = () => {
                     <p>VVIP Price: ${event.vvip_ticket_price}</p>
                     <p>Children Price: ${event.children_ticket_price}</p>
                     <Link
-                      to={`/events/${event.id}/book`}
+                      to={`/events/${event.id}`}
                       className="btn theme_btn button_hover"
                     >
                       Book Tickets

@@ -181,116 +181,173 @@ const EventTicket = () => {
   return (
     <>
       <Navbar />
-      <section className="ticket_booking_area section_gap">
+      <section className="accommodation_area section_gap">
         <div className="container">
-          <h2>{event.title}</h2>
-          {user && (
-            <p>
-              Welcome, {user.first_name} {user.last_name}!
-            </p>
-          )}
-          <form onSubmit={handleSubmit}>
-            <label>Regular Tickets:</label>
-            <input
-              type="number"
-              name="regular_tickets"
-              value={formData.regular_tickets}
-              onChange={(e) =>
-                handleTicketChange("regular", parseInt(e.target.value, 10))
-              }
-            />
+          <div className="booking-form">
+            <h2>{event.title}</h2>
+            {user && (
+              <p>
+                Welcome, {user.first_name} {user.last_name}!
+              </p>
+            )}
+            <form onSubmit={handleSubmit}>
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label htmlFor="regular_tickets">Regular Tickets:</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="regular_tickets"
+                      name="regular_tickets"
+                      value={formData.regular_tickets}
+                      onChange={(e) =>
+                        handleTicketChange(
+                          "regular",
+                          parseInt(e.target.value, 10)
+                        )
+                      }
+                    />
+                  </div>
 
-            <label>VIP Tickets:</label>
-            <input
-              type="number"
-              name="vip_tickets"
-              value={formData.vip_tickets}
-              onChange={(e) =>
-                handleTicketChange("vip", parseInt(e.target.value, 10))
-              }
-            />
+                  <div className="form-group">
+                    <label htmlFor="vip_tickets">VIP Tickets:</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="vip_tickets"
+                      name="vip_tickets"
+                      value={formData.vip_tickets}
+                      onChange={(e) =>
+                        handleTicketChange("vip", parseInt(e.target.value, 10))
+                      }
+                    />
+                  </div>
 
-            <label>VVIP Tickets:</label>
-            <input
-              type="number"
-              name="vvip_tickets"
-              value={formData.vvip_tickets}
-              onChange={(e) =>
-                handleTicketChange("vvip", parseInt(e.target.value, 10))
-              }
-            />
+                  <div className="form-group">
+                    <label htmlFor="vvip_tickets">VVIP Tickets:</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="vvip_tickets"
+                      name="vvip_tickets"
+                      value={formData.vvip_tickets}
+                      onChange={(e) =>
+                        handleTicketChange("vvip", parseInt(e.target.value, 10))
+                      }
+                    />
+                  </div>
 
-            <label>Children Tickets:</label>
-            <input
-              type="number"
-              name="children_tickets"
-              value={formData.children_tickets}
-              onChange={(e) =>
-                handleTicketChange("children", parseInt(e.target.value, 10))
-              }
-            />
+                  <div className="form-group">
+                    <label htmlFor="students_tickets">Students Tickets:</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="students_tickets"
+                      name="students_tickets"
+                      value={formData.students_tickets}
+                      onChange={(e) =>
+                        handleTicketChange(
+                          "students",
+                          parseInt(e.target.value, 10)
+                        )
+                      }
+                    />
+                  </div>
+                </div>
 
-            <label>Couples Tickets:</label>
-            <input
-              type="number"
-              name="couples_tickets"
-              value={formData.couples_tickets}
-              onChange={(e) =>
-                handleTicketChange("couples", parseInt(e.target.value, 10))
-              }
-            />
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label htmlFor="children_tickets">Children Tickets:</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="children_tickets"
+                      name="children_tickets"
+                      value={formData.children_tickets}
+                      onChange={(e) =>
+                        handleTicketChange(
+                          "children",
+                          parseInt(e.target.value, 10)
+                        )
+                      }
+                    />
+                  </div>
 
-            <label>Group Tickets:</label>
-            <input
-              type="number"
-              name="group_tickets"
-              value={formData.group_tickets}
-              onChange={(e) =>
-                handleTicketChange("group", parseInt(e.target.value, 10))
-              }
-            />
+                  <div className="form-group">
+                    <label htmlFor="couples_tickets">Couples Tickets:</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="couples_tickets"
+                      name="couples_tickets"
+                      value={formData.couples_tickets}
+                      onChange={(e) =>
+                        handleTicketChange(
+                          "couples",
+                          parseInt(e.target.value, 10)
+                        )
+                      }
+                    />
+                  </div>
 
-            <label>Students Tickets:</label>
-            <input
-              type="number"
-              name="students_tickets"
-              value={formData.students_tickets}
-              onChange={(e) =>
-                handleTicketChange("students", parseInt(e.target.value, 10))
-              }
-            />
+                  <div className="form-group">
+                    <label htmlFor="group_tickets">Group Tickets:</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="group_tickets"
+                      name="group_tickets"
+                      value={formData.group_tickets}
+                      onChange={(e) =>
+                        handleTicketChange(
+                          "group",
+                          parseInt(e.target.value, 10)
+                        )
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
 
-            <label>Ticket Type:</label>
-            <select
-              name="ticket_type"
-              value={formData.ticket_type}
-              onChange={(e) =>
-                setFormData({ ...formData, ticket_type: e.target.value })
-              }
-            >
-              <option value="Single">Single</option>
-              <option value="Multiple">Multiple</option>
-            </select>
+              <div className="form-group">
+                <label htmlFor="ticket_type">Ticket Type:</label>
+                <select
+                  className="form-control"
+                  id="ticket_type"
+                  name="ticket_type"
+                  value={formData.ticket_type}
+                  onChange={(e) =>
+                    setFormData({ ...formData, ticket_type: e.target.value })
+                  }
+                >
+                  <option value="Single">Single</option>
+                  <option value="Multiple">Multiple</option>
+                </select>
+              </div>
 
-            <div className="ticket-summary">
-              <h3>Ticket Summary</h3>
-              {Object.keys(formData).map((ticketType) =>
-                ticketType.endsWith("_tickets") ? (
-                  <p key={ticketType}>
-                    {`${ticketType
-                      .replace("_tickets", "")
-                      .charAt(0)
-                      .toUpperCase()}${ticketType
-                      .replace("_tickets", "")
-                      .slice(1)} Tickets: ${formData[ticketType]}`}
-                  </p>
-                ) : null
-              )}
-              <p>Total Price: ${calculateTotalPrice()}</p>
-            </div>
+              <div className="ticket-summary">
+                <h3>Ticket Summary</h3>
+                {Object.keys(formData).map((ticketType) =>
+                  ticketType.endsWith("_tickets") ? (
+                    <p key={ticketType}>
+                      {`${ticketType
+                        .replace("_tickets", "")
+                        .charAt(0)
+                        .toUpperCase()}${ticketType
+                        .replace("_tickets", "")
+                        .slice(1)} Tickets: ${formData[ticketType]}`}
+                    </p>
+                  ) : null
+                )}
+                <p>Total Price: ${calculateTotalPrice()}</p>
+              </div>
 
-            <button type="submit">Purchase Tickets</button>
-          </form>
+              <button type="submit" className="btn btn-primary">
+                Purchase Tickets
+              </button>
+            </form>
+          </div>
         </div>
       </section>
       <Footer />

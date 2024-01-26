@@ -129,9 +129,27 @@ const EventTicket = () => {
 
     return totalPrice;
   };
+  const resetForm = () => {
+    setFormData({
+      regular_tickets: 0,
+      vip_tickets: 0,
+      vvip_tickets: 0,
+      children_tickets: 0,
+      couples_tickets: 0,
+      group_tickets: 0,
+      students_tickets: 0,
+      ticket_type: "Multiple",
+      payment_method: "Mpesa",
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const totalPrice = calculateTotalPrice();
+    if (totalPrice <= 0) {
+      alert("Please add at least one ticket to your purchase.");
+      return;
+    }
 
     if (!user) {
       alert("Please log in before purchasing.");
@@ -161,6 +179,7 @@ const EventTicket = () => {
       if (response.ok) {
         console.log("Ticket purchase successful!");
         alert("Ticket purchase successful!");
+        resetForm();
       } else {
         const errorData = await response.json();
         console.error("Failed to purchase ticket:", errorData);

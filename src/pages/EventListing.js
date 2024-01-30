@@ -49,7 +49,8 @@ const EventListing = () => {
                     <p>Regular Price: ${event.regular_ticket_price}</p>
                     <p>VIP Price: ${event.vip_ticket_price}</p>
                     <p>VVIP Price: ${event.vvip_ticket_price}</p>
-                    <p>Children Price: ${event.children_ticket_price}</p>
+                    <p>Children Price: ${event.students_ticket_price}</p>
+                    <p>Children Price: ${event.group_ticket_price}</p>
                     <Link
                       to={`/events/${event.id}`}
                       className="btn theme_btn button_hover"

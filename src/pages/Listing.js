@@ -124,6 +124,12 @@ const Listing = () => {
       <Navbar />
       <section className="accommodation_area section_gap">
         <div className="container">
+          <div>
+            <p>
+              Find your next stay Search low prices on hotels, AirBnB, Event Spaces and much
+              more...
+            </p>
+          </div>
           <div
             className="row mb-5"
             style={{
@@ -350,7 +356,7 @@ const Listing = () => {
                         </div>
                         <div className="col-md-6">
                           <h4 className="sec_h4">
-                            <a href="#">{hotel.name}</a>
+                            <h5>{hotel.name}</h5>
                           </h4>
                           <p>Property Type: {hotel.property_type}</p>
                           <p>
@@ -360,7 +366,7 @@ const Listing = () => {
                           <p>Contact: {hotel.contact_number}</p>
                           <Link
                             to={`/rooms/${hotel.name}`}
-                            className="btn btn-primary"
+                            className="btn theme_btn"
                             onClick={() => handleSelectHotel(hotel.id)}
                           >
                             View
@@ -400,6 +406,16 @@ const Listing = () => {
                     />
                     <label className="form-check-label" htmlFor="filter2">
                       Hotel
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="filter2"
+                    />
+                    <label className="form-check-label" htmlFor="filter2">
+                      Event Space
                     </label>
                   </div>
                 </div>

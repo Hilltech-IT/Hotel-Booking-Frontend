@@ -184,27 +184,31 @@ const Rooms = () => {
             {/* Additional description if needed */}
           </div>
           <div className="row mb_30">
-            {currentRooms.map((room) => (
-              <div className="col-lg-3 col-sm-6" key={room.id}>
-                <div className="accomodation_item text-center card rounded">
-                  {/* <img src="/image/room1.jpg" alt="Room" /> */}
-                  <h4 className="sec_h4">{room.room_type}</h4>
-                  <h6>
-                    KES.{room.rate}
-                    <small>/night</small>
-                  </h6>
-                  <p>Amenities: {room.amenities}</p>
-                  <p>View: {room.view}</p>
-                  <p>Available Rooms: {room.rooms_count}</p>
-                  <button
-                    className="btn theme_btn button_hover"
-                    onClick={() => handleSubmit(room)}
-                  >
-                    Book Now
-                  </button>
+            {roomsData.length === 0 ? (
+              <p className="text-center">No rooms available</p>
+            ) : (
+              currentRooms.map((room) => (
+                <div className="col-lg-3 col-sm-6" key={room.id}>
+                  <div className="accomodation_item text-center card rounded">
+                    {/* <img src="/image/room1.jpg" alt="Room" /> */}
+                    <h4 className="sec_h4">{room.room_type}</h4>
+                    <h6>
+                      KES.{room.rate}
+                      <small>/night</small>
+                    </h6>
+                    <p>Amenities: {room.amenities}</p>
+                    <p>View: {room.view}</p>
+                    <p>Available Rooms: {room.rooms_count}</p>
+                    <button
+                      className="btn theme_btn button_hover"
+                      onClick={() => handleSubmit(room)}
+                    >
+                      Book Now
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </section>

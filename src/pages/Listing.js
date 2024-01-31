@@ -241,13 +241,25 @@ const Listing = () => {
           <div className="row">
             <div className="col-lg-8 col-md-8 col-sm-12">
               {listings.map((hotel) => (
+                // <div
+                //   className="row"
+                //   key={hotel.id}
+                //   style={{
+                //     backgroundColor: "#ffffff",
+                //     // borderRadius: "15px",
+                //     boxShadow: "2px 4px 8px rgba(0.2, 0, 0, 0.2)",
+                //     padding: "5px",
+                //     marginBottom: "10px",
+                //     width: "100%",
+                //   }}
+                // >
                 <div
                   className="row"
                   key={hotel.id}
                   style={{
                     backgroundColor: "#ffffff",
-                    borderRadius: "15px",
-                    boxShadow: "2px 4px 8px rgba(0.2, 0, 0, 0.2)",
+                    // borderRadius: "15px",
+                    border: "1px solid rgba(0.2, 0, 0, 0.2)", // Set border properties here
                     padding: "5px",
                     marginBottom: "10px",
                     width: "100%",

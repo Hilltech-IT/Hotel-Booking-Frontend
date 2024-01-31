@@ -28,11 +28,7 @@ const EventListing = () => {
       <section className="accomodation_area section_gap">
         <div className="container">
           <div className="section_title text-center">
-            <h2 className="title_color">Upcoming Events</h2>
-            <p>
-              We all live in an age that belongs to the young at heart. Life
-              that is becoming extremely fast.
-            </p>
+            <h3 className="title_color text-left">All events</h3>
           </div>
           <div className="row">
             {currentEvents.map((event) => (

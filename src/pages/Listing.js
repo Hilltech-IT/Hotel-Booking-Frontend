@@ -229,6 +229,7 @@ const Listing = () => {
                     <option value="">All</option>
                     <option value="Hotel">Hotel</option>
                     <option value="AirBnB">AirBnB</option>
+                    <option value="Event Space">Event Space</option>
                     {/* Add more options based on your property types */}
                   </select>
                 </div>

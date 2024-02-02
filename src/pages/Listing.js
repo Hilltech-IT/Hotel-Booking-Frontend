@@ -126,8 +126,8 @@ const Listing = () => {
         <div className="container">
           <div>
             <p>
-              Find your next stay Search low prices on hotels, AirBnB, Event Spaces and much
-              more...
+              Find your next stay Search low prices on hotels, AirBnB, Event
+              Spaces and much more...
             </p>
           </div>
           <div
@@ -364,13 +364,45 @@ const Listing = () => {
                             {hotel.country}
                           </p>
                           <p>Contact: {hotel.contact_number}</p>
-                          <Link
+                          {/* <Link
                             to={`/rooms/${hotel.name}`}
                             className="btn theme_btn"
                             onClick={() => handleSelectHotel(hotel.id)}
                           >
                             View
-                          </Link>
+                          </Link> */}
+                          {propertyTypeFilter === "AirBnB" ? (
+                            // <Link
+                            //   to={`/airbnb/${hotel.name}`}
+                            //   className="btn theme_btn"
+                            //   onClick={() => handleSelectHotel(hotel.id)}
+                            // >
+                            //   View
+                            // </Link>
+                            <Link
+                              to={`/airbnb/${hotel.id}`}
+                              className="btn theme_btn"
+                              onClick={() => handleSelectHotel(hotel.id)}
+                            >
+                              View
+                            </Link>
+                          ) : propertyTypeFilter === "Event Space" ? (
+                            <Link
+                              to={`/event-space/${hotel.id}`}
+                              className="btn theme_btn"
+                              onClick={() => handleSelectHotel(hotel.id)}
+                            >
+                              View
+                            </Link>
+                          ) : (
+                            <Link
+                              to={`/rooms/${hotel.name}`}
+                              className="btn theme_btn"
+                              onClick={() => handleSelectHotel(hotel.id)}
+                            >
+                              View
+                            </Link>
+                          )}
                         </div>
                       </div>
                     </div>

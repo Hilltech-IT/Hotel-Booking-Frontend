@@ -11,6 +11,8 @@ import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import EventListing from "./pages/EventListing";
 import EventTicket from "./pages/EventTicket";
+import AirBnb from "./pages/AirBnb";
+import EventSpace from "./pages/EventSpace";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
         <Route path="/account" element={<Account />} />
         <Route path="/events" element={<EventListing />} />
         <Route path="/events/:eventId" element={<EventTicket />} />
+        <Route path="/airbnb/:propertyId" element={<AirBnb />} />
+        <Route path="/event-space/:propertyId" element={<EventSpace />} />
       </Routes>
     </div>
   );

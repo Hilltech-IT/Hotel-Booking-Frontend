@@ -721,6 +721,18 @@ const EventSpace = () => {
   const toggleBooking = () => {
     setShowBookingForm(!showBookingForm);
   };
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+
+    // Pad single-digit months and days with a leading zero
+    month = month < 10 ? `0${month}` : month;
+    day = day < 10 ? `0${day}` : day;
+
+    return `${year}-${month}-${day}`;
+  };
 
   return (
     <div>
@@ -784,6 +796,7 @@ const EventSpace = () => {
                             setCheckinDate(e.target.value);
                             calculateTotals();
                           }}
+                          min={getCurrentDate()}
                           required
                         />
                       </div>
@@ -797,6 +810,7 @@ const EventSpace = () => {
                             setCheckoutDate(e.target.value);
                             calculateTotals();
                           }}
+                          min={getCurrentDate()}
                           required
                         />
                       </div>

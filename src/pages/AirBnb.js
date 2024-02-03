@@ -460,6 +460,18 @@ const AirBnb = () => {
   const toggleBooking = () => {
     setShowBookingForm(!showBookingForm);
   };
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+
+    // Pad single-digit months and days with a leading zero
+    month = month < 10 ? `0${month}` : month;
+    day = day < 10 ? `0${day}` : day;
+
+    return `${year}-${month}-${day}`;
+  };
 
   return (
     <div>
@@ -497,7 +509,6 @@ const AirBnb = () => {
           )}
         </div>
       </section>
-      // ... (previous code)
       {showBookingForm && selectedAirbnb && (
         <div className="booking_form_right">
           <section className="hotel_booking_area mt-5">
@@ -521,6 +532,7 @@ const AirBnb = () => {
                             setCheckinDate(e.target.value);
                             calculateTotals();
                           }}
+                          min={getCurrentDate()}
                           required
                         />
                       </div>
@@ -534,6 +546,7 @@ const AirBnb = () => {
                             setCheckoutDate(e.target.value);
                             calculateTotals();
                           }}
+                          min={getCurrentDate()}
                           required
                         />
                       </div>

@@ -14,7 +14,7 @@ const Listing = () => {
   const [cityFilter, setCityFilter] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(3);
+  const [itemsPerPage] = useState(6);
   const [propertyTypeFilter, setPropertyTypeFilter] = useState("");
 
   const { selectHotel, selectedHotel } = useContext(HotelContext);
@@ -97,7 +97,7 @@ const Listing = () => {
   };
 
   useEffect(() => {
-    fetch("http://34.171.61.167:8000/properties/api/property-listings/")
+    fetch("http://127.0.0.1:8000/properties/api/property-listings/")
       .then((response) => response.json())
       .then((data) => {
         if (data && data.results && Array.isArray(data.results)) {

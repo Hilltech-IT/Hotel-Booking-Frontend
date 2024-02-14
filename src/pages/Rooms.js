@@ -26,7 +26,7 @@ const Rooms = () => {
       try {
         const encodedPropertyName = encodeURIComponent(propertyname);
         const response = await fetch(
-          `http://34.171.61.167:8000/properties/api/rooms/?search=${encodedPropertyName}`
+          `http://127.0.0.1:8000/properties/api/rooms/?search=${encodedPropertyName}`
         );
         const data = await response.json();
         if (data && data.results) {
@@ -51,9 +51,34 @@ const Rooms = () => {
       alert("Sorry, the rooms are fully booked for this room type.");
       return;
     }
-
+   
+    //end of change
     setSelectedRoom(room);
     setShowBookingForm(true);
+  };
+
+  const getDatesBetween = (startDate, endDate) => {
+    const dates = [];
+    let currentDate = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Debugging: Log the input dates
+    console.log("Start Date:", startDate);
+    console.log("End Date:", endDate);
+
+    while (currentDate < end) {
+      const formattedDate = currentDate.toISOString().split("T")[0];
+      dates.push(formattedDate);
+      currentDate.setDate(currentDate.getDate() + 1);
+
+      // Debugging: Log the current date in each iteration
+      console.log("Current Date:", formattedDate);
+    }
+
+    // Debugging: Log the generated dates array
+    console.log("Dates Between:", dates);
+
+    return dates;
   };
 
   const getUserTokenFromSession = () => {
@@ -77,6 +102,20 @@ const Rooms = () => {
   };
 
   const handleRoomBooking = async () => {
+     // Check for conflicts between selected dates and booked dates
+  const selectedRoomBookedDates = selectedRoom.dates_booked || [];
+  const selectedDates = getDatesBetween(checkinDate, checkoutDate);
+  const conflict = selectedDates.some((date) =>
+    selectedRoomBookedDates.includes(date)
+  );
+
+  if (conflict) {
+    alert(
+      "Sorry, the selected dates are already booked. Please choose different dates."
+    );
+    return;
+  }
+  //end
     if (roomsBooked > selectedRoom.available_rooms) {
       alert(
         "Sorry, the requested number of rooms exceeds the available rooms."
@@ -120,7 +159,7 @@ const Rooms = () => {
 
     try {
       const response = await fetch(
-        "http://34.171.61.167:8000/bookings/book-a-room/",
+        "http://127.0.0.1:8000/bookings/book-a-room/",
         {
           method: "POST",
           headers: {
@@ -159,7 +198,7 @@ const Rooms = () => {
     const fetchHotelImages = async () => {
       try {
         const response = await fetch(
-          `http://34.171.61.167:8000/properties/api/property-listings/?search=${propertyname}`
+          `http://127.0.0.1:8000/properties/api/property-listings/?search=${propertyname}`
         );
         const data = await response.json();
         if (data && data.results && data.results.length > 0) {
@@ -173,6 +212,7 @@ const Rooms = () => {
 
     fetchHotelImages();
   }, [propertyname]);
+
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -284,6 +324,7 @@ const Rooms = () => {
                       onSubmit={(e) => {
                         e.preventDefault();
                         handleRoomBooking();
+                      
                       }}
                     >
                       <div className="form-group">

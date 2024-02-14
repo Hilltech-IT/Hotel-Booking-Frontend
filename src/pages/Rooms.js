@@ -103,18 +103,30 @@ const Rooms = () => {
 
   const handleRoomBooking = async () => {
      // Check for conflicts between selected dates and booked dates
-  const selectedRoomBookedDates = selectedRoom.dates_booked || [];
-  const selectedDates = getDatesBetween(checkinDate, checkoutDate);
-  const conflict = selectedDates.some((date) =>
-    selectedRoomBookedDates.includes(date)
-  );
+  // const selectedRoomBookedDates = selectedRoom.dates_booked || [];
+  // const selectedDates = getDatesBetween(checkinDate, checkoutDate);
+  // const conflict = selectedDates.some((date) =>
+  //   selectedRoomBookedDates.includes(date)
+  // );
 
-  if (conflict) {
-    alert(
-      "Sorry, the selected dates are already booked. Please choose different dates."
-    );
-    return;
-  }
+  // if (conflict) {
+  //   alert(
+  //     "Sorry, the selected dates are already booked. Please choose different dates."
+  //   );
+  //   return;
+  // }
+  // Check for conflicts between selected dates and booked dates
+const selectedRoomBookedDates = selectedRoom.dates_booked || [];
+const selectedDates = getDatesBetween(checkinDate, checkoutDate);
+const conflictingDate = selectedDates.find((date) =>
+  selectedRoomBookedDates.includes(date)
+);
+
+if (conflictingDate) {
+  alert(`Sorry, ${conflictingDate} is already booked. Please choose a different date.`);
+  return;
+}
+
   //end
     if (roomsBooked > selectedRoom.available_rooms) {
       alert(

@@ -653,7 +653,32 @@ const EventSpace = () => {
     setBookingTotals(totalCost);
   };
 
+  const getDatesBetween = (startDate, endDate) => {
+    const dates = [];
+    let currentDate = new Date(startDate);
+
+    while (currentDate <= new Date(endDate)) {
+      dates.push(currentDate.toISOString().split("T")[0]);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return dates;
+  };
+
   const handleEventSpaceBooking = async () => {
+    const selectedRoomBookedDates = selectedEventSpace.booked_dates || [];
+    const selectedDates = getDatesBetween(checkinDate, checkoutDate);
+    const conflictingDate = selectedDates.find((date) =>
+      selectedRoomBookedDates.includes(date)
+    );
+
+    if (conflictingDate) {
+      alert(
+        `Sorry, ${conflictingDate} is already booked. Please choose a different date.`
+      );
+      return;
+    }
+
     const token = getUserTokenFromSession();
 
     if (!token) {

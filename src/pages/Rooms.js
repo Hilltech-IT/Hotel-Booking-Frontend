@@ -51,7 +51,7 @@ const Rooms = () => {
       alert("Sorry, the rooms are fully booked for this room type.");
       return;
     }
-   
+
     //end of change
     setSelectedRoom(room);
     setShowBookingForm(true);
@@ -102,32 +102,34 @@ const Rooms = () => {
   };
 
   const handleRoomBooking = async () => {
-     // Check for conflicts between selected dates and booked dates
-  // const selectedRoomBookedDates = selectedRoom.dates_booked || [];
-  // const selectedDates = getDatesBetween(checkinDate, checkoutDate);
-  // const conflict = selectedDates.some((date) =>
-  //   selectedRoomBookedDates.includes(date)
-  // );
+    // Check for conflicts between selected dates and booked dates
+    // const selectedRoomBookedDates = selectedRoom.dates_booked || [];
+    // const selectedDates = getDatesBetween(checkinDate, checkoutDate);
+    // const conflict = selectedDates.some((date) =>
+    //   selectedRoomBookedDates.includes(date)
+    // );
 
-  // if (conflict) {
-  //   alert(
-  //     "Sorry, the selected dates are already booked. Please choose different dates."
-  //   );
-  //   return;
-  // }
-  // Check for conflicts between selected dates and booked dates
-const selectedRoomBookedDates = selectedRoom.dates_booked || [];
-const selectedDates = getDatesBetween(checkinDate, checkoutDate);
-const conflictingDate = selectedDates.find((date) =>
-  selectedRoomBookedDates.includes(date)
-);
+    // if (conflict) {
+    //   alert(
+    //     "Sorry, the selected dates are already booked. Please choose different dates."
+    //   );
+    //   return;
+    // }
+    // Check for conflicts between selected dates and booked dates
+    const selectedRoomBookedDates = selectedRoom.dates_booked || [];
+    const selectedDates = getDatesBetween(checkinDate, checkoutDate);
+    const conflictingDate = selectedDates.find((date) =>
+      selectedRoomBookedDates.includes(date)
+    );
 
-if (conflictingDate) {
-  alert(`Sorry, ${conflictingDate} is already booked. Please choose a different date.`);
-  return;
-}
+    if (conflictingDate) {
+      alert(
+        `Sorry, ${conflictingDate} is already booked. Please choose a different date.`
+      );
+      return;
+    }
 
-  //end
+    //end
     if (roomsBooked > selectedRoom.available_rooms) {
       alert(
         "Sorry, the requested number of rooms exceeds the available rooms."
@@ -336,7 +338,6 @@ if (conflictingDate) {
                       onSubmit={(e) => {
                         e.preventDefault();
                         handleRoomBooking();
-                      
                       }}
                     >
                       <div className="form-group">

@@ -890,7 +890,7 @@ const EventSpace = () => {
         {bookingError && <div className="error_message">{bookingError}</div>}
         {bookingSuccess && (
           <div className="success_message">
-            Event Space booked successfully!
+            Event Space booked successfully! Check your mail for payment link!
           </div>
         )}
       </div>

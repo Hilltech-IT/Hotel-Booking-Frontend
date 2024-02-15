@@ -178,7 +178,7 @@ const EventTicket = () => {
       );
       if (response.ok) {
         console.log("Ticket purchase successful!");
-        alert("Ticket purchase successful!");
+        alert("Ticket purchase successful! Check Mail for Payment Link");
         resetForm();
       } else {
         const errorData = await response.json();

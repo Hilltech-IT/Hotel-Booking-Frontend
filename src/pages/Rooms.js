@@ -72,11 +72,11 @@ const Rooms = () => {
       currentDate.setDate(currentDate.getDate() + 1);
 
       // Debugging: Log the current date in each iteration
-      console.log("Current Date:", formattedDate);
+      // console.log("Current Date:", formattedDate);
     }
 
     // Debugging: Log the generated dates array
-    console.log("Dates Between:", dates);
+    // console.log("Dates Between:", dates);
 
     return dates;
   };
@@ -187,7 +187,6 @@ const Rooms = () => {
       if (response.ok) {
         setBookingSuccess(true);
         setBookingError(null);
-
         setCheckinDate("");
         setCheckoutDate("");
         setRoomsBooked(1);
@@ -412,7 +411,9 @@ const Rooms = () => {
         )}
         {bookingError && <div className="error_message">{bookingError}</div>}
         {bookingSuccess && (
-          <div className="success_message">Room booked successfully!</div>
+          <div className="success_message">
+            Room booked successfully!Check Mail for payment link!
+          </div>
         )}
       </div>
       {hotelImages.length > 0 && <RoomImages images={hotelImages} />}

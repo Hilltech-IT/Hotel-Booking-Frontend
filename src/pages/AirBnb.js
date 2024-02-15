@@ -508,11 +508,11 @@ const AirBnb = () => {
               {airbnbData.map((airbnb) => (
                 <div className="col-md-6" key={airbnb.id}>
                   <div className="card mb-3">
-                    <img
+                    {/* <img
                       className="card-img-top"
                       src={airbnb.profile_image}
                       alt={airbnb.name}
-                    />
+                    /> */}
                     <div className="card-body">
                       <h5 className="card-title">{airbnb.name}</h5>
                       <p className="card-text">
@@ -622,7 +622,9 @@ const AirBnb = () => {
         )}
         {bookingError && <div className="error_message">{bookingError}</div>}
         {bookingSuccess && (
-          <div className="success_message">Airbnb booked successfully!</div>
+          <div className="success_message">
+            Airbnb booked successfully! Check Your Mail for payment links
+          </div>
         )}
       </div>
       {airbnbImages.length > 0 && <RoomImages images={airbnbImages} />}

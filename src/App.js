@@ -14,6 +14,8 @@ import EventTicket from "./pages/EventTicket";
 import AirBnb from "./pages/AirBnb";
 import EventSpace from "./pages/EventSpace";
 
+import PaymentCallback from "./pages/PaymentCallback";
+
 function App() {
   return (
     <div>
@@ -31,6 +33,7 @@ function App() {
         <Route path="/events/:eventId" element={<EventTicket />} />
         <Route path="/airbnb/:propertyId" element={<AirBnb />} />
         <Route path="/event-space/:propertyId" element={<EventSpace />} />
+        <Route path="/payment-callback/" element={<PaymentCallback />} />
       </Routes>
     </div>
   );

@@ -712,7 +712,7 @@ const EventSpace = () => {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/bookings/book-an-event-space/",
+        "http://34.171.61.167:8000/bookings/book-an-event-space/",
         {
           method: "POST",
           headers: {

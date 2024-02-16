@@ -29,7 +29,7 @@ const EventTicket = () => {
     const fetchEventDetails = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/events/api/events/${eventId}`
+          `http://34.171.61.167:8000/events/api/events/${eventId}`
         );
         if (response.ok) {
           const eventData = await response.json();
@@ -163,7 +163,7 @@ const EventTicket = () => {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/events/buy-event-ticket/",
+        "http://34.171.61.167:8000/events/buy-event-ticket/",
         {
           method: "POST",
           headers: {

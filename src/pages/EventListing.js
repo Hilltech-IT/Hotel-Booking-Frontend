@@ -10,7 +10,7 @@ const EventListing = () => {
 
   useEffect(() => {
     // Fetch events data
-    fetch("http://127.0.0.1:8000/events/api/events/")
+    fetch("http://34.171.61.167:8000/events/api/events/")
       .then((response) => response.json())
       .then((data) => setEvents(data.results))
       .catch((error) => console.error("Error fetching events:", error));

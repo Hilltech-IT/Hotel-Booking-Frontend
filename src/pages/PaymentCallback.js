@@ -20,7 +20,7 @@ const PaymentCallback = () => {
         //e.preventDefault();
 
         try {
-            const response = await fetch(`http://34.171.61.167:3000/payments/paystack-callback/?trxref=${trxref}&reference=${reference}`, {
+            const response = await fetch(`http://34.171.61.167:8000/payments/paystack-callback/?trxref=${trxref}&reference=${reference}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

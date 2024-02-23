@@ -174,7 +174,7 @@ const Rooms = () => {
 
     try {
       const response = await fetch(
-        "http://34.171.61.167:8000/bookings/book-a-room/",
+        `${BACKEND_API_URL}/bookings/book-a-room/`,
         {
           method: "POST",
           headers: {

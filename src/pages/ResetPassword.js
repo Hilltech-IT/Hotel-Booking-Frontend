@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
+import { BACKEND_API_URL } from '../services/constants';
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const ResetPassword = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://34.171.61.167:8000/users/change-password/${token}/`, {
+      const response = await fetch(`${BACKEND_API_URL}/users/change-password/${token}/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +43,6 @@ const ResetPassword = () => {
         setFormData({
           password: "",
           repeat_password: "",
-          
         });
         console.log("Password reset successful!");
         navigate("/");

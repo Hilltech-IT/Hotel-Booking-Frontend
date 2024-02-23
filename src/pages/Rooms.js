@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import RoomImages from "./RoomImages";
+import { BACKEND_API_URL } from "../services/constants";
 
 const Rooms = () => {
   const [roomsData, setRoomsData] = useState([]);
@@ -26,7 +27,7 @@ const Rooms = () => {
       try {
         const encodedPropertyName = encodeURIComponent(propertyname);
         const response = await fetch(
-          `http://34.171.61.167:8000/properties/api/rooms/?search=${encodedPropertyName}`
+          `${BACKEND_API_URL}/properties/api/rooms/?search=${encodedPropertyName}`
         );
         const data = await response.json();
         if (data && data.results) {

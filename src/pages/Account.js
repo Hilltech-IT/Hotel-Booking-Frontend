@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import {BACKEND_API_URL } from '../services/constants';
 
 const Account = () => {
   const [userData, setUserData] = useState(null);
@@ -16,7 +17,7 @@ const Account = () => {
 
   const fetchUserData = async (token) => {
     try {
-      const response = await fetch(`http://34.171.61.167:8000/users/`, {
+      const response = await fetch(`${BACKEND_API_URL}/users/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

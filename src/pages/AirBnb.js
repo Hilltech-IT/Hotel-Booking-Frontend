@@ -318,6 +318,7 @@ import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import RoomImages from "./RoomImages";
+import  { BACKEND_API_URL } from '../services/constants';
 
 const AirBnb = () => {
   const [airbnbData, setAirbnbData] = useState([]);
@@ -337,7 +338,7 @@ const AirBnb = () => {
     const fetchAirbnbData = async () => {
       try {
         const response = await fetch(
-          `http://34.171.61.167:8000/properties/api/property-listings/${propertyId}/`
+          `${BACKEND_API_URL}/properties/api/property-listings/${propertyId}/`
         );
         const data = await response.json();
         if (data) {
@@ -451,7 +452,7 @@ const AirBnb = () => {
 
     try {
       const response = await fetch(
-        "http://34.171.61.167:8000/bookings/book-an-airbnb/",
+        `${BACKEND_API_URL}/bookings/book-an-airbnb/`,
         {
           method: "POST",
           headers: {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { BACKEND_API_URL } from "../services/constants";
 
 const EventTicket = () => {
   const { eventId } = useParams();
@@ -29,7 +30,7 @@ const EventTicket = () => {
     const fetchEventDetails = async () => {
       try {
         const response = await fetch(
-          `http://34.171.61.167:8000/events/api/events/${eventId}`
+          `${BACKEND_API_URL}/events/api/events/${eventId}`
         );
         if (response.ok) {
           const eventData = await response.json();
@@ -53,7 +54,7 @@ const EventTicket = () => {
 
   const fetchUserData = async (token) => {
     try {
-      const response = await fetch(`http://34.171.61.167:8000/users/`, {
+      const response = await fetch(`${BACKEND_API_URL}/users/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -163,7 +164,7 @@ const EventTicket = () => {
 
     try {
       const response = await fetch(
-        "http://34.171.61.167:8000/events/buy-event-ticket/",
+        `${BACKEND_API_URL}/events/buy-event-ticket/`,
         {
           method: "POST",
           headers: {

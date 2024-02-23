@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { useLocation, Link } from "react-router-dom";
 import { HotelContext } from "../context/HotelContext";
 import Footer from "../components/Footer";
+import { BACKEND_API_URL } from '../services/constants';
 
 const Listing = () => {
   const location = useLocation();
@@ -97,7 +98,7 @@ const Listing = () => {
   };
 
   useEffect(() => {
-    fetch("http://34.171.61.167:8000/properties/api/property-listings/")
+    fetch(`${BACKEND_API_URL}/properties/api/property-listings/`)
       .then((response) => response.json())
       .then((data) => {
         if (data && data.results && Array.isArray(data.results)) {

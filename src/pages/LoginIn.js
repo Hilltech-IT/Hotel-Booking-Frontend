@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import { BACKEND_API_URL } from "../services/constants";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://34.171.61.167:8000/users/login/", {
+      const response = await fetch(`${BACKEND_API_URL}/users/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

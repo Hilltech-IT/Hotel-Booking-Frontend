@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_API_URL } from '../services/constants';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        "http://34.171.61.167:8000/users/register/",
+        `${BACKEND_API_URL}/users/register/`,
         {
           method: "POST",
           headers: {

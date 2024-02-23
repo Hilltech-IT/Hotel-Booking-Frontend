@@ -579,6 +579,7 @@ import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import RoomImages from "./RoomImages";
+import { BACKEND_API_URL } from "../services/constants";
 
 const EventSpace = () => {
   const [eventSpaceData, setEventSpaceData] = useState([]);
@@ -598,7 +599,7 @@ const EventSpace = () => {
     const fetchEventSpaceData = async () => {
       try {
         const response = await fetch(
-          `http://34.171.61.167:8000/properties/api/property-listings/${propertyId}/`
+          `${BACKEND_API_URL}/properties/api/property-listings/${propertyId}/`
         );
         const data = await response.json();
         if (data) {
@@ -712,7 +713,7 @@ const EventSpace = () => {
 
     try {
       const response = await fetch(
-        "http://34.171.61.167:8000/bookings/book-an-event-space/",
+        `${BACKEND_API_URL}/bookings/book-an-event-space/`,
         {
           method: "POST",
           headers: {

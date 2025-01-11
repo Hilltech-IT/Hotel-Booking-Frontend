@@ -337,11 +337,11 @@ const AirBnb = () => {
     const fetchAirbnbData = async () => {
       try {
         const response = await fetch(
-          `http://34.171.61.167:8000/properties/api/property-listings/${propertyId}/`
+          `http://127.0.0.1:8000/properties/api/property-listings/${propertyId}/`
         );
         const data = await response.json();
         if (data) {
-          setAirbnbData([data]); // Assuming the response is a single property
+          setAirbnbData([data]); 
         }
       } catch (error) {
         console.error("Error fetching Airbnb details:", error);

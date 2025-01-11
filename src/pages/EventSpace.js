@@ -598,11 +598,11 @@ const EventSpace = () => {
     const fetchEventSpaceData = async () => {
       try {
         const response = await fetch(
-          `http://34.171.61.167:8000/properties/api/property-listings/${propertyId}/`
+          `http://127.0.0.1:8000/properties/api/property-listings/${propertyId}/`
         );
         const data = await response.json();
         if (data) {
-          setEventSpaceData([data]); // Assuming the response is a single event space
+          setEventSpaceData([data]); 
         }
       } catch (error) {
         console.error("Error fetching Event Space details:", error);
@@ -712,7 +712,7 @@ const EventSpace = () => {
 
     try {
       const response = await fetch(
-        "http://34.171.61.167:8000/bookings/book-an-event-space/",
+        "http://127.0.0.1:8000/bookings/book-an-event-space/",
         {
           method: "POST",
           headers: {

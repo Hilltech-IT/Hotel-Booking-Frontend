@@ -63,7 +63,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        "http://34.171.61.167:8000/users/register/",
+        "http://127.0.0.1:8000/users/register/",
         {
           method: "POST",
           headers: {

@@ -342,7 +342,7 @@ const AirBnb = () => {
         );
         const data = await response.json();
         if (data) {
-          setAirbnbData([data]); // Assuming the response is a single property
+          setAirbnbData([data]); 
         }
       } catch (error) {
         console.error("Error fetching Airbnb details:", error);

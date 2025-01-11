@@ -603,7 +603,7 @@ const EventSpace = () => {
         );
         const data = await response.json();
         if (data) {
-          setEventSpaceData([data]); // Assuming the response is a single event space
+          setEventSpaceData([data]); 
         }
       } catch (error) {
         console.error("Error fetching Event Space details:", error);

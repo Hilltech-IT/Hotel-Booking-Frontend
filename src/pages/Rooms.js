@@ -212,7 +212,7 @@ const Rooms = () => {
     const fetchHotelImages = async () => {
       try {
         const response = await fetch(
-          `http://34.171.61.167:8000/properties/api/property-listings/?search=${propertyname}`
+          `http://127.0.0.1:8000/properties/api/property-listings/?search=${propertyname}`
         );
         const data = await response.json();
         if (data && data.results && data.results.length > 0) {

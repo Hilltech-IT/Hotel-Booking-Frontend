@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { BACKEND_API_URL } from "../services/constants";
 
 const EventTicket = () => {
+  const navigate = useNavigate()
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
   const [user, setUser] = useState(null);
@@ -29,7 +31,7 @@ const EventTicket = () => {
     const fetchEventDetails = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/events/api/events/${eventId}`
+          `http://34.171.61.167:8000/events/api/events/${eventId}`
         );
         if (response.ok) {
           const eventData = await response.json();
@@ -53,7 +55,7 @@ const EventTicket = () => {
 
   const fetchUserData = async (token) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/users/`, {
+      const response = await fetch(`http://34.171.61.167:8000/users/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -148,6 +150,7 @@ const EventTicket = () => {
     const totalPrice = calculateTotalPrice();
     if (totalPrice <= 0) {
       alert("Please add at least one ticket to your purchase.");
+      
       return;
     }
 
@@ -163,7 +166,7 @@ const EventTicket = () => {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/events/buy-event-ticket/",
+        "http://34.171.61.167:8000/events/buy-event-ticket/",
         {
           method: "POST",
           headers: {
@@ -179,6 +182,7 @@ const EventTicket = () => {
       if (response.ok) {
         console.log("Ticket purchase successful!");
         alert("Ticket purchase successful! Check Mail for Payment Link");
+        navigate("/")
         resetForm();
       } else {
         const errorData = await response.json();

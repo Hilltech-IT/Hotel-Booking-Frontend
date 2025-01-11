@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate, useParams } from "react-router-dom";
+import { BACKEND_API_URL } from "../services/constants";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const ForgotPassword = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/users/forgot-password/`, {
+      const response = await fetch(`${BACKEND_API_URL}/users/forgot-password/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

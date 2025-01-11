@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Navbar from '../components/Navbar';
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { BACKEND_API_URL } from '../services/constants';
 
 
 const PaymentCallback = () => {
@@ -20,7 +21,7 @@ const PaymentCallback = () => {
         //e.preventDefault();
 
         try {
-            const response = await fetch(`http://127.0.0.1:8000/payments/paystack-callback/?trxref=${trxref}&reference=${reference}`, {
+            const response = await fetch(`${BACKEND_API_URL}/payments/paystack-callback/?trxref=${trxref}&reference=${reference}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -43,9 +44,10 @@ const PaymentCallback = () => {
     }
     handleCallbackData()
   return (
-    <div>
-        <h5>TRXREF: {trxref}</h5>
-        <h5>Ref: {reference}</h5>
+    <div className='container'>
+        <div className='row mt-5'>
+            <h5 className='text-center'>Your payment has been successful, thank you@</h5>
+        </div>
     </div>
   )
 }

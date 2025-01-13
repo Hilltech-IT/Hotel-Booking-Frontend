@@ -23,7 +23,9 @@ const EventSpace = () => {
   useEffect(() => {
     const fetchEventSpaceData = async () => {
       try {
-        const response = await fetch(`${BACKEND_API_URL}/properties/api/property-listings/${propertyId}/`);
+        const response = await fetch(
+          `http://34.171.61.167:8000/properties/api/property-listings/${propertyId}/`
+        );
         const data = await response.json();
         if (data) {
           setEventSpaceData([data]); 
@@ -136,7 +138,7 @@ const EventSpace = () => {
 
     try {
       const response = await fetch(
-        `${BACKEND_API_URL}/bookings/book-an-event-space/ `,
+        "http://34.171.61.167:8000/bookings/book-an-event-space/",
         {
           method: "POST",
           headers: {

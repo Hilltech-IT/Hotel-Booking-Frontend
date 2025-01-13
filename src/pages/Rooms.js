@@ -262,7 +262,8 @@ const Rooms = () => {
                       KES.{room.rate}
                       <small>/night</small>
                     </h6>
-                    <p>Amenities: {room.amenities}</p>
+                    
+                    {/* <p>Amenities: {room.amenities}</p> */}
                     <p>View: {room.view}</p>
                     <p>Available Rooms: {room.rooms_count}</p>
                     <button

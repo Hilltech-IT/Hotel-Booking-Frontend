@@ -209,22 +209,7 @@ const Listing = () => {
                     {/* Add more options if needed */}
                   </select>
                 </div>
-                {/* <div className="form-group mr-1">
-                  <label htmlFor="adults">Adults:</label>
-                  <select className="form-control ml-1" id="adults">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
-                </div> */}
-                {/* <div className="form-group mr-1">
-                  <label htmlFor="children">Children:</label>
-                  <select className="form-control ml-1" id="children">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                  </select>
-                </div> */}
+             
                 <div className="form-group mr-1">
                   <label htmlFor="propertyType">Property Type:</label>
                   <select
@@ -246,91 +231,7 @@ const Listing = () => {
               </form>
             </div>
           </div>
-          {/* <div className="row">
-            <div className="col-md-8">
-              <div className="row">
-                {listings.map((hotel) => (
-                  <div
-                    className="row"
-                    key={hotel.id}
-                    style={{
-                      backgroundColor: "#ffffff",
-                      // borderRadius: "15px",
-                      // boxShadow: "2px 4px 8px rgba(0.2, 0, 0, 0.2)",
-                      border: "1px solid rgba(0.2, 0, 0, 0.2)",
-                      marginBottom: "10px",
-                      width: "100%",
-                    }}
-                  >
-                    <div className="col-lg-6 col-md-6 col-sm-6">
-                      <div className="hotel_img">
-                        <img
-                          src={hotel.profile_image}
-                          alt={hotel.name}
-                          style={{ width: "100%", height: "auto" }}
-                        />
-                      </div>
-                    </div>
-                    <div className="col-lg-6 col-md-6 col-sm-6">
-                      <div className="description">
-                        <a href="#">
-                          <h4 className="sec_h4">{hotel.name}</h4>
-                        </a>
-                        <p>Property Type: {hotel.property_type}</p>
-                        <p>
-                          Location: {hotel.location}, {hotel.city},{" "}
-                          {hotel.country}
-                        </p>
-                        <p>Contact: {hotel.contact_number}</p>
-                        <p>Property Type: {hotel.property_type}</p>
-                        <Link
-                          to={`/rooms/${hotel.name}`}
-                          className="btn btn-primary"
-                          onClick={() => handleSelectHotel(hotel.id)}
-                        >
-                          View
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="row">
-                <div className="col-lg-4 col-md-4 col-sm-12 flex-md-row">
-                  <form>
-                    <div className="filter-section p-3 rounded">
-                      <h4>Filters</h4>
-                      <div className="form-check">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id="filter1"
-                        />
-                        <label className="form-check-label" htmlFor="filter1">
-                          Filter 1
-                        </label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id="filter2"
-                        />
-                        <label className="form-check-label" htmlFor="filter2">
-                          Filter 2
-                        </label>
-                      </div>
-                    </div>
-                    <button type="submit" className="btn btn-primary mt-3">
-                      Apply Filters
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div> */}
+       
           <div className="row">
             <div className="col-md-8">
               <div className="row">

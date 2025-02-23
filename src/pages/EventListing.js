@@ -7,7 +7,7 @@ import { BACKEND_API_URL } from "../services/constants";
 const EventListing = () => {
   const [events, setEvents] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(4); // Change this value based on your desired items per page
+  const [itemsPerPage] = useState(4); 
 
   useEffect(() => {
     // Fetch events data

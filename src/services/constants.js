@@ -1,11 +1,11 @@
 
-const BACKEND_API_URL = "http://34.173.89.74"
+const BACKEND_API_URL = "https://www.stayzhub.com/"
 //const BACKEND_API_URL = "http://34.171.61.167:8000"
 //const BACKEND_API_URL = "http://127.0.0.1:8000"
 
-const PROPERTIES_API_URL = "http://127.0.0.1:8000/properties/api"
-const BOOKINGS_API_URL = "http://127.0.0.1:8000/bookings/api"
-const USERS_API_URL = "http://127.0.0.1:8000/users"
+const PROPERTIES_API_URL = "https://www.stayzhub.com/properties/api"
+const BOOKINGS_API_URL = "https://www.stayzhub.com/bookings/api"
+const USERS_API_URL = "https://www.stayzhub.com/users"
 
 module.exports = {
     BACKEND_API_URL,

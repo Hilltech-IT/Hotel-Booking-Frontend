@@ -1,5 +1,5 @@
 
-const BACKEND_API_URL = "http://34.173.89.74"
+const BACKEND_API_URL = "https://stayzhub.com"
 //const BACKEND_API_URL = "http://34.171.61.167:8000"
 //const BACKEND_API_URL = "http://127.0.0.1:8000"
 

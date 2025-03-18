@@ -568,7 +568,7 @@ const Listing = () => {
 
         {/* Listings */}
         <div className="w-full lg:w-3/4">
-          <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+          {/* <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
             <form onSubmit={handleFormSubmit} className="flex flex-wrap gap-4">
               <div className="flex-1 min-w-[200px] relative">
                 <label htmlFor="location" className="block text-sm font-medium text-gray-700">
@@ -605,7 +605,7 @@ const Listing = () => {
                 </button>
               </div>
             </form>
-          </div>
+          </div> */}
 
           <h2 className="text-2xl font-bold mb-6">Popular Listings</h2>
           {paginatedListings.length > 0 ? (

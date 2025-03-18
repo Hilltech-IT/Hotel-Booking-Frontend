@@ -429,14 +429,22 @@ const Listing = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
-  const [propertyTypeFilter, setPropertyTypeFilter] = useState("");
+  const [propertyTypeFilters, setPropertyTypeFilters] = useState({
+    Hotel: false,
+    AirBnB: false,
+    EventSpace: false,
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const { selectHotel } = useContext(HotelContext);
 
   const handlePropertyTypeChange = (e) => {
-    setPropertyTypeFilter(e.target.value);
+    const { name, checked } = e.target;
+    setPropertyTypeFilters((prev) => ({
+      ...prev,
+      [name]: checked,
+    }));
   };
 
   const handleSelectHotel = useCallback((hotelId) => {
@@ -477,14 +485,14 @@ const Listing = () => {
   };
 
   const filteredListings = useMemo(() => {
-    return originalListings.filter(
-      (hotel) =>
-        (cityFilter === "" ||
-          hotel.country.toLowerCase().includes(cityFilter.toLowerCase())) &&
-        (propertyTypeFilter === "" ||
-          hotel.property_type.toLowerCase() === propertyTypeFilter.toLowerCase())
-    );
-  }, [cityFilter, propertyTypeFilter, originalListings]);
+    return originalListings.filter((hotel) => {
+      const matchesCity = cityFilter === "" || hotel.country.toLowerCase().includes(cityFilter.toLowerCase());
+      const matchesPropertyType =
+        Object.values(propertyTypeFilters).every((val) => !val) || // If no filters are selected, show all
+        propertyTypeFilters[hotel.property_type.replace(/\s+/g, "")]; // Check if the property type is selected
+      return matchesCity && matchesPropertyType;
+    });
+  }, [cityFilter, propertyTypeFilters, originalListings]);
 
   const paginatedListings = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -534,137 +542,144 @@ const Listing = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
-      <div className="container mx-auto px-4 mt-8">
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <form onSubmit={handleFormSubmit} className="flex flex-wrap gap-4">
-            <div className="flex-1 min-w-[200px] relative">
-              <label htmlFor="location" className="block text-sm font-medium text-gray-700">
-                Location
-              </label>
-              <input
-                type="text"
-                id="location"
-                placeholder="Enter location"
-                value={cityFilter}
-                onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
-              {suggestions.length > 0 && (
-                <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 max-h-48 overflow-y-auto shadow-lg">
-                  {suggestions.map((suggestion, index) => (
-                    <div
-                      key={index}
-                      onClick={() => handleSuggestionClick(suggestion)}
-                      className="p-2 hover:bg-gray-100 cursor-pointer"
-                    >
-                      {suggestion}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="flex-1 min-w-[150px]">
-              <label htmlFor="propertyType" className="block text-sm font-medium text-gray-700">
-                Property Type
-              </label>
-              <select
-                id="propertyType"
-                value={propertyTypeFilter}
-                onChange={handlePropertyTypeChange}
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-              >
-                <option value="">All</option>
-                <option value="Hotel">Hotel</option>
-                <option value="AirBnB">AirBnB</option>
-                <option value="Event Space">Event Space</option>
-              </select>
-            </div>
-
-            <div className="flex-1 min-w-[100px] self-end">
-              <button
-                type="submit"
-                className="w-full p-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-300"
-              >
-                Search
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 mt-8">
-        <h2 className="text-2xl font-bold mb-6">Popular Listings</h2>
-        {paginatedListings.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {paginatedListings.map((hotel) => (
-              <div key={hotel.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                <img
-                  src={hotel.profile_image}
-                  alt={hotel.name}
-                  className="w-full h-48 object-cover"
+      {/* Main Content */}
+      <div className="container mx-auto px-4 mt-8 flex flex-col lg:flex-row gap-8">
+        {/* Sidebar for Filters */}
+        <div className="w-full lg:w-1/4 bg-white rounded-xl shadow-lg p-6">
+          <h3 className="text-lg font-semibold mb-4">Filter by Property Type</h3>
+          <form onSubmit={handleFormSubmit} className="space-y-4">
+            {Object.keys(propertyTypeFilters).map((type) => (
+              <div key={type} className="flex items-center">
+                <input
+                  type="checkbox"
+                  id={type}
+                  name={type}
+                  checked={propertyTypeFilters[type]}
+                  onChange={handlePropertyTypeChange}
+                  className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
                 />
-                <div className="p-4">
-                  <h3 className="text-xl font-semibold mb-2">{hotel.name}</h3>
-                  <p className="text-gray-600 mb-2">
-                    {hotel.location}, {hotel.city}, {hotel.country}
-                  </p>
-                  <p className="text-gray-800 font-bold">${hotel.price} / night</p>
-                  <div className="flex items-center mt-2">
-                    <span className="text-yellow-500">⭐ {hotel.rating}</span>
-                  </div>
-                  <Link
-                    to={
-                      propertyTypeFilter === "AirBnB"
-                        ? `/airbnb/${hotel.id}`
-                        : propertyTypeFilter === "Event Space"
-                        ? `/event-space/${hotel.id}`
-                        : `/rooms/${hotel.name}`
-                    }
-                    className="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition duration-300 block text-center"
-                    onClick={() => handleSelectHotel(hotel.id)}
-                  >
-                    View
-                  </Link>
-                </div>
+                <label htmlFor={type} className="ml-2 text-sm text-gray-700">
+                  {type.replace(/([A-Z])/g, " $1").trim()} {/* Convert camelCase to readable text */}
+                </label>
               </div>
             ))}
-          </div>
-        ) : (
-          <div className="text-center text-gray-600">No listings found.</div>
-        )}
-      </div>
+          </form>
+        </div>
 
-      <div className="container mx-auto px-4 mt-8 flex justify-center">
-        <nav className="flex space-x-2">
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-300"
-          >
-            Previous
-          </button>
-          {[...Array(totalPages)].map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentPage(index + 1)}
-              className={`px-4 py-2 ${
-                currentPage === index + 1
-                  ? "bg-purple-600 text-white"
-                  : "bg-gray-200 text-gray-700"
-              } rounded-lg hover:bg-purple-700 hover:text-white`}
-            >
-              {index + 1}
-            </button>
-          ))}
-          <button
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-            disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-300"
-          >
-            Next
-          </button>
-        </nav>
+        {/* Listings */}
+        <div className="w-full lg:w-3/4">
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <form onSubmit={handleFormSubmit} className="flex flex-wrap gap-4">
+              <div className="flex-1 min-w-[200px] relative">
+                <label htmlFor="location" className="block text-sm font-medium text-gray-700">
+                  Location
+                </label>
+                <input
+                  type="text"
+                  id="location"
+                  placeholder="Enter location"
+                  value={cityFilter}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+                {suggestions.length > 0 && (
+                  <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 max-h-48 overflow-y-auto shadow-lg">
+                    {suggestions.map((suggestion, index) => (
+                      <div
+                        key={index}
+                        onClick={() => handleSuggestionClick(suggestion)}
+                        className="p-2 hover:bg-gray-100 cursor-pointer"
+                      >
+                        {suggestion}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="flex-1 min-w-[100px] self-end">
+                <button
+                  type="submit"
+                  className="w-full p-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-300"
+                >
+                  Search
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <h2 className="text-2xl font-bold mb-6">Popular Listings</h2>
+          {paginatedListings.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {paginatedListings.map((hotel) => (
+                <div key={hotel.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                  <img
+                    src={hotel.profile_image}
+                    alt={hotel.name}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-4">
+                    <h3 className="text-xl font-semibold mb-2">{hotel.name}</h3>
+                    <p className="text-gray-600 mb-2">
+                      {hotel.location}, {hotel.city}, {hotel.country}
+                    </p>
+                    <p className="text-gray-800 font-bold">${hotel.price} / night</p>
+                    <div className="flex items-center mt-2">
+                      <span className="text-yellow-500">⭐ {hotel.rating}</span>
+                    </div>
+                    <Link
+                      to={
+                        propertyTypeFilters.AirBnB
+                          ? `/airbnb/${hotel.id}`
+                          : propertyTypeFilters.EventSpace
+                          ? `/event-space/${hotel.id}`
+                          : `/rooms/${hotel.name}`
+                      }
+                      className="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition duration-300 block text-center"
+                      onClick={() => handleSelectHotel(hotel.id)}
+                    >
+                      View
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center text-gray-600">No listings found.</div>
+          )}
+
+          {/* Pagination */}
+          <div className="mt-8 flex justify-center">
+            <nav className="flex space-x-2">
+              <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-300"
+              >
+                Previous
+              </button>
+              {[...Array(totalPages)].map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentPage(index + 1)}
+                  className={`px-4 py-2 ${
+                    currentPage === index + 1
+                      ? "bg-purple-600 text-white"
+                      : "bg-gray-200 text-gray-700"
+                  } rounded-lg hover:bg-purple-700 hover:text-white`}
+                >
+                  {index + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-300"
+              >
+                Next
+              </button>
+            </nav>
+          </div>
+        </div>
       </div>
 
       <Footer />

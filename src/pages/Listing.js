@@ -417,6 +417,8 @@ import { useLocation, Link } from "react-router-dom";
 import { HotelContext } from "../context/HotelContext";
 import Footer from "../components/Footer";
 import { BACKEND_API_URL } from "../services/constants";
+import SearchBar from "../pages/SearchBar";
+import useGeolocation from "../hooks/useGeolocation"; 
 
 const Listing = () => {
   const location = useLocation();
@@ -425,7 +427,8 @@ const Listing = () => {
 
   const [listings, setListings] = useState([]);
   const [originalListings, setOriginalListings] = useState([]);
-  const [cityFilter, setCityFilter] = useState("");
+  const userCountry = useGeolocation(); // Use the custom hook
+  const [cityFilter, setCityFilter] = useState(location.state?.location || userCountry || "");
   const [suggestions, setSuggestions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
@@ -436,74 +439,12 @@ const Listing = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [startDate, setStartDate] = useState(location.state?.checkInDate || "");
+  const [endDate, setEndDate] = useState(location.state?.checkOutDate || "");
 
   const { selectHotel } = useContext(HotelContext);
 
-  const handlePropertyTypeChange = (e) => {
-    const { name, checked } = e.target;
-    setPropertyTypeFilters((prev) => ({
-      ...prev,
-      [name]: checked,
-    }));
-  };
-
-  const handleSelectHotel = useCallback((hotelId) => {
-    selectHotel({ hotelId: hotelId });
-  }, [selectHotel]);
-
-  const handleInputChange = async (e) => {
-    const value = e.target.value;
-    setCityFilter(value);
-
-    try {
-      const response = await fetch("https://restcountries.com/v3.1/all");
-
-      if (response.ok) {
-        const data = await response.json();
-        const countryNames = data.map((country) => country.name.common);
-        setSuggestions(
-          countryNames.filter((country) =>
-            country.toLowerCase().startsWith(value.toLowerCase())
-          )
-        );
-      } else {
-        throw new Error("Failed to fetch data");
-      }
-    } catch (error) {
-      console.error("Error fetching country suggestions:", error);
-    }
-  };
-
-  const handleSuggestionClick = (value) => {
-    setCityFilter(value);
-    setSuggestions([]);
-  };
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    setCurrentPage(1);
-  };
-
-  const filteredListings = useMemo(() => {
-    return originalListings.filter((hotel) => {
-      const matchesCity = cityFilter === "" || hotel.country.toLowerCase().includes(cityFilter.toLowerCase());
-      const matchesPropertyType =
-        Object.values(propertyTypeFilters).every((val) => !val) || // If no filters are selected, show all
-        propertyTypeFilters[hotel.property_type.replace(/\s+/g, "")]; // Check if the property type is selected
-      return matchesCity && matchesPropertyType;
-    });
-  }, [cityFilter, propertyTypeFilters, originalListings]);
-
-  const paginatedListings = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return filteredListings.slice(startIndex, endIndex);
-  }, [filteredListings, currentPage, itemsPerPage]);
-
-  const totalPages = useMemo(() => {
-    return Math.ceil(filteredListings.length / itemsPerPage);
-  }, [filteredListings, itemsPerPage]);
-
+  // Fetch listings
   useEffect(() => {
     const fetchListings = async () => {
       setLoading(true);
@@ -530,6 +471,41 @@ const Listing = () => {
     fetchListings();
   }, [countryFilter]);
 
+  // Handle search form submission
+  const handleSearch = ({ location, checkInDate, checkOutDate }) => {
+    setCityFilter(location);
+    setStartDate(checkInDate);
+    setEndDate(checkOutDate);
+    setCurrentPage(1);
+  };
+
+  // Filter listings based on city and property type (dates ignored for now)
+  const filteredListings = useMemo(() => {
+    return originalListings.filter((hotel) => {
+      const matchesCity = cityFilter === "" || hotel.country.toLowerCase().includes(cityFilter.toLowerCase());
+      const matchesPropertyType =
+        Object.values(propertyTypeFilters).every((val) => !val) || // If no filters are selected, show all
+        propertyTypeFilters[hotel.property_type.replace(/\s+/g, "")]; // Check if the property type is selected
+
+      // TODO: Add date filtering logic here later
+      // const matchesDates = ...
+
+      return matchesCity && matchesPropertyType; // Add `&& matchesDates` later
+    });
+  }, [cityFilter, propertyTypeFilters, originalListings]); // Add startDate and endDate to dependencies later
+
+  // Paginate listings
+  const paginatedListings = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredListings.slice(startIndex, endIndex);
+  }, [filteredListings, currentPage, itemsPerPage]);
+
+  // Calculate total pages
+  const totalPages = useMemo(() => {
+    return Math.ceil(filteredListings.length / itemsPerPage);
+  }, [filteredListings, itemsPerPage]);
+
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
@@ -547,7 +523,7 @@ const Listing = () => {
         {/* Sidebar for Filters */}
         <div className="w-full lg:w-1/4 bg-white rounded-xl shadow-lg p-6">
           <h3 className="text-lg font-semibold mb-4">Filter by Property Type</h3>
-          <form onSubmit={handleFormSubmit} className="space-y-4">
+          <form className="space-y-4">
             {Object.keys(propertyTypeFilters).map((type) => (
               <div key={type} className="flex items-center">
                 <input
@@ -555,7 +531,13 @@ const Listing = () => {
                   id={type}
                   name={type}
                   checked={propertyTypeFilters[type]}
-                  onChange={handlePropertyTypeChange}
+                  onChange={(e) => {
+                    const { name, checked } = e.target;
+                    setPropertyTypeFilters((prev) => ({
+                      ...prev,
+                      [name]: checked,
+                    }));
+                  }}
                   className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
                 />
                 <label htmlFor={type} className="ml-2 text-sm text-gray-700">
@@ -568,44 +550,15 @@ const Listing = () => {
 
         {/* Listings */}
         <div className="w-full lg:w-3/4">
-          {/* <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-            <form onSubmit={handleFormSubmit} className="flex flex-wrap gap-4">
-              <div className="flex-1 min-w-[200px] relative">
-                <label htmlFor="location" className="block text-sm font-medium text-gray-700">
-                  Location
-                </label>
-                <input
-                  type="text"
-                  id="location"
-                  placeholder="Enter location"
-                  value={cityFilter}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                />
-                {suggestions.length > 0 && (
-                  <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 max-h-48 overflow-y-auto shadow-lg">
-                    {suggestions.map((suggestion, index) => (
-                      <div
-                        key={index}
-                        onClick={() => handleSuggestionClick(suggestion)}
-                        className="p-2 hover:bg-gray-100 cursor-pointer"
-                      >
-                        {suggestion}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <div className="flex-1 min-w-[100px] self-end">
-                <button
-                  type="submit"
-                  className="w-full p-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-300"
-                >
-                  Search
-                </button>
-              </div>
-            </form>
-          </div> */}
+          {/* Search Bar */}
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <SearchBar
+              defaultLocation={cityFilter}
+              onSearch={handleSearch}
+              defaultCheckInDate={startDate}
+              defaultCheckOutDate={endDate}
+            />
+          </div>
 
           <h2 className="text-2xl font-bold mb-6">Popular Listings</h2>
           {paginatedListings.length > 0 ? (
@@ -635,7 +588,7 @@ const Listing = () => {
                           : `/rooms/${hotel.name}`
                       }
                       className="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition duration-300 block text-center"
-                      onClick={() => handleSelectHotel(hotel.id)}
+                      onClick={() => selectHotel({ hotelId: hotel.id })}
                     >
                       View
                     </Link>

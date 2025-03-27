@@ -222,44 +222,62 @@ import { BACKEND_API_URL } from "../services/constants";
 import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../pages/SearchBar";
 import useGeolocation from "../hooks/useGeolocation"; 
-import { FaMapMarkerAlt } from "react-icons/fa"
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 const Home = () => {
   const [hotels, setHotels] = useState([]);
   const [filteredHotels, setFilteredHotels] = useState([]);
-  const userCountry = useGeolocation();
+  const [searchLocation, setSearchLocation] = useState("");
+  const { country, loading: geoLoading, error: geoError } = useGeolocation();
   const navigate = useNavigate();
+
+  // Set initial location when geolocation loads
+  useEffect(() => {
+    if (country && !searchLocation) {
+      setSearchLocation(country);
+    }
+  }, [country, searchLocation]);
 
   // Fetch all hotel data from backend
   useEffect(() => {
-    fetch(`${BACKEND_API_URL}/properties/api/property-listings/`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data && data.results && Array.isArray(data.results)) {
+    const fetchHotels = async () => {
+      try {
+        const response = await fetch(`${BACKEND_API_URL}/properties/api/property-listings/`);
+        const data = await response.json();
+        if (data?.results?.length) {
           setHotels(data.results);
-          setFilteredHotels(data.results.slice(0, 6));
-        } else {
-          console.error("Invalid data format received:", data);
+          // Initial filter by geolocation if available
+          const initialFilter = country 
+            ? data.results.filter(h => 
+                h.country.toLowerCase().includes(country.toLowerCase())
+              ).slice(0, 6)
+            : data.results.slice(0, 6);
+          setFilteredHotels(initialFilter);
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching data:", error);
-      });
-  }, []);
+      }
+    };
+
+    fetchHotels();
+  }, [country]);
 
   // Handle search form submission
   const handleSearch = ({ location, checkInDate, checkOutDate }) => {
-    const filtered = hotels.filter((hotel) =>
-      hotel.country.toLowerCase().includes(location.toLowerCase())
-    );
-    setFilteredHotels(filtered.slice(0, 6)); // Show only 6 filtered hotels
+    setSearchLocation(location);
+    const filtered = location 
+      ? hotels.filter(hotel =>
+          hotel.country.toLowerCase().includes(location.toLowerCase())
+        )
+      : hotels;
+    setFilteredHotels(filtered.slice(0, 6));
   };
 
   // Redirect to Listing page with location and dates
   const handleViewMore = () => {
     navigate("/listing", {
       state: {
-        location: userCountry,
+        location: searchLocation || country,
         checkInDate: "",
         checkOutDate: "",
       },
@@ -268,10 +286,8 @@ const Home = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Navbar */}
       <Navbar />
 
-      {/* Main Content */}
       <main className="flex-grow">
         {/* Hero Section */}
         <div
@@ -288,12 +304,19 @@ const Home = () => {
 
         {/* Search Bar */}
         <div className="container mx-auto px-4 -mt-20 z-10 relative max-w-7xl">
-          <SearchBar defaultLocation={userCountry} onSearch={handleSearch} />
+          <SearchBar 
+            defaultLocation={searchLocation} 
+            onSearch={handleSearch}
+            isLoading={geoLoading}
+          />
         </div>
 
         {/* Hotel Listings */}
         <div className="container mx-auto px-4 mt-8 max-w-7xl">
-          <h2 className="text-2xl font-bold mb-6">Popular Hotels</h2>
+          <h2 className="text-2xl font-bold mb-6">
+            {searchLocation ? `Hotels in ${searchLocation}` : "Popular Hotels"}
+          </h2>
+          
           {filteredHotels.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredHotels.map((hotel) => (
@@ -305,6 +328,9 @@ const Home = () => {
                     src={hotel.profile_image}
                     alt={hotel.name}
                     className="w-full h-48 object-cover"
+                    onError={(e) => {
+                      e.target.src = 'https://via.placeholder.com/300x200';
+                    }}
                   />
                   <div className="p-4">
                     <h3 className="text-xl font-semibold mb-2">{hotel.name}</h3>
@@ -327,10 +353,11 @@ const Home = () => {
               ))}
             </div>
           ) : (
-            <p className="text-center text-gray-500">No hotels found.</p>
+            <p className="text-center text-gray-500">
+              {geoLoading ? "Detecting your location..." : "No hotels found."}
+            </p>
           )}
 
-          {/* View More Button */}
           {filteredHotels.length > 0 && (
             <div className="mt-8 flex justify-center">
               <button
@@ -344,13 +371,11 @@ const Home = () => {
         </div>
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
 };
 
 export default Home;
-
 
 

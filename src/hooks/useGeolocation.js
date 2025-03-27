@@ -1,16 +1,28 @@
 import { useState, useEffect } from "react";
 
 const useGeolocation = () => {
-  const [userCountry, setUserCountry] = useState("");
+  const [location, setLocation] = useState({
+    country: "",
+    loading: true,
+    error: null
+  });
 
   useEffect(() => {
     const fetchCountryByIP = async () => {
       try {
         const response = await fetch("https://ipapi.co/json/");
         const data = await response.json();
-        setUserCountry(data.country_name);
+        setLocation(prev => ({
+          ...prev, 
+          country: data.country_name, 
+          loading: false
+        }));
       } catch (error) {
-        console.error("Error fetching user country by IP:", error);
+        setLocation(prev => ({
+          ...prev, 
+          error: "IP-based location failed", 
+          loading: false
+        }));
       }
     };
 
@@ -23,23 +35,25 @@ const useGeolocation = () => {
               `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
             );
             const data = await response.json();
-            setUserCountry(data.countryName);
+            setLocation(prev => ({
+              ...prev,
+              country: data.countryName,
+              loading: false
+            }));
           } catch (error) {
-            console.error("Error fetching user country:", error);
-            fetchCountryByIP(); // Fallback to IP-based geolocation
+            fetchCountryByIP(); // Fallback
           }
         },
         (error) => {
-          console.error("Geolocation error:", error);
-          fetchCountryByIP(); // Fallback to IP-based geolocation
+          fetchCountryByIP(); // Fallback
         }
       );
     } else {
-      fetchCountryByIP(); // Fallback to IP-based geolocation
+      fetchCountryByIP(); // Fallback
     }
   }, []);
 
-  return userCountry;
+  return location;
 };
 
 export default useGeolocation;

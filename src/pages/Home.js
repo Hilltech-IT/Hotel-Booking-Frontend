@@ -228,7 +228,7 @@ const Home = () => {
   const [hotels, setHotels] = useState([]);
   const [filteredHotels, setFilteredHotels] = useState([]);
   const [searchLocation, setSearchLocation] = useState("");
-  const { country, loading: geoLoading, error: geoError } = useGeolocation();
+  const { country, loading: geoLoading } = useGeolocation();
   const navigate = useNavigate();
 
   // Set initial location when geolocation loads
@@ -263,25 +263,37 @@ const Home = () => {
   }, [country]);
 
   // Handle search form submission
-  const handleSearch = ({ location, checkInDate, checkOutDate }) => {
+  const handleSearch = ({ location }) => {
     setSearchLocation(location);
     const filtered = location 
       ? hotels.filter(hotel =>
-          hotel.country.toLowerCase().includes(location.toLowerCase())
+          hotel.country.toLowerCase().includes(location.toLowerCase()) ||
+          hotel.city.toLowerCase().includes(location.toLowerCase())
         )
       : hotels;
     setFilteredHotels(filtered.slice(0, 6));
   };
 
-  // Redirect to Listing page with location and dates
+  // Redirect to Listing page with location
   const handleViewMore = () => {
     navigate("/listing", {
       state: {
-        location: searchLocation || country,
-        checkInDate: "",
-        checkOutDate: "",
+        location: searchLocation || country
       },
     });
+  };
+
+  // Determine the correct route based on property type
+  const getPropertyRoute = (property) => {
+    const propertyType = property.property_type.replace(/\s+/g, "");
+    switch (propertyType) {
+      case "AirBnB":
+        return `/airbnb/${property.id}`;
+      case "EventSpace":
+        return `/event-space/${property.id}`;
+      default:
+        return `/rooms/${property.name}`;
+    }
   };
 
   return (
@@ -314,7 +326,7 @@ const Home = () => {
         {/* Hotel Listings */}
         <div className="container mx-auto px-4 mt-8 max-w-7xl">
           <h2 className="text-2xl font-bold mb-6">
-            {searchLocation ? `Hotels in ${searchLocation}` : "Popular Hotels"}
+            {searchLocation ? `Properties in ${searchLocation}` : "Popular Properties"}
           </h2>
           
           {filteredHotels.length > 0 ? (
@@ -338,12 +350,13 @@ const Home = () => {
                       <FaMapMarkerAlt className="mr-2" />
                       {hotel.location} {hotel.city}, {hotel.country}
                     </p>
-                    {/* <p className="text-gray-800 font-bold">${hotel.price} / night</p> */}
                     <div className="flex items-center mt-2">
-                      {/* <span className="text-yellow-500">⭐ {hotel.rating}</span> */}
+                      <span className="text-sm text-gray-500 capitalize">
+                        {hotel.property_type}
+                      </span>
                     </div>
                     <Link
-                      to={`/rooms/${hotel.name}`}
+                      to={getPropertyRoute(hotel)}
                       className="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition duration-300 block text-center"
                     >
                       View
@@ -354,7 +367,7 @@ const Home = () => {
             </div>
           ) : (
             <p className="text-center text-gray-500">
-              {geoLoading ? "Detecting your location..." : "No hotels found."}
+              {geoLoading ? "Detecting your location..." : "No properties found."}
             </p>
           )}
 
@@ -364,7 +377,7 @@ const Home = () => {
                 onClick={handleViewMore}
                 className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-300"
               >
-                View More Hotels
+                View More Properties
               </button>
             </div>
           )}
@@ -377,5 +390,4 @@ const Home = () => {
 };
 
 export default Home;
-
 

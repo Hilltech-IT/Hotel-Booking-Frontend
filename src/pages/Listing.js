@@ -411,7 +411,7 @@
 // };
 
 // export default Listing;
-import React, { useState, useEffect, useContext, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useContext, useMemo } from "react";
 import Navbar from "../components/Navbar";
 import { useLocation, Link } from "react-router-dom";
 import { HotelContext } from "../context/HotelContext";
@@ -430,7 +430,6 @@ const Listing = () => {
   const [originalListings, setOriginalListings] = useState([]);
   const [searchLocation, setSearchLocation] = useState("");
   const [cityFilter, setCityFilter] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
   const [propertyTypeFilters, setPropertyTypeFilters] = useState({
@@ -440,10 +439,8 @@ const Listing = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
 
-  const { country, loading: geoLoading, error: geoError } = useGeolocation();
+  const { country, loading: geoLoading } = useGeolocation();
   const { selectHotel } = useContext(HotelContext);
 
   // Initialize location state
@@ -479,11 +476,9 @@ const Listing = () => {
   }, [countryFilter]);
 
   // Handle search form submission
-  const handleSearch = ({ location, checkInDate, checkOutDate }) => {
+  const handleSearch = ({ location }) => {
     setSearchLocation(location);
     setCityFilter(location);
-    setStartDate(checkInDate);
-    setEndDate(checkOutDate);
     setCurrentPage(1);
   };
 
@@ -509,6 +504,19 @@ const Listing = () => {
   }, [filteredListings, currentPage, itemsPerPage]);
 
   const totalPages = Math.ceil(filteredListings.length / itemsPerPage);
+
+  // Determine the correct route based on property type
+  const getPropertyRoute = (property) => {
+    const propertyType = property.property_type.replace(/\s+/g, "");
+    switch (propertyType) {
+      case "AirBnB":
+        return `/airbnb/${property.id}`;
+      case "EventSpace":
+        return `/event-space/${property.id}`;
+      default:
+        return `/rooms/${property.name}`;
+    }
+  };
 
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
@@ -539,6 +547,7 @@ const Listing = () => {
                       ...prev,
                       [e.target.name]: e.target.checked,
                     }));
+                    setCurrentPage(1);
                   }}
                   className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
                 />
@@ -556,8 +565,6 @@ const Listing = () => {
             <SearchBar
               defaultLocation={searchLocation}
               onSearch={handleSearch}
-              defaultCheckInDate={startDate}
-              defaultCheckOutDate={endDate}
               isLoading={geoLoading}
             />
           </div>
@@ -587,18 +594,13 @@ const Listing = () => {
                       <FaMapMarkerAlt className="mr-2" />
                       {hotel.location} {hotel.city}, {hotel.country}
                     </p>
-                    {/* <p className="text-gray-800 font-bold">${hotel.price} / night</p> */}
                     <div className="flex items-center mt-2">
-                      {/* <span className="text-yellow-500">⭐ {hotel.rating}</span> */}
+                      <span className="text-sm text-gray-500 capitalize">
+                        {hotel.property_type}
+                      </span>
                     </div>
                     <Link
-                      to={
-                        propertyTypeFilters.AirBnB
-                          ? `/airbnb/${hotel.id}`
-                          : propertyTypeFilters.EventSpace
-                          ? `/event-space/${hotel.id}`
-                          : `/rooms/${hotel.name}`
-                      }
+                      to={getPropertyRoute(hotel)}
                       className="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition duration-300 block text-center"
                       onClick={() => selectHotel({ hotelId: hotel.id })}
                     >
@@ -619,31 +621,21 @@ const Listing = () => {
             <div className="mt-8 flex flex-col items-center">
               <div className="flex items-center gap-4">
                 <button
-                  onClick={() => {
-                    if (currentPage > 1) {
-                      setCurrentPage(prev => prev - 1);
-                    } else {
-                      alert("You're on the first page");
-                    }
-                  }}
-                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-300"
                 >
                   Previous
                 </button>
                 
                 <span className="text-gray-700">
-                  Page {currentPage} of {Math.max(1, Math.ceil(filteredListings.length / itemsPerPage))}
+                  Page {currentPage} of {totalPages}
                 </span>
                 
                 <button
-                  onClick={() => {
-                    if (currentPage * itemsPerPage < filteredListings.length) {
-                      setCurrentPage(prev => prev + 1);
-                    } else {
-                      alert("No more items to show");
-                    }
-                  }}
-                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-300"
                 >
                   Next
                 </button>
@@ -655,7 +647,6 @@ const Listing = () => {
               </p>
             </div>
           )}
-          
         </div>
       </div>
 

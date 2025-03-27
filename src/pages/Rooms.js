@@ -662,8 +662,8 @@ const Rooms = () => {
       <Navbar />
 
       <main className="flex-grow">
-        {/* Hero Section with balanced padding */}
-        <div className="relative bg-gradient-to-r from-purple-600 to-indigo-800 py-20 text-white px-6">
+        {/* Hero Section */}
+        <div className="relative bg-gradient-to-r from-purple-600 to-indigo-800 py-20 text-white px-6 sm:px-12 md:px-20">
           <div className="absolute inset-0 bg-black opacity-30"></div>
           <div className="container mx-auto px-4 relative z-10 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Rooms</h1>
@@ -673,267 +673,90 @@ const Rooms = () => {
           </div>
         </div>
 
-        {/* Rooms Section with balanced layout */}
-        <section className="py-12 px-6">
+        {/* Rooms Section */}
+        <section className="py-16 px-6 sm:px-12">
           <div className="container mx-auto">
             <div className="text-center mb-12 px-4">
               <h2 className="text-3xl font-bold text-gray-800 mb-2">Available Rooms</h2>
               <div className="w-20 h-1 bg-purple-600 mx-auto"></div>
             </div>
-            
+
             {roomsData.length === 0 ? (
               <div className="text-center py-12 px-4">
                 <p className="text-gray-600 text-lg">No rooms available at this time</p>
               </div>
             ) : (
-              <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-4">
-                  {currentRooms.map((room) => (
-                    <div key={room.id} className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                      <div className="relative h-48 overflow-hidden">
-                        <img
-                          src={room.image || "https://via.placeholder.com/300x200?text=Room+Image"}
-                          alt={room.room_type}
-                          className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                          onError={(e) => {
-                            e.target.src = "https://via.placeholder.com/300x200?text=Room+Image";
-                          }}
-                        />
-                        <div className="absolute top-4 right-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                          {room.rooms_count} Available
-                        </div>
-                      </div>
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold text-gray-800 mb-2">{room.room_type}</h3>
-                        
-                        <div className="flex items-center text-gray-600 mb-3">
-                          <FaMapMarkerAlt className="mr-2 text-purple-600" />
-                          <span>{room.view}</span>
-                        </div>
-                        
-                        <div className="flex justify-between items-center mb-4">
-                          <div className="flex items-center">
-                            <FaBed className="text-purple-600 mr-2" />
-                            <span className="text-gray-700">{room.beds || "1 King Bed"}</span>
-                          </div>
-                          <div className="flex items-center">
-                            {/* <FaRulerCombined className="text-purple-600 mr-2" />
-                            <span className="text-gray-700">{room.size || "30 m²"}</span> */}
-                          </div>
-                        </div>
-                        
-                        <div className="flex justify-between items-center mb-4">
-                          <div className="flex items-center">
-                            {/* <FaStar className="text-yellow-400 mr-1" />
-                            <span className="font-semibold">{room.rating || "4.8"}</span> */}
-                          </div>
-                          <div className="text-right">
-                            <p className="text-2xl font-bold text-purple-600">
-                              KES {room.rate.toLocaleString()}
-                            </p>
-                            <p className="text-sm text-gray-500">per night</p>
-                          </div>
-                        </div>
-                        
-                        <button
-                          className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 font-semibold"
-                          onClick={() => handleSubmit(room)}
-                        >
-                          Book Now
-                        </button>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                {currentRooms.map((room) => (
+                  <div key={room.id} className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <div className="relative h-48 overflow-hidden">
+                      <img
+                        src={room.image || "https://via.placeholder.com/300x200?text=Room+Image"}
+                        alt={room.room_type}
+                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                        onError={(e) => {
+                          e.target.src = "https://via.placeholder.com/300x200?text=Room+Image";
+                        }}
+                      />
+                      <div className="absolute top-4 right-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        {room.rooms_count} Available
                       </div>
                     </div>
-                  ))}
-                </div>
-
-                {/* Pagination with balanced spacing */}
-                <div className="mt-12 flex flex-col items-center px-4">
-                  <div className="flex items-center gap-4">
-                    <button
-                      onClick={() => paginate(currentPage - 1)}
-                      disabled={currentPage === 1}
-                      className={`px-4 py-2 rounded-lg ${currentPage === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-purple-600 hover:bg-purple-700 text-white'}`}
-                    >
-                      Previous
-                    </button>
-                    
-                    <div className="flex space-x-2">
-                      {[...Array(Math.ceil(roomsData.length / itemsPerPage)).keys()].map((number) => (
-                        <button
-                          key={number + 1}
-                          onClick={() => paginate(number + 1)}
-                          className={`w-10 h-10 rounded-full ${currentPage === number + 1 ? 'bg-purple-600 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
-                        >
-                          {number + 1}
-                        </button>
-                      ))}
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-gray-800 mb-2">{room.room_type}</h3>
+                      <div className="flex items-center text-gray-600 mb-3">
+                        <FaMapMarkerAlt className="mr-2 text-purple-600" />
+                        <span>{room.view}</span>
+                      </div>
+                      <div className="flex justify-between items-center mb-4">
+                        <div className="flex items-center">
+                          <FaBed className="text-purple-600 mr-2" />
+                          <span className="text-gray-700">{room.beds || "1 King Bed"}</span>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center mb-4">
+                        <div className="text-right">
+                          <p className="text-2xl font-bold text-purple-600">
+                            KES {room.rate.toLocaleString()}
+                          </p>
+                          <p className="text-sm text-gray-500">per night</p>
+                        </div>
+                      </div>
+                      <button
+                        className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 font-semibold"
+                        onClick={() => handleSubmit(room)}
+                      >
+                        Book Now
+                      </button>
                     </div>
-                    
-                    <button
-                      onClick={() => paginate(currentPage + 1)}
-                      disabled={currentPage === Math.ceil(roomsData.length / itemsPerPage)}
-                      className={`px-4 py-2 rounded-lg ${currentPage === Math.ceil(roomsData.length / itemsPerPage) ? 'bg-gray-300 cursor-not-allowed' : 'bg-purple-600 hover:bg-purple-700 text-white'}`}
-                    >
-                      Next
-                    </button>
                   </div>
-                  
-                  <p className="text-sm text-gray-600 mt-4">
-                    Showing {Math.min(((currentPage - 1) * itemsPerPage) + 1, roomsData.length)} to{' '}
-                    {Math.min(currentPage * itemsPerPage, roomsData.length)} of{' '}
-                    {roomsData.length} rooms
-                  </p>
-                </div>
-              </>
+                ))}
+              </div>
             )}
           </div>
         </section>
 
-        {/* Hotel Images Gallery with balanced padding */}
-        {hotelImages.length > 0 && (
-          <div className="px-6">
-            <RoomImages images={hotelImages} />
+        {/* Pagination */}
+        <div className="flex justify-center py-8">
+          <button
+            className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700"
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <div className="mx-4 text-lg font-semibold">
+            Page {currentPage} of {Math.ceil(roomsData.length / itemsPerPage)}
           </div>
-        )}
+          <button
+            className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700"
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === Math.ceil(roomsData.length / itemsPerPage)}
+          >
+            Next
+          </button>
+        </div>
       </main>
-
-      {/* Booking Form Modal */}
-      {showBookingForm && selectedRoom && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold text-gray-800">Book {selectedRoom.room_type}</h3>
-              <button 
-                onClick={() => setShowBookingForm(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              handleRoomBooking();
-            }}>
-              <div className="space-y-4">
-                <div>
-                  <label htmlFor="checkIn" className="block text-sm font-medium text-gray-700 mb-1">
-                    Check-In Date
-                  </label>
-                  <input
-                    type="date"
-                    id="checkIn"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                    value={checkinDate}
-                    onChange={(e) => setCheckinDate(e.target.value)}
-                    min={getCurrentDate()}
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="checkOut" className="block text-sm font-medium text-gray-700 mb-1">
-                    Check-Out Date
-                  </label>
-                  <input
-                    type="date"
-                    id="checkOut"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                    value={checkoutDate}
-                    onChange={(e) => setCheckoutDate(e.target.value)}
-                    min={checkinDate || getCurrentDate()}
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="rooms" className="block text-sm font-medium text-gray-700 mb-1">
-                    Number of Rooms
-                  </label>
-                  <input
-                    type="number"
-                    id="rooms"
-                    min="1"
-                    max={selectedRoom.rooms_count}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                    value={roomsBooked}
-                    onChange={(e) => setRoomsBooked(Math.min(Number(e.target.value), selectedRoom.rooms_count))}
-                    required
-                  />
-                  <p className="text-xs text-gray-500 mt-1">Max {selectedRoom.rooms_count} rooms available</p>
-                </div>
-                
-                <div className="pt-2">
-                  <button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 font-semibold"
-                  >
-                    Confirm Booking
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Status Modals */}
-      {(loginPrompt || bookingError || bookingSuccess) && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md text-center">
-            {loginPrompt && (
-              <>
-                <div className="text-red-500 mb-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">Login Required</h3>
-                <p className="text-gray-600 mb-4">You need to log in to book rooms.</p>
-              </>
-            )}
-            
-            {bookingError && (
-              <>
-                <div className="text-red-500 mb-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">Booking Failed</h3>
-                <p className="text-gray-600 mb-4">{bookingError}</p>
-              </>
-            )}
-            
-            {bookingSuccess && (
-              <>
-                <div className="text-green-500 mb-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">Booking Confirmed!</h3>
-                <p className="text-gray-600 mb-4">
-                  Your room has been booked successfully. Check your email for the payment link.
-                </p>
-              </>
-            )}
-            
-            <button
-              className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-all duration-300 font-semibold"
-              onClick={() => {
-                setLoginPrompt(false);
-                setBookingError(null);
-                setBookingSuccess(false);
-              }}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
 
       <Footer />
     </div>

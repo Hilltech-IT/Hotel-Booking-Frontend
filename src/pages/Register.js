@@ -333,19 +333,20 @@
 // };
 
 // export default Register;
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_API_URL } from "../services/constants";
 import Footer from "../components/Footer";
+import { FaChevronDown } from "react-icons/fa";
 
 const Register = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
-
-  // Country
   const [countries, setCountries] = useState([]);
-  const [countryData, setCountryData] = useState({ country: "" });
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+  const countryDropdownRef = useRef(null);
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -361,103 +362,101 @@ const Register = () => {
     address: "",
   });
 
-  // Fetch list of countries from REST Countries API
+  // Fetch countries from API
   useEffect(() => {
-    fetch("https://restcountries.com/v3.1/all")
-      .then((response) => response.json())
-      .then((data) => {
-        const countryNames = data.map((country) => country.name.official);
-        setCountries(countryNames);
-      })
-      .catch((error) => {
-        console.error("Error fetching countries:", error);
-      });
+    const fetchCountries = async () => {
+      try {
+        const response = await fetch('https://restcountries.com/v3.1/all');
+        const data = await response.json();
+        const formattedCountries = data
+          .map(country => ({
+            name: country.name.common,
+            code: country.cca2
+          }))
+          .sort((a, b) => a.name.localeCompare(b.name));
+        
+        setCountries(formattedCountries);
+      } catch (error) {
+        console.error('Error fetching countries:', error);
+      }
+    };
+
+    fetchCountries();
   }, []);
 
-  const handleCountryChange = (event) => {
-    const { value } = event.target;
-    setCountryData({ country: value });
-    setFormData({
-      ...formData,
-      country: value,
-    });
-  };
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (countryDropdownRef.current && !countryDropdownRef.current.contains(event.target)) {
+        setShowCountryDropdown(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData(prev => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
 
-  const handleSessionStorage = (userData) => {
-    sessionStorage.setItem("user", JSON.stringify(userData));
+  const handleCountrySelect = (countryName) => {
+    setFormData(prev => ({
+      ...prev,
+      country: countryName,
+    }));
+    setShowCountryDropdown(false);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await fetch(`${BACKEND_API_URL}/users/register/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          ...formData,
-          country: countryData.country,
-        }),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        handleSessionStorage(formData);
-        setFormData({
-          username: "",
-          email: "",
-          password: "",
-          first_name: "",
-          last_name: "",
-          id_number: "",
-          role: "",
-          phone_number: "",
-          gender: "",
-          date_of_birth: "",
-          country: "",
-          address: "",
-        });
+        sessionStorage.setItem("user", JSON.stringify(formData));
         navigate("/");
       } else {
         const errorData = await response.json();
-        setError(errorData.message || "An error occurred. Please try again.");
+        setError(errorData.message || "Registration failed. Please try again.");
       }
     } catch (error) {
-      console.error("Error occurred:", error);
+      console.error("Error:", error);
       setError("An error occurred. Please try again.");
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Navbar */}
       <Navbar />
 
-      {/* Registration Form */}
       <div className="container mx-auto px-4 py-8 flex-grow">
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
-          <h2 className="text-2xl font-bold text-center mb-6">Sign in or create an account</h2>
+          <h2 className="text-2xl font-bold text-center mb-6">Create an Account</h2>
+          
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
               {error}
             </div>
           )}
+
           <form onSubmit={handleSubmit}>
-            {/* Left Column */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Username */}
               <div>
                 <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                  Username
+                  Username *
                 </label>
                 <input
                   type="text"
@@ -473,7 +472,7 @@ const Register = () => {
               {/* Email */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email address
+                  Email *
                 </label>
                 <input
                   type="email"
@@ -489,7 +488,7 @@ const Register = () => {
               {/* Password */}
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                  Password
+                  Password *
                 </label>
                 <input
                   type="password"
@@ -505,7 +504,7 @@ const Register = () => {
               {/* First Name */}
               <div>
                 <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">
-                  First Name
+                  First Name *
                 </label>
                 <input
                   type="text"
@@ -521,7 +520,7 @@ const Register = () => {
               {/* Last Name */}
               <div>
                 <label htmlFor="last_name" className="block text-sm font-medium text-gray-700">
-                  Last Name
+                  Last Name *
                 </label>
                 <input
                   type="text"
@@ -537,7 +536,7 @@ const Register = () => {
               {/* ID Number */}
               <div>
                 <label htmlFor="id_number" className="block text-sm font-medium text-gray-700">
-                  ID Number
+                  ID Number *
                 </label>
                 <input
                   type="text"
@@ -553,7 +552,7 @@ const Register = () => {
               {/* Role */}
               <div>
                 <label htmlFor="role" className="block text-sm font-medium text-gray-700">
-                  Role
+                  Role *
                 </label>
                 <select
                   id="role"
@@ -565,17 +564,18 @@ const Register = () => {
                 >
                   <option value="">Select Role</option>
                   <option value="customer">Customer</option>
-                  {/* Add other role options */}
+                  <option value="host">Host</option>
+                  <option value="admin">Admin</option>
                 </select>
               </div>
 
               {/* Phone Number */}
               <div>
                 <label htmlFor="phone_number" className="block text-sm font-medium text-gray-700">
-                  Phone Number
+                  Phone Number *
                 </label>
                 <input
-                  type="text"
+                  type="tel"
                   id="phone_number"
                   name="phone_number"
                   value={formData.phone_number}
@@ -588,7 +588,7 @@ const Register = () => {
               {/* Gender */}
               <div>
                 <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
-                  Gender
+                  Gender *
                 </label>
                 <select
                   id="gender"
@@ -601,14 +601,15 @@ const Register = () => {
                   <option value="">Select Gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
-                  {/* Add other gender options */}
+                  <option value="Other">Other</option>
+                  <option value="Prefer not to say">Prefer not to say</option>
                 </select>
               </div>
 
               {/* Date of Birth */}
               <div>
                 <label htmlFor="date_of_birth" className="block text-sm font-medium text-gray-700">
-                  Date of Birth
+                  Date of Birth *
                 </label>
                 <input
                   type="date"
@@ -621,32 +622,56 @@ const Register = () => {
                 />
               </div>
 
-              {/* Country */}
-              <div>
+              {/* Country - Improved Version */}
+              <div className="relative" ref={countryDropdownRef}>
                 <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-                  Country
+                  Country *
                 </label>
-                <select
-                  id="country"
-                  name="country"
-                  value={countryData.country}
-                  onChange={handleCountryChange}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  required
-                >
-                  <option value="">Select a country</option>
-                  {countries.map((country, index) => (
-                    <option key={index} value={country}>
-                      {country}
-                    </option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="country"
+                    name="country"
+                    value={formData.country}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setShowCountryDropdown(true);
+                    }}
+                    onFocus={() => setShowCountryDropdown(true)}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    required
+                    autoComplete="off"
+                  />
+                  <FaChevronDown 
+                    className="absolute right-3 top-9 text-gray-400 cursor-pointer"
+                    onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+                  />
+                </div>
+                
+                {showCountryDropdown && (
+                  <div className="absolute z-10 mt-1 w-full max-h-60 overflow-auto bg-white border border-gray-300 rounded-md shadow-lg">
+                    {countries
+                      .filter(country => 
+                        formData.country === "" || 
+                        country.name.toLowerCase().includes(formData.country.toLowerCase())
+                      )
+                      .map((country) => (
+                        <div
+                          key={country.code}
+                          className="p-2 hover:bg-gray-100 cursor-pointer"
+                          onClick={() => handleCountrySelect(country.name)}
+                        >
+                          {country.name}
+                        </div>
+                      ))}
+                  </div>
+                )}
               </div>
 
               {/* Address */}
               <div>
                 <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-                  Address
+                  Address *
                 </label>
                 <input
                   type="text"
@@ -661,19 +686,18 @@ const Register = () => {
             </div>
 
             {/* Submit Button */}
-            <div className="mt-6">
+            <div className="mt-8">
               <button
                 type="submit"
-                className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                className="w-full bg-purple-600 text-white py-3 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 text-lg font-medium"
               >
-                Submit
+                Create Account
               </button>
             </div>
           </form>
         </div>
       </div>
 
-      {/* Footer */}
       <Footer />
     </div>
   );

@@ -615,39 +615,47 @@ const Listing = () => {
           )}
 
           {/* Pagination */}
-          {filteredListings.length > itemsPerPage && (
-            <div className="mt-8 flex justify-center">
-              <nav className="flex space-x-2">
+          {filteredListings.length > 0 && (
+            <div className="mt-8 flex flex-col items-center">
+              <div className="flex items-center gap-4">
                 <button
-                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                  disabled={currentPage === 1}
-                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-300"
+                  onClick={() => {
+                    if (currentPage > 1) {
+                      setCurrentPage(prev => prev - 1);
+                    } else {
+                      alert("You're on the first page");
+                    }
+                  }}
+                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
                 >
                   Previous
                 </button>
-                {Array.from({ length: totalPages }, (_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrentPage(i + 1)}
-                    className={`px-4 py-2 ${
-                      currentPage === i + 1
-                        ? "bg-purple-600 text-white"
-                        : "bg-gray-200 text-gray-700"
-                    } rounded-lg hover:bg-purple-700 hover:text-white`}
-                  >
-                    {i + 1}
-                  </button>
-                ))}
+                
+                <span className="text-gray-700">
+                  Page {currentPage} of {Math.max(1, Math.ceil(filteredListings.length / itemsPerPage))}
+                </span>
+                
                 <button
-                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                  disabled={currentPage === totalPages}
-                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-300"
+                  onClick={() => {
+                    if (currentPage * itemsPerPage < filteredListings.length) {
+                      setCurrentPage(prev => prev + 1);
+                    } else {
+                      alert("No more items to show");
+                    }
+                  }}
+                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
                 >
                   Next
                 </button>
-              </nav>
+              </div>
+              <p className="text-sm text-gray-600 mt-2">
+                Showing {Math.min(((currentPage - 1) * itemsPerPage) + 1, filteredListings.length)} to{' '}
+                {Math.min(currentPage * itemsPerPage, filteredListings.length)} of{' '}
+                {filteredListings.length} listings
+              </p>
             </div>
           )}
+          
         </div>
       </div>
 

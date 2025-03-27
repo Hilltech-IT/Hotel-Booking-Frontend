@@ -338,9 +338,9 @@ const Home = () => {
                       <FaMapMarkerAlt className="mr-2" />
                       {hotel.location} {hotel.city}, {hotel.country}
                     </p>
-                    <p className="text-gray-800 font-bold">${hotel.price} / night</p>
+                    {/* <p className="text-gray-800 font-bold">${hotel.price} / night</p> */}
                     <div className="flex items-center mt-2">
-                      <span className="text-yellow-500">⭐ {hotel.rating}</span>
+                      {/* <span className="text-yellow-500">⭐ {hotel.rating}</span> */}
                     </div>
                     <Link
                       to={`/rooms/${hotel.name}`}

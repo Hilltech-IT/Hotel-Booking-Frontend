@@ -222,11 +222,12 @@ import { BACKEND_API_URL } from "../services/constants";
 import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../pages/SearchBar";
 import useGeolocation from "../hooks/useGeolocation"; 
+import { FaMapMarkerAlt } from "react-icons/fa"
 
 const Home = () => {
   const [hotels, setHotels] = useState([]);
   const [filteredHotels, setFilteredHotels] = useState([]);
-  const userCountry = useGeolocation(); 
+  const userCountry = useGeolocation();
   const navigate = useNavigate();
 
   // Fetch all hotel data from backend
@@ -236,7 +237,7 @@ const Home = () => {
       .then((data) => {
         if (data && data.results && Array.isArray(data.results)) {
           setHotels(data.results);
-          setFilteredHotels(data.results.slice(0, 6)); // Show only 6 hotels initially
+          setFilteredHotels(data.results.slice(0, 6));
         } else {
           console.error("Invalid data format received:", data);
         }
@@ -270,62 +271,78 @@ const Home = () => {
       {/* Navbar */}
       <Navbar />
 
-      {/* Hero Section */}
-      <div className="relative h-[400px] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('https://via.placeholder.com/1920x600')" }}>
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="text-center text-white">
-            <h1 className="text-4xl font-bold mb-4">Find Your Perfect Stay</h1>
-            <p className="text-xl mb-8">Book unique hotels, homes, and more.</p>
+      {/* Main Content */}
+      <main className="flex-grow">
+        {/* Hero Section */}
+        <div
+          className="relative h-[400px] bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('https://via.placeholder.com/1920x600')" }}
+        >
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="text-center text-white">
+              <h1 className="text-4xl font-bold mb-4">Find Your Perfect Stay</h1>
+              <p className="text-xl mb-8">Book unique hotels, homes, and more.</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Search Bar */}
-      <div className="container mx-auto px-4 -mt-20 z-10 relative max-w-7xl">
-        <SearchBar defaultLocation={userCountry} onSearch={handleSearch} />
-      </div>
+        {/* Search Bar */}
+        <div className="container mx-auto px-4 -mt-20 z-10 relative max-w-7xl">
+          <SearchBar defaultLocation={userCountry} onSearch={handleSearch} />
+        </div>
 
-      {/* Hotel Listings */}
-      <div className="container mx-auto px-4 mt-8 max-w-7xl">
-        <h2 className="text-2xl font-bold mb-6">Popular Hotels</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredHotels.map((hotel) => (
-            <div key={hotel.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-              <img
-                src={hotel.profile_image}
-                alt={hotel.name}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-xl font-semibold mb-2">{hotel.name}</h3>
-                <p className="text-gray-600 mb-2">
-                  {hotel.location}, {hotel.city}, {hotel.country}
-                </p>
-                <p className="text-gray-800 font-bold">${hotel.price} / night</p>
-                <div className="flex items-center mt-2">
-                  <span className="text-yellow-500">⭐ {hotel.rating}</span>
-                </div>
-                <Link
-                  to={`/rooms/${hotel.name}`}
-                  className="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition duration-300 block text-center"
+        {/* Hotel Listings */}
+        <div className="container mx-auto px-4 mt-8 max-w-7xl">
+          <h2 className="text-2xl font-bold mb-6">Popular Hotels</h2>
+          {filteredHotels.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredHotels.map((hotel) => (
+                <div
+                  key={hotel.id}
+                  className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
                 >
-                  View
-                </Link>
-              </div>
+                  <img
+                    src={hotel.profile_image}
+                    alt={hotel.name}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-4">
+                    <h3 className="text-xl font-semibold mb-2">{hotel.name}</h3>
+                    <p className="text-gray-600 mb-2 flex items-center">
+                      <FaMapMarkerAlt className="mr-2" />
+                      {hotel.location} {hotel.city}, {hotel.country}
+                    </p>
+                    <p className="text-gray-800 font-bold">${hotel.price} / night</p>
+                    <div className="flex items-center mt-2">
+                      <span className="text-yellow-500">⭐ {hotel.rating}</span>
+                    </div>
+                    <Link
+                      to={`/rooms/${hotel.name}`}
+                      className="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition duration-300 block text-center"
+                    >
+                      View
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          ) : (
+            <p className="text-center text-gray-500">No hotels found.</p>
+          )}
 
-        {/* View More Button */}
-        <div className="mt-8 flex justify-center">
-          <button
-            onClick={handleViewMore}
-            className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-300"
-          >
-            View More Hotels
-          </button>
+          {/* View More Button */}
+          {filteredHotels.length > 0 && (
+            <div className="mt-8 flex justify-center">
+              <button
+                onClick={handleViewMore}
+                className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-300"
+              >
+                View More Hotels
+              </button>
+            </div>
+          )}
         </div>
-      </div>
+      </main>
 
       {/* Footer */}
       <Footer />
@@ -334,3 +351,6 @@ const Home = () => {
 };
 
 export default Home;
+
+
+

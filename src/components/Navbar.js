@@ -116,12 +116,14 @@
 //   );
 // };
 // export default Navbar;
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loggedInUser = sessionStorage.getItem("user");
@@ -135,12 +137,14 @@ const Navbar = () => {
   const handleLogout = () => {
     sessionStorage.removeItem("user");
     setUser(null);
+    setIsDropdownOpen(false);
+    navigate("/login"); // Redirect to login page after logout
   };
 
   const loggedInUserName = getLoggedInUserName();
 
   return (
-    <header className="bg-white shadow-md">
+    <header className="bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav className="flex items-center justify-between py-4">
           {/* Brand Logo */}
@@ -197,7 +201,10 @@ const Navbar = () => {
               </>
             ) : (
               <div className="relative">
-                <button className="flex items-center space-x-2 focus:outline-none">
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex items-center space-x-2 focus:outline-none"
+                >
                   <span className="text-gray-700">{loggedInUserName}</span>
                   <svg
                     className="w-4 h-4"
@@ -214,20 +221,23 @@ const Navbar = () => {
                     />
                   </svg>
                 </button>
-                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
-                  <Link
-                    to="/account"
-                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                  >
-                    Account
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                  >
-                    Sign Out
-                  </button>
-                </div>
+                {isDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg">
+                    <Link
+                      to="/account"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Account
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>

@@ -419,6 +419,8 @@ import Footer from "../components/Footer";
 import { BACKEND_API_URL } from "../services/constants";
 import SearchBar from "../pages/SearchBar";
 import useGeolocation from "../hooks/useGeolocation"; 
+import { FaMapMarkerAlt } from "react-icons/fa";
+
 
 const Listing = () => {
   const location = useLocation();
@@ -443,6 +445,16 @@ const Listing = () => {
   const [endDate, setEndDate] = useState(location.state?.checkOutDate || "");
 
   const { selectHotel } = useContext(HotelContext);
+  
+  useEffect(() => {
+    if (!cityFilter && userCountry) {
+      setCityFilter(userCountry);
+    }
+  }, [userCountry, cityFilter]);
+  useEffect(() => {
+    console.log("User Country:", userCountry);
+  }, [userCountry]);
+    
 
   // Fetch listings
   useEffect(() => {
@@ -572,9 +584,10 @@ const Listing = () => {
                   />
                   <div className="p-4">
                     <h3 className="text-xl font-semibold mb-2">{hotel.name}</h3>
-                    <p className="text-gray-600 mb-2">
-                      {hotel.location}, {hotel.city}, {hotel.country}
-                    </p>
+                    <p className="text-gray-600 mb-2 flex items-center">
+                    <FaMapMarkerAlt className="mr-2" />
+                    {hotel.location} {hotel.city}, {hotel.country}
+                  </p>
                     <p className="text-gray-800 font-bold">${hotel.price} / night</p>
                     <div className="flex items-center mt-2">
                       <span className="text-yellow-500">⭐ {hotel.rating}</span>

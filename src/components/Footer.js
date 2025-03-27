@@ -142,9 +142,10 @@
 // };
 
 // export default Footer;
+
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-8">
+    <footer className="bg-gray-900 text-white py-8 mt-10">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div>
@@ -190,7 +191,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="border-t border-gray-700 mt-6 pt-4 text-center text-sm">
-          <p>© WonderWise - All rights reserved | Created with <i className="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://hilltechit.com/" target="_blank" className="hover:underline">HillTech IT</a></p>
+          <p>© WonderWise - All rights reserved</p>
         </div>
       </div>
     </footer>

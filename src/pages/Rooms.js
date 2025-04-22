@@ -200,7 +200,8 @@ const Rooms = () => {
     const fetchHotelImages = async () => {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/properties/api/property-listings/?search=${propertyname}`
+          `${BACKEND_API_URL}/properties/api/property-listings/?search=${propertyname}`
+          //`http://127.0.0.1:8000/properties/api/property-listings/?search=${propertyname}`
         );
         const data = await response.json();
         if (data && data.results && data.results.length > 0) {

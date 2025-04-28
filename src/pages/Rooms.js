@@ -196,25 +196,58 @@ const Rooms = () => {
     setShowBookingForm(true);
   };
 
+  // useEffect(() => {
+  //   const fetchHotelImages = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${BACKEND_API_URL}/properties/api/property-listings/?search=${propertyname}`
+  //         //`http://127.0.0.1:8000/properties/api/property-listings/?search=${propertyname}`
+  //       );
+  //       const data = await response.json();
+  //       if (data && data.results && data.results.length > 0) {
+  //         const hotelImagesData = data.results[0].images;
+  //         setHotelImages(hotelImagesData);
+  //         console.log(hotelImages);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching hotel images:", error);
+  //     }
+  //   };
+
+  //   fetchHotelImages();
+  // }, [propertyname]);
   useEffect(() => {
     const fetchHotelImages = async () => {
       try {
         const response = await fetch(
           `${BACKEND_API_URL}/properties/api/property-listings/?search=${propertyname}`
-          //`http://127.0.0.1:8000/properties/api/property-listings/?search=${propertyname}`
         );
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const data = await response.json();
-        if (data && data.results && data.results.length > 0) {
-          const hotelImagesData = data.results[0].images;
+        
+        if (data?.results?.length > 0) {
+          const hotelImagesData = data.results[0].images || [];
           setHotelImages(hotelImagesData);
+        } else {
+          setHotelImages([]); 
         }
       } catch (error) {
         console.error("Error fetching hotel images:", error);
+        setHotelImages([]); 
       }
     };
-
+  
     fetchHotelImages();
   }, [propertyname]);
+  
+  // If you want to log when images change
+  useEffect(() => {
+    console.log('Hotel images updated:', hotelImages);
+  }, [hotelImages]);
 
   if (loading) {
     return (

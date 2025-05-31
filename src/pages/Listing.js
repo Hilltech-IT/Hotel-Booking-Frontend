@@ -514,7 +514,7 @@ const Listing = () => {
       case "EventSpace":
         return `/event-space/${property.id}`;
       default:
-        return `/rooms/${property.name}`;
+        return `/hotels/${property.id}`;
     }
   };
 

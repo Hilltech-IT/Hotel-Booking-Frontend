@@ -730,8 +730,8 @@ const Rooms = () => {
 
   useEffect(() => {
     // Use the images from the hotel data if available
-    if (hotelData && hotelData.propertyimages) {
-      setHotelImages(hotelData.propertyimages);
+    if (hotelData && hotelData.property_image) {
+      setHotelImages(hotelData.property_image);
     }
   }, [hotelData]);
 

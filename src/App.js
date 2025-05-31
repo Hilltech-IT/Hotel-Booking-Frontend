@@ -35,7 +35,8 @@ function App() {
         <Route path="/activate-account/:token" element={<ActivateAccount />} />
 
         <Route path="/listing" element={<Listing />} />
-        <Route path="/rooms/:propertyname" element={<Rooms />} />
+        {/* <Route path="/rooms/:propertyname" element={<Rooms />} /> */}
+        <Route path="/hotels/:id" element={<Rooms />} />
         <Route path="/account" element={<Account />} />
         <Route path="/events" element={<EventListing />} />
         <Route path="/events/:eventId" element={<EventTicket />} />

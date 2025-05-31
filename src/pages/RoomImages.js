@@ -36,6 +36,7 @@ import React from "react";
 import { FaExpand } from "react-icons/fa";
 
 const RoomImages = ({ images }) => {
+  console.log(images);
   return (
     <section className="py-16 bg-gray-50 px-6">
       <div className="container mx-auto">

@@ -27,7 +27,8 @@ const Navbar = () => {
   const loggedInUserName = getLoggedInUserName();
 
   return (
-    <header className="bg-white">
+    // <header className="bg-white" >
+      <header className="bg-white relative z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav className="flex items-center justify-between py-4">
           {/* Brand Logo */}

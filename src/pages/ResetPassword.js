@@ -7,7 +7,7 @@ const ResetPassword = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
     const { token } = useParams()
-    console.log(`Password Reset Token: ${token}`)
+    console.log(`Password Reset Bearer: ${token}`)
   // country
   
   const [formData, setFormData] = useState({

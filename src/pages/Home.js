@@ -215,7 +215,7 @@
 // };
 
 // export default Home;
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { BACKEND_API_URL } from "../services/constants";
@@ -223,6 +223,8 @@ import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../pages/SearchBar";
 import useGeolocation from "../hooks/useGeolocation"; 
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { HotelContext } from "../context/HotelContext";
+
 
 const Home = () => {
   const [hotels, setHotels] = useState([]);
@@ -230,6 +232,7 @@ const Home = () => {
   const [searchLocation, setSearchLocation] = useState("");
   const { country, loading: geoLoading } = useGeolocation();
   const navigate = useNavigate();
+  const { selectHotel } = useContext(HotelContext);
 
   // Set initial location when geolocation loads
   useEffect(() => {
@@ -283,6 +286,7 @@ const Home = () => {
     });
   };
 
+
   // Determine the correct route based on property type
   const getPropertyRoute = (property) => {
     const propertyType = property.property_type.replace(/\s+/g, "");
@@ -292,7 +296,7 @@ const Home = () => {
       case "EventSpace":
         return `/event-space/${property.id}`;
       default:
-        return `/rooms/${property.name}`;
+       return `/hotels/${property.id}`;
     }
   };
 
@@ -355,12 +359,13 @@ const Home = () => {
                         {hotel.property_type}
                       </span>
                     </div>
-                    <Link
-                      to={getPropertyRoute(hotel)}
-                      className="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition duration-300 block text-center"
-                    >
-                      View
-                    </Link>
+                <Link
+                    to={getPropertyRoute(hotel)}
+                        className="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition duration-300 block text-center"
+                        onClick={() => selectHotel({ hotelId: hotel.id })} 
+                      >
+                        View
+                      </Link>
                   </div>
                 </div>
               ))}

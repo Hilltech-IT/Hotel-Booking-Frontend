@@ -59,7 +59,7 @@
 //         method: "GET",
 //         headers: {
 //           "Content-Type": "application/json",
-//           Authorization: `Token ${token}`,
+//           Authorization: `Bearer ${token}`,
 //         },
 //       });
 
@@ -171,7 +171,7 @@
 //           method: "POST",
 //           headers: {
 //             "Content-Type": "application/json",
-//             Authorization: `Token ${token}`,
+//             Authorization: `Bearer ${token}`,
 //           },
 //           body: JSON.stringify({
 //             event: eventId,
@@ -444,7 +444,7 @@ const EventTicket = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -530,7 +530,7 @@ const EventTicket = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Token ${token}`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             event: eventId,

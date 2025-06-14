@@ -109,7 +109,7 @@
 
 //     if (!token) {
 //       setLoginPrompt(true);
-//       console.error("Token not available.");
+//       console.error("Bearer not available.");
 //       return;
 //     }
 
@@ -143,7 +143,7 @@
 //           method: "POST",
 //           headers: {
 //             "Content-Type": "application/json",
-//             Authorization: `Token ${token}`,
+//             Authorization: `Bearer ${token}`,
 //           },
 //           body: JSON.stringify(bookingData),
 //         }
@@ -440,7 +440,7 @@ const EventSpace = () => {
 
     if (!token) {
       setLoginPrompt(true);
-      console.error("Token not available.");
+      console.error("Bearer not available.");
       return;
     }
 
@@ -474,7 +474,7 @@ const EventSpace = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Token ${token}`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(bookingData),
         }

@@ -109,7 +109,7 @@
 
 //     if (!token) {
 //       setLoginPrompt(true);
-//       console.error("Token not available.");
+//       console.error("Bearer not available.");
 //       return;
 //     }
 
@@ -143,7 +143,7 @@
 //           method: "POST",
 //           headers: {
 //             "Content-Type": "application/json",
-//             Authorization: `Token ${token}`,
+//             Authorization: `Bearer ${token}`,
 //           },
 //           body: JSON.stringify(bookingData),
 //         }
@@ -370,25 +370,26 @@ const AirBnb = () => {
     setShowBookingForm(true);
   };
 
-  const getUserTokenFromSession = () => {
+
+    const getUserTokenFromSession = () => {
     try {
-      const userData = JSON.parse(sessionStorage.getItem("user"));
-      return userData?.token || null;
+      const token = sessionStorage.getItem("token");
+      return token || null;
     } catch (error) {
-      console.error("Error retrieving token from session storage:", error);
+      console.error("Error retrieving access token from session storage:", error);
       return null;
     }
-  };
+    };
 
-  const getUserIdFromSession = () => {
+    const getUserIdFromSession = () => {
     try {
       const userData = JSON.parse(sessionStorage.getItem("user"));
-      return userData?.pk || null;
+      return userData?.id || null;
     } catch (error) {
       console.error("Error retrieving user ID from session storage:", error);
       return null;
     }
-  };
+    };
 
   const calculateTotals = () => {
     const daysBooked = Math.ceil(
@@ -431,7 +432,7 @@ const AirBnb = () => {
 
     if (!token) {
       setLoginPrompt(true);
-      console.error("Token not available.");
+      console.error("Bearer not available.");
       return;
     }
 
@@ -465,7 +466,7 @@ const AirBnb = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Token ${token}`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(bookingData),
         }

@@ -21,7 +21,7 @@
 //         method: "GET",
 //         headers: {
 //           "Content-Type": "application/json",
-//           Authorization: `Token ${token}`,
+//           Authorization: `Bearer ${token}`,
 //         },
 //       });
 
@@ -185,12 +185,14 @@ const Account = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5); // Adjust the number of items per page as needed
 
-  useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    if (user && user.pk) {
-      fetchUserData(user.token);
-    }
-  }, []);
+useEffect(() => {
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const token = sessionStorage.getItem("token");
+
+  if (user && user.id && token) {
+    fetchUserData(token);
+  }
+}, []);
 
   const fetchUserData = async (token) => {
     try {
@@ -198,7 +200,7 @@ const Account = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `Bearer  ${token}`,
         },
       });
 

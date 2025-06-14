@@ -20,6 +20,7 @@ import PaymentCallback from "./pages/PaymentCallback";
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import ActivateAccount from "./pages/ActivateAccount";
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (

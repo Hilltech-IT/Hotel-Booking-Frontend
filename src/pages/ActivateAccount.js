@@ -6,7 +6,7 @@ const ActivateAccount = () => {
     const navigate = useNavigate()
     const { token } = useParams()
 
-    console.log(`Token: ${token}`)
+    console.log(`Bearer: ${token}`)
 
     useEffect(() => {
         const activateUser = async() => {
